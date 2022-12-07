@@ -11,4 +11,15 @@ public class UserHomeController {
   public String showMain(){
     return "hi!";
   }
+  @RequestMapping("/user/home/main2")
+  @ResponseBody
+  public String showMain2(){
+    return "반가워!";
+  }
+  @RequestMapping("/user/home/main3")
+  @ResponseBody
+  public String showMain3(){
+    return "잘가!";
+  }
+ 
 }
