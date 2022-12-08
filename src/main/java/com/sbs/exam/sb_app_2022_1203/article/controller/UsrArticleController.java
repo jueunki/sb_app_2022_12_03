@@ -84,6 +84,19 @@ public class UsrArticleController {
     return articles;
   }
 
+  @RequestMapping("/user/article/getArticle")
+  @ResponseBody
+  public Object getArticleAction(int id) { //상세보기는 하나만 가져오는것이기 때문에 복수와 단수를 정확하게 표현해줘야한다.
+    Article article = getArticle(id);
+
+    if (article == null) {
+      return id + "번 게시물이 존재하지 않습니다.";
+    }
+
+    return article;
+    //String data type과 Int data type을 둘다 허용 하려면 둘의 상위type인 Object로 사용해준다(별로 좋은 방법은 아닙니다.)
+  }
+
   @RequestMapping("/user/article/doDelete")
   @ResponseBody
   public String doDelete(int id) {
