@@ -52,3 +52,11 @@ request 요청을하면 브라우저로 간다
 
 
 스프링부트 : 웹프레임워크
+-------------------------------------------
+==error==
+fatal: The current branch master has no upstream branch. To push the current branch and set the remote as upstream, use
+git push --set-upstream orgin master  To have this happen automatically for branches without a tracking upstream, see 'push.autoSetupRemote' in 'git help config'.
+
+$ git push --set-upstream origin master
+$ git push
+-------------------------------------------
