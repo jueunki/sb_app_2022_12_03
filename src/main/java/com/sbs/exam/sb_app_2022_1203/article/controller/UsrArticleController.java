@@ -1,6 +1,8 @@
 package com.sbs.exam.sb_app_2022_1203.article.controller;
 
+import com.sbs.exam.sb_app_2022_1203.article.service.ArticleService;
 import com.sbs.exam.sb_app_2022_1203.article.vo.Article;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -11,11 +13,14 @@ import java.util.List;
 @Controller
 public class UsrArticleController {
   // 인스턴스 변수 시작
+  @Autowired  //컴포넌트로 등록되는 것들에게 붙여주면 된다.
+  private ArticleService articleService;
   int articleLastId;
 
   // 인스턴스 변수 끝
 
   // 생성자
+
   private List<Article> articles;
 
   public UsrArticleController() {

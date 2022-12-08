@@ -44,14 +44,47 @@ db(창고)
 컨트롤러에서 말도안되는걸 걸러내고 서비스가 레포지토리에게 디비에서 데이터를 가져오라고 시킨다. 요리해서 컨트롤러가 jsp 뷰에게 요리를 보여준다.
 request 요청을하면 브라우저로 간다
 
+MVC 디자인 패턴
+M(모델:요리,재료,재료창고)핵심로직을 담당한다
+V(뷰:접시(플레이팅))
+C(컨트롤러:점원)
+--
+사람으로 예시를 들었을때
+M(영혼)
+V(육체)
+C(정신,마음,생각)
+--
+컴퓨터로 예시를 들었을때
+M(순수 데이터,로직)
+V(프로그램의 눈에 보이는 부분)
+C(고객의 요청을 받아서 M과 C를 컨트롤 한다.)
+C->M->C->V 순서!
+---------------------------
+Spring boot의 MVC
 
+M
+-서비스
+-리포지터리
+-DB데이터
+
+V
+-JSP
+-JS
+-CSS
+-HTML
+
+C
+-컨트롤러
+----------------------------------------------
 /user.article.doAdd?title=제목1&body=내용1
 
 
 
 
 
-스프링부트 : 웹프레임워크
+스프링부트 : 웹프레임워크인데 잘 활용하려면 규칙에 맞게 따라야한다.
+컨트롤러 - 서비스 - 리포지터리 - 데이터베이스의 구조로 되어있다.
+
 -------------------------------------------
 ==error==
 fatal: The current branch master has no upstream branch. To push the current branch and set the remote as upstream, use
@@ -60,3 +93,12 @@ git push --set-upstream orgin master  To have this happen automatically for bran
 $ git push --set-upstream origin master
 $ git push
 -------------------------------------------
+==검색할것들==
+소프트웨어 디자인 패턴 -> 검색
+GOF -> 검색 정처기 시험칠때 많이 봐야한다.
+
+-------------------------------------------
+@Autowired  //컴포넌트로 등록되는 것들에게 붙여주면 된다.
+객체를 만드는부분에 new로 시작되는 메서드를 붙이지말고 @Autowired를 붙이면 된다.
+
+@Service //서비스에 무조건 붙인다.
