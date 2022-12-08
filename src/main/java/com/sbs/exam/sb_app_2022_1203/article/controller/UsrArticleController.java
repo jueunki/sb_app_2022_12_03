@@ -13,7 +13,8 @@ public class UsrArticleController {
   int articleLastId;
 
   private List<Article> articles;
-  public UsrArticleController(){
+
+  public UsrArticleController() {
     articles = new ArrayList<>();
     articleLastId = 0;
 
@@ -22,26 +23,30 @@ public class UsrArticleController {
 
   private void makeTestDate() {
 
-    for(int i = 1; i <= 10; i++){
-      int id = articleLastId + 1;
+    for (int i = 1; i <= 10; i++) {
       String title = "제목" + i;
       String body = "내용" + i;
-      Article article = new Article(id,title,body);
 
-      articles.add(article);
-      articleLastId = id;
+      writeArticle(title, body);
     }
+  }
+
+  private Article writeArticle(String title, String body) {
+    int id = articleLastId + 1;
+    Article article = new Article(id, title, body);
+
+    articles.add(article);
+    articleLastId = id;
+    return article;
   }
 
   @RequestMapping("/user/article/doAdd")
   @ResponseBody
   public Article doAdd(String title, String body) {
-    int id = articleLastId + 1;
-    Article article = new Article(id, title, body);
-    articles.add(article);
-    articleLastId = id;
+    Article article = writeArticle(title, body);
     return article;
   }
+
 
   @RequestMapping("/user/article/getArticles")
   @ResponseBody
