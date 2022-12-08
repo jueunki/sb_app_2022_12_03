@@ -20,7 +20,8 @@ public class UsrArticleController {
   @RequestMapping("/user/article/doAdd")
   @ResponseBody
   public Article doAdd(String title, String body) {
-    Article article = articleService.writeArticle(title, body);
+
+    Article article = articleService.writeArticle(title,body);
     return article;
   }
 
