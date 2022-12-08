@@ -57,7 +57,15 @@ public class UsrArticleController {
 
   private void deleteArticle(int id) {
     Article article = getArticle(id);
-    articles.remove(article); 
+    articles.remove(article);
+  }
+
+  private void ModifyArticle(int id, String title, String body) {
+    Article article = getArticle(id);
+
+    article.setTitle(title);
+    article.setBody(body);
+
   }
   // 서비스 메서드 끝
 
@@ -88,6 +96,21 @@ public class UsrArticleController {
 
     return id + "번 게시물을 삭제하였습니다.";
   }
+
+  @RequestMapping("/user/article/doModify")
+  @ResponseBody
+  public String doModify(int id, String title, String body) {
+    Article article = getArticle(id);
+
+    if (article == null) {
+      return id + "번 게시물이 존재하지 않습니다.";
+    }
+
+    ModifyArticle(id, title, body);
+
+    return id + "번 게시물을 수정하였습니다."; //localhost:8081/user/article/doModify?id=1&title=제목1 수정&body=내용1 수정 이라고적으면 수정이 된다.
+  }
+
 
 
   // 액션 메서드 끝
