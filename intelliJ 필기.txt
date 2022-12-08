@@ -1,0 +1,64 @@
+alt + 1 : 프로젝트 창 열었다 닫았다 하는것.
+ctrl + shift + r : 파일명으로 검색이 가능하다.
+ctrl + shift + F10 : 실행.
+ctrl + shift + f : 소스코드 정렬.
+ctrl + 1 : 오류가 났을때 누르면 insert return이라고 있는데 오류메시지를 고쳐준다.
+sout + enter : System.out.println(); 코드를 자동완성 시켜준다. 일일이 작성하지 않아도 된다.
+
+-----------------------------------------------------------------------------------------
+
+이렇게 되어있지않으면 실행이 되지않는다. 둘다 항상 있어야한다. 실수로 지웠다면 작성해줘야 실행 할 수 있다.
+public class Main {
+    public static void main(String[] args) {
+
+
+	}
+}
+
+
+-----------------------------------------------------------------------------------------
+
+
+
+git init
+git remote add origin [원격리포지터리 주소]
+git config --globar user.name [이름]
+git config --globar user.email [이메일]
+git status
+git add .
+git commit -m "세팅"
+git push orgin master
+
+
+-----------------------------------------------------------------------------------------
+
+MVC
+C	controller			말도 안되는거 걸러내는 부분
+M	service, repository, db	핵심로직을 다룬다(요리사), repository(db와의 통신을 담당한다.), db(창고)
+V	jsp				데이터를 템플릿에 담에서 
+
+controller(직원)
+service(요리사)
+repository(인턴)
+db(창고)
+컨트롤러에서 말도안되는걸 걸러내고 서비스가 레포지토리에게 디비에서 데이터를 가져오라고 시킨다. 요리해서 컨트롤러가 jsp 뷰에게 요리를 보여준다.
+request 요청을하면 브라우저로 간다
+
+
+/user.article.doAdd?title=제목1&body=내용1
+
+
+
+
+
+스프링부트 : 웹프레임워크
+
+
+
+
+
+
+
+
+
+
