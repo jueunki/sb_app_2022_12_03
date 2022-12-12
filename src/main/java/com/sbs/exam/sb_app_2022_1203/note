@@ -108,10 +108,87 @@ GOF -> 검색 정처기 시험칠때 많이 봐야한다.
 Controller는 되느냐 되지않느냐 입력이 되었느냐 되지않았느냐 등등을 확인하는 부분이라서
 Service로직을 넣고 사용해서는 안된다!
 
+
+2020-12-12==
 **list에 있는 내장 메서드는 외워야한다.
 
 # void 타입은 return이 없다.
 
 생성자는 객체가 만들어지면서 딱 한번 실행이되는데 생성자를 썼기때문에 publicArticleService가 실행이되고
 private ArticleRepository articleRepository;는 실행하면 NULL이 나오게된다.
+
+데이터를 저장하면 램에 저장이되는데 db에 저장을해서 사용해야한다.
+ArticleRepository에 있는 컴포넌트를 지우고 @Mapper로 수정한 후
+class를 interface로 바꾼다.
+ private int articleLastId;
+  private List<Article> articles;
+  public ArticleRepository(){
+    articles = new ArrayList<>();
+    articleLastId = 0;
+
+
+  }
+
+  public void makeTestDate() {
+
+    for (int i = 1; i <= 10; i++) {
+      String title = "제목" + i;
+      String body = "내용" + i;
+
+      writeArticle(title, body);
+    }
+  } 는 필요하지않기 때문에 지워주고
+  @Mapper
+  public interface ArticleRepository {
+
+    public Article writeArticle(String title, String body);
+
+    public Article getArticle(int id);
+
+    public void deleteArticle(int id);
+    public List<Article> getArticles();
+    public void ModifyArticle(int id, String title, String body);
+    }
+    메서드 안에있던 내용들을 모두 지워준다.
+
+마이바티스를 추가해야하는데 build.gradle을 클릭해서 들어가보면
+implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.0'라고
+마이바티스가 추가가 되어있다. -> 스프링이니셜라이즈를 했을때 미리 추가한것이다.
+그래서 따로 다시 추가 할 필요는 없다.
+마이 바티스를 사용하려면 마리아db가 필수이기때문에 함께 가져왔다.
+
+결과적으로 마이바티스를 쓸것이지만 마리아db가 있어야 사용할 수 있기 때문에
+마이바티스와 마리아db는 짝이라고 볼 수 있다.
+ArticleService에 articleRepository.makeTestDate();가 오류가 생긴다.
+이 부분은 이제 필요가 없기 때문에 지워줘도 된다.
+왜? 데이터 베이스에 따로 저장할것이기 때문에 testdatabase는 필요없는것이다.
+@Mapper
+public interface ArticleRepository {
+
+  // INSERT INTO article SET regDate = NOW(), updateDate = NOW(), title = ?, `body` = ?
+  public Article writeArticle(String title, String body);
+
+  // SELECE * FROM article WHERE id = ? 이라고 해야 id를 가져올 수 있다.
+  public Article getArticle(int id);
+  // DELETE FROM article WHERE id = ?
+  public void deleteArticle(int id);
+
+  // SELECT * FROM article ORDER BY id DESC;
+  public List<Article> getArticles();
+
+  // UPDATE article SET title = ?, `body` = ? updateDate = NOW() WHERE id = ?
+
+  public void ModifyArticle(int id, String title, String body);
+}
+SELECT 같은 경우에는 마이바티스가 알아서 다 해주지만 마이바티스에게 힌트를 줘야한다.
+mybatis select annotation이라고 구글에 검색한 후
+@Select("SELECT * FROM article WHERE id = #{id}") 를 repository안의 select문 위에 붙여준다.
+메서드가 실행이 되려면 해당 쿼리가 실행이 되는데 매개변수로 받은 아이디가 치환이된다.
+db에 있는 데이터를 받아서 getArticle에 넣어주는 역할을 하는것이다.
+http://localhost:8081/user/article/getArticle?id=1이라고 검색하고 로그인을 해주면
+{"id":1,"title":"제목1","body":"내용1"}
+이렇게 출력이되며 id4는 없기때문에 존재하지않는다는 문구가 뜨게된다.
+
+
+
 
