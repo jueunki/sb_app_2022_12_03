@@ -1,18 +1,16 @@
 package com.sbs.exam.sb_app_2022_1203.article.repository;
 
 import com.sbs.exam.sb_app_2022_1203.article.vo.Article;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
 @Mapper
 public interface ArticleRepository {
 
+  @Insert("INSERT INTO article SET regDate = NOW(), updateDate = NOW(), title = #{title}, `body` = #{body}")
   // INSERT INTO article SET regDate = NOW(), updateDate = NOW(), title = ?, `body` = ?
-  public Article writeArticle(String title, String body);
+  public void writeArticle(String title, String body);
 
   @Select("SELECT * FROM article WHERE id = #{id}")
   // SELECE * FROM article WHERE id = ? 이라고 해야 id를 가져올 수 있다.
@@ -30,5 +28,8 @@ public interface ArticleRepository {
   // UPDATE article SET title = ?, `body` = ? updateDate = NOW() WHERE id = ?
 
   public void ModifyArticle(int id, String title, String body);
+
+  @Select("SELECT LAST_INSERT_ID()")
+  public int getLastInsertId();
 }
 

@@ -189,6 +189,21 @@ http://localhost:8081/user/article/getArticle?id=1이라고 검색하고 로그�
 {"id":1,"title":"제목1","body":"내용1"}
 이렇게 출력이되며 id4는 없기때문에 존재하지않는다는 문구가 뜨게된다.
 
+자동 생성키/동적sql을 모른다면 mybatis select annotation // mybatis insert annotation 등 으로 검색해서 찾아볼 수 있다.
+==ArticleRepository에 insert부분
+@Insert("INSERT INTO Students (NAME, EMAIL ) VALUES (#{name},#{email})")
+  // INSERT INTO article SET regDate = NOW(), updateDate = NOW(), title = ?, `body` = ?
+  public Article writeArticle(String title, String body);
+여기서 보면 return을 안해주기때문에
+@Insert("INSERT INTO Students (NAME, EMAIL ) VALUES (#{name},#{email})")
+  public void writeArticle(String title, String body);
+  void로 바꿔준다.
+    @Insert("INSERT INTO article SET regDate = NOW(), updateDate = NOW(), title = #{title}, `body` = #{body}")
+    public Article writeArticle(String title, String body);
+    미리 적어둔 sql문구를 적어주고 물음표란에 #{} 등을 잊어서는 안된다.
 
+  @Select("SELECT LAST_INSERT_ID()")
+  public int getLastInsertId();
+} 를 따로 빼주는 작업을 했다.
 
 

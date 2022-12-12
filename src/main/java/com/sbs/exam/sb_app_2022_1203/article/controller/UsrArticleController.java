@@ -13,15 +13,16 @@ import java.util.List;
 public class UsrArticleController {
   @Autowired
   private ArticleService articleService;
-  private List<Article> articles;
 
 
   // 액션 메서드 시작
   @RequestMapping("/user/article/doAdd")
   @ResponseBody
   public Article doAdd(String title, String body) {
+    int id = articleService.writeArticle(title,body);
 
-    Article article = articleService.writeArticle(title,body);
+    Article article = articleService.getArticle(id);
+
     return article;
   }
 
@@ -34,7 +35,7 @@ public class UsrArticleController {
 
   @RequestMapping("/user/article/getArticle")
   @ResponseBody
-  public Object getArticleAction(int id) { //상세보기는 하나만 가져오는것이기 때문에 복수와 단수를 정확하게 표현해줘야한다.
+  public Object getArticle(int id) { //상세보기는 하나만 가져오는것이기 때문에 복수와 단수를 정확하게 표현해줘야한다.
     Article article = articleService.getArticle(id);
 
     if (article == null) {

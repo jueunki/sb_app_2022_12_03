@@ -17,8 +17,10 @@ public class ArticleService {
   }
 
 
-  public Article writeArticle(String title, String body) {
-    return articleRepository.writeArticle(title, body);
+  public int writeArticle(String title, String body) {
+
+    articleRepository.writeArticle(title, body);
+    return articleRepository.getLastInsertId();
   }
 
   public List<Article> getArticles() {
