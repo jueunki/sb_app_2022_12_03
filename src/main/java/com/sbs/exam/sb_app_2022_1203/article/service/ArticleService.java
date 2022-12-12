@@ -12,7 +12,7 @@ public class ArticleService {
   private ArticleRepository articleRepository;
 
   public ArticleService(ArticleRepository articleRepository){
-    this.articleRepository = articleRepository;
+    this.articleRepository = articleRepository; //@Autowired를 지워주고 생성자 주입해준다.
     articleRepository.makeTestDate();
   }
 

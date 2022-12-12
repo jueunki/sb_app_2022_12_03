@@ -110,3 +110,8 @@ Service로직을 넣고 사용해서는 안된다!
 
 **list에 있는 내장 메서드는 외워야한다.
 
+# void 타입은 return이 없다.
+
+생성자는 객체가 만들어지면서 딱 한번 실행이되는데 생성자를 썼기때문에 publicArticleService가 실행이되고
+private ArticleRepository articleRepository;는 실행하면 NULL이 나오게된다.
+
