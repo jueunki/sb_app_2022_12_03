@@ -1,4 +1,4 @@
-package com.sbs.exam.sb_app_2022_1203.article.vo;
+package com.sbs.exam.sb_app_2022_1203.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

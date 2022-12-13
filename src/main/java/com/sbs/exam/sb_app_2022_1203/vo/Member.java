@@ -1,4 +1,5 @@
-package com.sbs.exam.sb_app_2022_1203.member.vo;
+package com.sbs.exam.sb_app_2022_1203.vo;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class  Member {
+public class Member {
   private int id;
   private String regDate;
   private String updateDate;
@@ -18,7 +19,6 @@ public class  Member {
   private String nickname;
   private String cellphoneNo;
   private String email;
-  private boolean delStatus;  // int로 잡으면 안된다. 1이면true 0이면 false로 잡는다.
+  private boolean delStatus;
   private String delDate;
-
 }

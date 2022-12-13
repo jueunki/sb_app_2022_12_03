@@ -1,6 +1,6 @@
-package com.sbs.exam.sb_app_2022_1203.article.repository;
+package com.sbs.exam.sb_app_2022_1203.repository;
 
-import com.sbs.exam.sb_app_2022_1203.article.vo.Article;
+import com.sbs.exam.sb_app_2022_1203.vo.Article;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

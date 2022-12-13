@@ -1,7 +1,7 @@
-package com.sbs.exam.sb_app_2022_1203.article.service;
+package com.sbs.exam.sb_app_2022_1203.service;
 
-import com.sbs.exam.sb_app_2022_1203.article.repository.ArticleRepository;
-import com.sbs.exam.sb_app_2022_1203.article.vo.Article;
+import com.sbs.exam.sb_app_2022_1203.repository.ArticleRepository;
+import com.sbs.exam.sb_app_2022_1203.vo.Article;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,7 +1,7 @@
-package com.sbs.exam.sb_app_2022_1203.article.controller;
+package com.sbs.exam.sb_app_2022_1203.controller;
 
-import com.sbs.exam.sb_app_2022_1203.article.service.ArticleService;
-import com.sbs.exam.sb_app_2022_1203.article.vo.Article;
+import com.sbs.exam.sb_app_2022_1203.service.ArticleService;
+import com.sbs.exam.sb_app_2022_1203.vo.Article;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
