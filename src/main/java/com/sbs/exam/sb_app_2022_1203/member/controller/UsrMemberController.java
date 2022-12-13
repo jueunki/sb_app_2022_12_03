@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.lang.reflect.Member;
+
 @Controller
 public class UsrMemberController {
   private MemberService memberService;  //alt + insert해서 constructor를 눌러서 만들어준다.
@@ -16,11 +18,12 @@ public class UsrMemberController {
 
   @RequestMapping("/user/member/doJoin")
   @ResponseBody
-  public String doJoin(String loginId, String loginPw, String name, String nickname,
+  public Member doJoin(String loginId, String loginPw, String name, String nickname,
                        String cellphoneNo, String email) {
-    memberService.join(loginId, loginPw, name, nickname,
-        cellphoneNo, email);
-    return "성공!";
+    int id = memberService.join(loginId, loginPw, name, nickname, cellphoneNo, email);
+    Member member = memberService.getMemberById(id);
+
+    return member;
   }
 
 }
