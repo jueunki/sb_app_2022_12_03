@@ -36,3 +36,5 @@ public class MemberService {
     return memberRepository.getMemberById(id);
   }
 }
+
+
