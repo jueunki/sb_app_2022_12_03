@@ -15,12 +15,17 @@ public class UsrMemberController {
     this.memberService = memberService;
   }
 
-
+  //Object : int와 String을 둘다 받으려면 오브젝트를 써준다.
   @RequestMapping("/user/member/doJoin")
   @ResponseBody
-  public Member doJoin(String loginId, String loginPw, String name, String nickname,
+  public Object doJoin(String loginId, String loginPw, String name, String nickname,
                        String cellphoneNo, String email) {
     int id = memberService.join(loginId, loginPw, name, nickname, cellphoneNo, email);
+
+    if (id == -1 ) {
+      return "해당 로그인 아이디는 이미 사용중 입니다.";
+    }
+
     Member member = memberService.getMemberById(id);
 
     return member;
