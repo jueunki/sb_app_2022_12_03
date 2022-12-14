@@ -21,7 +21,7 @@ public class UsrMemberController {
   //Object : int와 String을 둘다 받으려면 오브젝트를 써준다.
   @RequestMapping("/user/member/doJoin")
   @ResponseBody
-  public ResultData doJoin(String loginId, String loginPw, String name, String nickname,
+  public ResultData<Member> doJoin(String loginId, String loginPw, String name, String nickname,
                            String cellphoneNo, String email) {
 
 
@@ -58,7 +58,7 @@ public class UsrMemberController {
     ResultData<Integer> joinRd = memberService.join(loginId, loginPw, name, nickname, cellphoneNo, email);  // 받아야 할 정보가 resultCode 하나이다.
 
     if (joinRd.isFail()) {
-      return joinRd;  // 실패해서 return하는것이다.
+      return (ResultData) joinRd;  // 실패해서 return하는것이다.
     }   //f : 포멧이다.
 
 

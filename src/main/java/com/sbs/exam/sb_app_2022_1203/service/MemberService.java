@@ -16,7 +16,7 @@ public class MemberService {
   }
 
 
-  public ResultData join(String loginId, String loginPw, String name, String nickname, String cellphoneNo, String email) {
+  public ResultData<Integer> join(String loginId, String loginPw, String name, String nickname, String cellphoneNo, String email) {
 
 
     // 로그인 아이디 중복 체크!
@@ -47,6 +47,7 @@ public class MemberService {
   }
 
   public Member getMemberById(int id) {
+
     return memberRepository.getMemberById(id);
   }
 }
