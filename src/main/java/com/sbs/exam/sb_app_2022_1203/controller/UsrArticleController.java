@@ -41,8 +41,8 @@ public class UsrArticleController {
 
 
   @RequestMapping("/user/article/getArticles")
-  @ResponseBody
-  public ResultData getArticles() {
+  @ResponseBody   //자바에서는 형태를 자세히 써주는것이 좋아서 이러한 타입을 리턴한다라는 뜻으로 적어준다.
+  public ResultData<List<Article>> getArticles() {
     List<Article> articles = articleService.getArticles();
 
     return ResultData.from("S-1", "게시물 리스트 입니다.", articles);
@@ -50,7 +50,7 @@ public class UsrArticleController {
 
   @RequestMapping("/user/article/getArticle")
   @ResponseBody
-  public ResultData getArticle(int id) { //상세보기는 하나만 가져오는것이기 때문에 복수와 단수를 정확하게 표현해줘야한다.
+  public ResultData<Article> getArticle(int id) { //상세보기는 하나만 가져오는것이기 때문에 복수와 단수를 정확하게 표현해줘야한다.
     Article article = articleService.getArticle(id);
 
     if (article == null) {
@@ -64,29 +64,30 @@ public class UsrArticleController {
 
   @RequestMapping("/user/article/doDelete")
   @ResponseBody
-  public String doDelete(int id) {
+  public ResultData<Integer> doDelete(int id) {
     Article article = articleService.getArticle(id);
     if (article == null) {
-      return id + "번 게시물이 존재하지 않습니다.";
+      return ResultData.from( "F-1", Ut.f("%d번 게시물이 존재하지 않습니다.", id));
+
     }
 
     articleService.deleteArticle(id);
 
-    return id + "번 게시물을 삭제하였습니다.";
+    return ResultData.from( "S-1", Ut.f("%d번 게시물을 삭제하였습니다.", id), id);
   }
 
   @RequestMapping("/user/article/doModify")
   @ResponseBody
-  public String doModify(int id, String title, String body) {
+  public ResultData<Integer> doModify(int id, String title, String body) {
     Article article = articleService.getArticle(id);
 
     if (article == null) {
-      return id + "번 게시물이 존재하지 않습니다.";
+      return ResultData.from( "F-1", Ut.f("%d번 게시물이 존재하지 않습니다.", id));
     }
 
     articleService.ModifyArticle(id, title, body);  //여기에 요청을 넣는것이다.
 
-    return id + "번 게시물을 수정하였습니다."; //localhost:8081/user/article/doModify?id=1&title=제목1 수정&body=내용1 수정 이라고적으면 수정이 된다.
+    return ResultData.from( "S-1", Ut.f("%d번 게시물을 수정하였습니다.", id), id); //localhost:8081/user/article/doModify?id=1&title=제목1 수정&body=내용1 수정 이라고적으면 수정이 된다.
   }
 
 
