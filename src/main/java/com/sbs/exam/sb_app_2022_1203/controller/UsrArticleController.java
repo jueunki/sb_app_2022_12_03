@@ -28,11 +28,11 @@ public class UsrArticleController {
     if(Ut.empty(body)) {
       return ResultData.from("F-2","body(을)를 입력해주세요.");
     }
-
-
-    ResultData writerArticleRd = articleService.writeArticle(title, body);
-
-    int id = (int)writerArticleRd.getData1();
+    // ResultData<Integer> 의 뜻 : 제너릭을 재정의하는것?
+    // <Integer>를 쓴 이유 : 데이터 타입이 int인것을 return할것인데, int로 형변환을 해줄 필요가 없게된다.
+    ResultData<Integer> writerArticleRd = articleService.writeArticle(title, body);
+ 
+    int id = writerArticleRd.getData1();
     Article article = articleService.getArticle(id);
 
     // Data만 바꿔서 브라우저로 넘기는 과정

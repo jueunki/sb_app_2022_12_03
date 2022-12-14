@@ -55,14 +55,14 @@ public class UsrMemberController {
     // S-1
     //회원가입이 완료되었습니다.
     // 회원번호를 바꾸고 싶을때를 대비해 newData를 만듬
-    ResultData joinRd = memberService.join(loginId, loginPw, name, nickname, cellphoneNo, email);  // 받아야 할 정보가 resultCode 하나이다.
+    ResultData<Integer> joinRd = memberService.join(loginId, loginPw, name, nickname, cellphoneNo, email);  // 받아야 할 정보가 resultCode 하나이다.
 
     if (joinRd.isFail()) {
       return joinRd;  // 실패해서 return하는것이다.
     }   //f : 포멧이다.
 
 
-    Member member = memberService.getMemberById((int)joinRd.getData1());  //형변환 해준다.
+    Member member = memberService.getMemberById(joinRd.getData1());  //형변환 해준다.
 
     // 기존 보고서에서 데이터만 member로 바꾼것이다.
     return ResultData.newData(joinRd, member);  //newData :
