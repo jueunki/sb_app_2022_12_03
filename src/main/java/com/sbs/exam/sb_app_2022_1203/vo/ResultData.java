@@ -35,11 +35,17 @@ public class ResultData {
 
   }
 
+
   public Boolean isSuccess() {
     return resultCode.startsWith("S-");  //무엇이든 앞에 S가 붙으면 성공이다 라는 의미.
   }
 
   public Boolean isFail() {
     return isSuccess() == false;  // isSuccess가 false면 실패라는 의미.
+  }
+
+  public static ResultData newData(ResultData joinRd, Object newData) {
+    return from(joinRd.getResultCode(), joinRd.getMsg(), newData);
+
   }
 }
