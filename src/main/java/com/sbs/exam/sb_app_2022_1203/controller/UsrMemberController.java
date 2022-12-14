@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
+
 
 @Controller
 public class UsrMemberController {
@@ -68,6 +70,51 @@ public class UsrMemberController {
     return ResultData.newData(joinRd, member);  //newData :
   }
 
+
+
+  @RequestMapping("/user/member/doLogin")
+  @ResponseBody           //로그인 구현까지 마치면 여기 HttpSession httpsession 이렇게 세션에 저장을 해야한다.
+  public ResultData doLogin(HttpSession httpSession, String loginId, String loginPw) {
+
+    boolean isLogined = false;
+
+    if (httpSession.getAttribute("loginedMemberId") != null){
+      //이미 로그인 되어있는 상태라면
+      isLogined = true; // true라서 아래로 넘어가서
+    }
+
+    if(isLogined) {
+      return ResultData.from("F-5", "이미 로그인 되었습니다.");
+      // 이미 로그인이 되었다고 문구를 띄운다.
+    }
+
+    if (Ut.empty(loginId)) {
+      return ResultData.from("F-1", "loginId(을)를 입력 해주세요.");
+    }
+
+    if (Ut.empty(loginPw)) {
+      return ResultData.from("F-2","loginPw(을)를 입력 해주세요.");
+    }
+
+    Member member = memberService.getMemberByLoginId(loginId);
+
+    if(member == null) {
+      return ResultData.from("F-3", "존재하지 않는 로그인 아이디 입니다.");
+    }
+
+    if(member.getLoginPw().equals(loginPw) == false) {
+      return ResultData.from("F-4", "비밀번호가 일치하지 않습니다.");
+    }
+
+
+    //이렇게 적으면 세션을 지나서 통과되는 문을 만드는것과 같다.
+    httpSession.setAttribute("loginedMemberId", member.getId());
+
+
+    return ResultData.from("S-1", Ut.f("%s님 환영합니다!", member.getNickname()));
+
+  }
+  //로그인 구현까지 마치면 세션에 저장을 해야한다.
 }
 
 

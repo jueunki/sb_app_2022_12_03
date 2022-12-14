@@ -38,11 +38,11 @@ public class MemberService {
     return ResultData.from("S-1", "회원가입이 완료 되었습니다.", id);
   }
 
-  private Member getMemberByNameAndEmail(String name, String email) {
+  public Member getMemberByNameAndEmail(String name, String email) {
     return memberRepository.getMemberByNameAndEmail(name, email);
   }
 
-  private Member getMemberByLoginId(String loginId) {
+  public Member getMemberByLoginId(String loginId) {
     return memberRepository.getMemberByLoginId(loginId);
   }
 
