@@ -1,7 +1,9 @@
 package com.sbs.exam.sb_app_2022_1203.service;
 
 import com.sbs.exam.sb_app_2022_1203.repository.ArticleRepository;
+import com.sbs.exam.sb_app_2022_1203.util.Ut;
 import com.sbs.exam.sb_app_2022_1203.vo.Article;
+import com.sbs.exam.sb_app_2022_1203.vo.ResultData;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,10 +19,13 @@ public class ArticleService {
   }
 
 
-  public int writeArticle(String title, String body) {
+  public ResultData writeArticle(String title, String body) {
 
     articleRepository.writeArticle(title, body);
-    return articleRepository.getLastInsertId();
+    int id = articleRepository.getLastInsertId();
+
+    // Service(여기)에서 Controller에게 넘기는 과정
+    return ResultData.from("S-1", Ut.f("%d번 게시물이 생성되었습니다.", id), id);
   }
 
   public List<Article> getArticles() {
