@@ -16,7 +16,7 @@ public interface ArticleRepository {
       `body` = #{body}
       """)
   // INSERT INTO article SET regDate = NOW(), updateDate = NOW(), title = ?, `body` = ?
-  public void writeArticle(@Param("title") String title, @Param("title")String body);
+  public void writeArticle(@Param("title") String title, @Param("title") String body);
 
   @Select("""
       SELECT *
@@ -43,23 +43,23 @@ public interface ArticleRepository {
   public List<Article> getArticles();
 
   @Update("""
-        <script>
-        UPDATE article 
-        <set>
-          <if test='title != null'>
-            title = #{title}, 
-          </if>
-          <if test='body != null'>
-            `body` =  #{body}, 
-          </if>
-          updateDate = NOW()
-        </set> 
-        WHERE id =  #{id}
-        </script>
-        """)
+      <script>
+      UPDATE article 
+      <set>
+        <if test='title != null'>
+          title = #{title}, 
+        </if>
+        <if test='body != null'>
+          `body` =  #{body}, 
+        </if>
+        updateDate = NOW()
+      </set> 
+      WHERE id =  #{id}
+      </script>
+      """)
   // UPDATE article SET title = ?, `body` = ? updateDate = NOW() WHERE id = ?
 
-  public void ModifyArticle(@Param("title")int id, @Param("title") String title, @Param("title") String body);
+  public void ModifyArticle(@Param("title") int id, @Param("title") String title, @Param("title") String body);
 
   @Select("SELECT LAST_INSERT_ID()")
   public int getLastInsertId();

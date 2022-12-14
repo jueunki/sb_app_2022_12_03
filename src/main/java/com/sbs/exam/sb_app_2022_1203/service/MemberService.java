@@ -5,7 +5,6 @@ import com.sbs.exam.sb_app_2022_1203.vo.Member;
 import org.springframework.stereotype.Service;
 
 
-
 @Service
 public class MemberService {
   private MemberRepository memberRepository;  //@Autowired하면 안된다.

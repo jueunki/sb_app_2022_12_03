@@ -11,7 +11,7 @@ public class ArticleService {
 
   private ArticleRepository articleRepository;
 
-  public ArticleService(ArticleRepository articleRepository){
+  public ArticleService(ArticleRepository articleRepository) {
     this.articleRepository = articleRepository; //@Autowired를 지워주고 생성자 주입해준다.
 
   }
@@ -36,6 +36,6 @@ public class ArticleService {
   }
 
   public void ModifyArticle(int id, String title, String body) {
-    articleRepository.ModifyArticle(id, title,body);
+    articleRepository.ModifyArticle(id, title, body);
   }
 }

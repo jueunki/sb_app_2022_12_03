@@ -9,7 +9,6 @@ public class ResultData {
   private String resultCode;
   @Getter
   private String msg;
-
   //비고란
   @Getter
   private Object data1;
@@ -19,9 +18,14 @@ public class ResultData {
 
   }
 
+
+  public static ResultData from(String resultCode, String msg) {
+    return from(resultCode, msg, null);
+  }
+
   // 아래 ResultData 보고서 만들기.
-  private static ResultData from(String resultCode, String msg, Object data1) {
-              //ResultData : 데이터 타입.
+  public static ResultData from(String resultCode, String msg, Object data1) {
+    //ResultData : 데이터 타입.
     ResultData rd = new ResultData();
     rd.resultCode = resultCode;
     rd.msg = msg;
@@ -31,11 +35,11 @@ public class ResultData {
 
   }
 
-  public Boolean isSuccess(){
-    return  resultCode.startsWith("S-");  //무엇이든 앞에 S가 붙으면 성공이다 라는 의미.
+  public Boolean isSuccess() {
+    return resultCode.startsWith("S-");  //무엇이든 앞에 S가 붙으면 성공이다 라는 의미.
   }
 
-  public Boolean isFail(){
+  public Boolean isFail() {
     return isSuccess() == false;  // isSuccess가 false면 실패라는 의미.
   }
 }
