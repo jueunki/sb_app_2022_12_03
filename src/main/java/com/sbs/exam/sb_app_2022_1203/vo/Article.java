@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor //@AllArgsConstructor : 모든인스턴스의 변수를 받는 생성자를 만들수있다.
 public class Article {
   private int id;
+  private String regDate;
+  private String updateDate;
   private String title;
   private String body;
 
