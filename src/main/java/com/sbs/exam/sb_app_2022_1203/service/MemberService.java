@@ -22,10 +22,21 @@ public class MemberService {
     Member oldMember = getMemberByLoginId(loginId);
 
     if (oldMember != null) {
-      return -1;
+      return -1;  //실패하면 -1로 설정.
+    }
+
+    // 이름 + 이메일 중복 체크(동시중복 체크)
+    oldMember = getMemberByNameAndEmail(name, email);
+
+    if (oldMember != null) {
+      return -2; //실패하면 -2로 설정.
     }
     memberRepository.join(loginId, loginPw, name, nickname, cellphoneNo, email);
     return memberRepository.getLastInsertId();
+  }
+
+  private Member getMemberByNameAndEmail(String name, String email) {
+    return memberRepository.getMemberByNameAndEmail(name, email);
   }
 
   private Member getMemberByLoginId(String loginId) {

@@ -15,4 +15,8 @@ public class Ut {
     String str = (String) obj;
     return str.trim().length() == 0;  // 좌우 공백을 제거하고 길이를 쟀을때 길이가 0이면 비어있다고 여긴다.
   }
+
+  public static String f(String format, Object... args) { // Object... args: 이렇게 쓰면 들어가는 값이 두개이던 N개이던 배열 형식으로 받아서 들어간다.
+    return String.format(format, args);
+  }
 }
