@@ -1,4 +1,4 @@
-package com.sbs.exam.sb_app_2022_1203.home.controller;
+package com.sbs.exam.sb_app_2022_1203.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

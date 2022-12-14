@@ -1,4 +1,4 @@
-package com.sbs.exam.sb_app_2022_1203.ut;
+package com.sbs.exam.sb_app_2022_1203.util;
 
 
 // Util 함수 클래스 : 로그인 아이디가 있는지 체크해주는 함수
