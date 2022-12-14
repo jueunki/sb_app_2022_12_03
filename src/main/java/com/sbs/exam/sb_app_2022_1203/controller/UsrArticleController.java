@@ -20,7 +20,7 @@ public class UsrArticleController {
   // 액션 메서드 시작
   @RequestMapping("/user/article/doAdd")
   @ResponseBody
-  public ResultData doAdd(String title, String body) {
+  public ResultData<Article> doAdd(String title, String body) {
     if(Ut.empty(title)) {
       return ResultData.from("F-1","title(을)를 입력해주세요.");
     }
@@ -31,12 +31,12 @@ public class UsrArticleController {
     // ResultData<Integer> 의 뜻 : 제너릭을 재정의하는것?
     // <Integer>를 쓴 이유 : 데이터 타입이 int인것을 return할것인데, int로 형변환을 해줄 필요가 없게된다.
     ResultData<Integer> writerArticleRd = articleService.writeArticle(title, body);
- 
+
     int id = writerArticleRd.getData1();
     Article article = articleService.getArticle(id);
 
     // Data만 바꿔서 브라우저로 넘기는 과정
-    return ResultData.from(writerArticleRd.getResultCode(), writerArticleRd.getMsg(), article);
+    return ResultData.newData(writerArticleRd, article);
   }
 
 
