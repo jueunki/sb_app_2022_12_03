@@ -101,6 +101,10 @@ DESC article;
 
 SELECT * FROM article; #->select하고나면 memberId가 0으로 나오는데 기존에 없던건데 추가를 했기때문에 0이 나오는것이다.
 
+# 기존 게시물의 작성자를 2번으로 지정
+UPDATE article
+SET memberId = 2
+WHERE memberId = 0;
 
 
 
