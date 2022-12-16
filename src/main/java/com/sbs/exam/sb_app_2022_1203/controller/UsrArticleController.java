@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -20,7 +21,19 @@ public class UsrArticleController {
   // 액션 메서드 시작
   @RequestMapping("/user/article/doAdd")
   @ResponseBody
-  public ResultData<Article> doAdd(String title, String body) {
+  public ResultData<Article> doAdd(HttpSession httpSession, String title, String body) {
+    boolean isLogined = false;
+    int loginedMemberId = 0;
+
+    if(httpSession.getAttribute("loginedMemberId") == null ) {
+      // 로그인 되어있는 상태
+      isLogined = true;
+      loginedMemberId = (int)httpSession.getAttribute("loginedMemberId");
+    }
+    if(isLogined == false) {
+      return ResultData.from("F-A","로그인 후 이용해주세요.");
+    }
+
     if(Ut.empty(title)) {
       return ResultData.from("F-1","title(을)를 입력해주세요.");
     }
@@ -30,7 +43,7 @@ public class UsrArticleController {
     }
     // ResultData<Integer> 의 뜻 : 제너릭을 재정의하는것?
     // <Integer>를 쓴 이유 : 데이터 타입이 int인것을 return할것인데, int로 형변환을 해줄 필요가 없게된다.
-    ResultData<Integer> writerArticleRd = articleService.writeArticle(title, body);
+    ResultData<Integer> writerArticleRd = articleService.writeArticle(loginedMemberId, title, body);
 
     int id = writerArticleRd.getData1();
     Article article = articleService.getArticle(id);

@@ -19,9 +19,9 @@ public class ArticleService {
   }
 
 
-  public ResultData writeArticle(String title, String body) {
+  public ResultData writeArticle(int memberId, String title, String body) {
 
-    articleRepository.writeArticle(title, body);
+    articleRepository.writeArticle(memberId, title, body);
     int id = articleRepository.getLastInsertId();
 
     // Service(여기)에서 Controller에게 넘기는 과정
