@@ -27,7 +27,7 @@ public class MemberService {
     }
 
     // 이름 + 이메일 중복 체크(동시중복 체크)
-    oldMember = getMemberByNameAndEmail(name, email);
+    Member oldNamAndEmail = getMemberByNameAndEmail(name, email);
 
     if (oldMember != null) {
       return ResultData.from("F-8",Ut.f("해당 이름(%s)과 이메일(%s)은 이미 사용중 입니다.", name, email));
@@ -35,7 +35,7 @@ public class MemberService {
     memberRepository.join(loginId, loginPw, name, nickname, cellphoneNo, email);
     int id = memberRepository.getLastInsertId();
 
-    return ResultData.from("S-1", "회원가입이 완료 되었습니다.", id);
+    return ResultData.from("S-1", "회원가입이 완료 되었습니다.","id", id);
   }
 
   public Member getMemberByNameAndEmail(String name, String email) {

@@ -9,8 +9,8 @@ public class UsrHomeController {
 
   @RequestMapping("/user/home/main")
   @ResponseBody
-  public String main() {
-    return "안녕";
+  public String showMain() {
+    return "user/home/main";
   }
 }
 

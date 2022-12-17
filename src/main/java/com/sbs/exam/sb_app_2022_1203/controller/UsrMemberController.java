@@ -67,7 +67,7 @@ public class UsrMemberController {
     Member member = memberService.getMemberById(joinRd.getData1());  //형변환 해준다.
 
     // 기존 보고서에서 데이터만 member로 바꾼것이다.
-    return ResultData.newData(joinRd, member);  //newData :
+    return ResultData.newData(joinRd,"member", member);  //newData :
   }
 
 

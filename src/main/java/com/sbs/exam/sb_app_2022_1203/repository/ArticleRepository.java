@@ -17,7 +17,7 @@ public interface ArticleRepository {
       `body` = #{body}
       """)
   // INSERT INTO article SET regDate = NOW(), updateDate = NOW(), title = ?, `body` = ?
-  public void writeArticle(@Param("memberId") int memberId, @Param("title") String title, @Param("title") String body);
+  public void writeArticle(@Param("memberId") int memberId, @Param("title") String title, @Param("body") String body);
 
   @Select("""
       SELECT *
@@ -25,14 +25,14 @@ public interface ArticleRepository {
       WHERE id = #{id}
       """)
   // SELECE * FROM article WHERE id = ? 이라고 해야 id를 가져올 수 있다.
-  public Article getArticle(@Param("title") int id);
+  public Article getArticle(@Param("id") int id);
 
   @Delete("""
       DELETE FROM article 
       WHERE id = #{id}
       """)
   // DELETE FROM article WHERE id = ?
-  public void deleteArticle(@Param("title") int id);
+  public void deleteArticle(@Param("id") int id);
 
 
   @Select("""
@@ -60,9 +60,10 @@ public interface ArticleRepository {
       """)
   // UPDATE article SET title = ?, `body` = ? updateDate = NOW() WHERE id = ?
 
-  public void ModifyArticle(@Param("title") int id, @Param("title") String title, @Param("title") String body);
+  public void modifyArticle(@Param("id") int id, @Param("title") String title, @Param("body") String body);
 
   @Select("SELECT LAST_INSERT_ID()")
   public int getLastInsertId();
+
 }
 

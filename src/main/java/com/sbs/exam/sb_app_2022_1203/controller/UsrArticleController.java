@@ -49,7 +49,7 @@ public class UsrArticleController {
     Article article = articleService.getArticle(id);
 
     // Data만 바꿔서 브라우저로 넘기는 과정
-    return ResultData.newData(writerArticleRd, article);
+    return ResultData.newData(writerArticleRd, "article", article); //데이터만 보여주는것이 아니라 데이터 타입도 보여주는것.
   }
 
 
@@ -58,7 +58,7 @@ public class UsrArticleController {
   public ResultData<List<Article>> getArticles() {
     List<Article> articles = articleService.getArticles();
 
-    return ResultData.from("S-1", "게시물 리스트 입니다.", articles);
+    return ResultData.from("S-1", "게시물 리스트 입니다.", "articles", articles);
   }
 
   @RequestMapping("/user/article/getArticle")
@@ -71,7 +71,7 @@ public class UsrArticleController {
       return ResultData.from("F-1", Ut.f("%d번 게시물이 존재하지 않습니다.", id));
     }
 
-    return ResultData.from("S-1", Ut.f("%d번 게시물 입니다.", id), article);
+    return ResultData.from("S-1", Ut.f("%d번 게시물 입니다.", id),"article", article);
     //String data type과 Int data type을 둘다 허용 하려면 둘의 상위type인 Object로 사용해준다(별로 좋은 방법은 아닙니다.)
   }
 
@@ -102,7 +102,7 @@ public class UsrArticleController {
 
     articleService.deleteArticle(id);
 
-    return ResultData.from("S-1", Ut.f("%d번 게시물을 삭제하였습니다.", id), id);
+    return ResultData.from("S-1", Ut.f("%d번 게시물을 삭제하였습니다.", id),"id", id);
   }
 
   @RequestMapping("/user/article/doModify")
