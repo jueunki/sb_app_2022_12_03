@@ -25,7 +25,7 @@ public class UsrArticleController {
     boolean isLogined = false;
     int loginedMemberId = 0;
 
-    if (httpSession.getAttribute("loginedMemberId") == null) {
+    if (httpSession.getAttribute("loginedMemberId") != null) {
       // 로그인 되어있는 상태
       isLogined = true;
       loginedMemberId = (int) httpSession.getAttribute("loginedMemberId");
@@ -43,13 +43,13 @@ public class UsrArticleController {
     }
     // ResultData<Integer> 의 뜻 : 제너릭을 재정의하는것?
     // <Integer>를 쓴 이유 : 데이터 타입이 int인것을 return할것인데, int로 형변환을 해줄 필요가 없게된다.
-    ResultData<Integer> writerArticleRd = articleService.writeArticle(loginedMemberId, title, body);
+    ResultData<Integer> writeArticleRd = articleService.writeArticle(loginedMemberId, title, body);
+    int id = writeArticleRd.getData1();
 
-    int id = writerArticleRd.getData1();
     Article article = articleService.getArticle(id);
 
     // Data만 바꿔서 브라우저로 넘기는 과정
-    return ResultData.newData(writerArticleRd, "article", article); //데이터만 보여주는것이 아니라 데이터 타입도 보여주는것.
+    return ResultData.newData(writeArticleRd, "article", article); //데이터만 보여주는것이 아니라 데이터 타입도 보여주는것.
   }
 
 
