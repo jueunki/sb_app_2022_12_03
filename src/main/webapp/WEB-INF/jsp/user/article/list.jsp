@@ -6,6 +6,16 @@
   <title>게시물 리스트</title>
 </head>
 <body>
+
+<h1>게시물 리스트 페이지</h1>
+
+<header>
+  <a href="">로고</a>
+  <ul>
+    <li><a href="/">홈</a></li>
+    <li><a href="/user/article/list">리스트</a></li>
+  </ul>
+</header>
 <table border="1">
   <thead>
   <tr>
