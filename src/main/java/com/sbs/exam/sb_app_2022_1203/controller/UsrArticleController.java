@@ -6,6 +6,7 @@ import com.sbs.exam.sb_app_2022_1203.vo.Article;
 import com.sbs.exam.sb_app_2022_1203.vo.ResultData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -53,12 +54,14 @@ public class UsrArticleController {
   }
 
 
-  @RequestMapping("/user/article/getArticles")
-  @ResponseBody   //자바에서는 형태를 자세히 써주는것이 좋아서 이러한 타입을 리턴한다라는 뜻으로 적어준다.
-  public ResultData<List<Article>> getArticles() {
+  @RequestMapping("/user/article/list")
+  public String showList(Model model) {
     List<Article> articles = articleService.getArticles();
 
-    return ResultData.from("S-1", "게시물 리스트 입니다.", "articles", articles);
+    model.addAttribute("articles", articles);
+
+    return "/user/article/list";
+
   }
 
   @RequestMapping("/user/article/getArticle")

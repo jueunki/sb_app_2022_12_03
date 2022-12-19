@@ -26,6 +26,7 @@ dependencies {
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
     /* JSP 엔진 */
     implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
+
     /* JSTL */
     implementation group: 'javax.servlet', name: 'jstl', version: '1.2'
     compileOnly 'org.projectlombok:lombok'
@@ -36,7 +37,10 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
 }
 
+
+
+
 tasks.named('test') {
     useJUnitPlatform()
 }
-targetCompatibility = JavaVersion.VERSION_15
+
