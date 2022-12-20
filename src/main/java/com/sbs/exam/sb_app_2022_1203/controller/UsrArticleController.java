@@ -64,17 +64,13 @@ public class UsrArticleController {
 
   }
 
-  @RequestMapping("/user/article/getArticle")
-  @ResponseBody
-  public ResultData<Article> getArticle(int id) { //상세보기는 하나만 가져오는것이기 때문에 복수와 단수를 정확하게 표현해줘야한다.
+  @RequestMapping("/user/article/detail")
+  public String showDetail(Model model, int id) { //상세보기는 하나만 가져오는것이기 때문에 복수와 단수를 정확하게 표현해줘야한다.
     Article article = articleService.getArticle(id);
 
-    if (article == null) {
+   model.addAttribute("article", article);
 
-      return ResultData.from("F-1", Ut.f("%d번 게시물이 존재하지 않습니다.", id));
-    }
-
-    return ResultData.from("S-1", Ut.f("%d번 게시물 입니다.", id),"article", article);
+    return "user/article/detail";
     //String data type과 Int data type을 둘다 허용 하려면 둘의 상위type인 Object로 사용해준다(별로 좋은 방법은 아닙니다.)
   }
 

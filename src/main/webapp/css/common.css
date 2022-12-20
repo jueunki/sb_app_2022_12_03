@@ -16,9 +16,10 @@ header > a {
 /* 라이브러리 */
 .con {
     width : 1080px;
-    margin : 0 auto;
+    margin : 0 auto; /* 0은 위아래 margin은 왼쪽+오른쪽 // display block을 가운데로 정렬 할 수 있다. */
 }
 
+/* list 테이블 만드는 부분*/
 .table-box-type-1 > table {
     width :100%;
 }
@@ -29,3 +30,4 @@ header > a {
     border:1px solid black;
     padding: 10px;
 }
+/* 여기까지 테이블 만드는 부분 */
