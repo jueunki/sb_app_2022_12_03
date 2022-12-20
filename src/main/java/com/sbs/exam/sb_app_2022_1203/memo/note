@@ -268,6 +268,10 @@ mx-auto : 블럭요소 가운데로 정렬(container에 주로 사용)
 mt : margin-top라고해서 위쪽 바깥쪽 여백을 주는것.
 flex h-full items-center px-3 hover:underline : 수직 중앙정렬 후 마우스를 갖다댔을때 언더라인이 생기면서 클릭 할 수 있게 된다.
 onclick="history.back()" : 클릭했을때 뒤로가기(버튼에서 <button type="button" "여기안에 작성">뒤로가기</button>)
+<c:if test="false"> : 참이면 보여지고, 참이 아니면 안보여진다.
+
+
+--------------------------
 colgroup을 주고 col에 너비를 200 준것이다(list의 내용에 들어가는 부분)
 <colgroup>
     <col width="200"/>
@@ -289,7 +293,13 @@ SELECT * FROM article; : 순수하게 article 게시물 보여주는것.
 SELECT * FROM article; : json을 통해 추가적인 데이터를 가져올때.
 
 ------------------
-
+ private void updateForPrintData(int actorId, Article article) { //(int actorId, Article article) : 로그인 한 사람이 누구인지 얻어오고, 해당 게시물을 얻어오는데
+    if( article == null ) {
+      return;                       // 게시물이 없으면 그대로 있는데 게시물이 있으면
+    }
+    ResultData actorCanDeleteRd = actorCanDelete(actorId, article);     //actorCanDelete에게 물어본다 해당아이디가 해당 게시물을 삭제 할 수 있는지.
+    article.setExtra__actorCanDelete(actorCanDeleteRd.isSuccess());     //그러면 삭제 할 수 있는 가능성을 (actorCanDeleteRd.isSuccess())여기에 심어주는데
+  }
 
 
 

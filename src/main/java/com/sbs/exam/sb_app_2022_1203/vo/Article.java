@@ -15,8 +15,11 @@ public class Article {
   private int memberId;
   private String title;
   private String body;
+  // 여기 까지는 기본 쿼리를 쓰면 받을 수 있고
 
   private  String extra__writerName; // 작성자다.
-
+  // 여기는 leftjoin을 사용하면 받을 수 있는데,
+  private boolean extra__actorCanDelete;
+  // 여기는 쿼리로 받아올 수 없다.(무조건 false인 정보이다.)
 }
 
