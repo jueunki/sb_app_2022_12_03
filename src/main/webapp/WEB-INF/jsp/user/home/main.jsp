@@ -4,8 +4,10 @@
 <c:set var="pageTitle" value="메인" />
 <%@ include file="../common/head.jspf" %>
 
-<div>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et, optio vel? Ab accusamus ad animi assumenda corporis, culpa dolor, dolore, dolores ducimus earum et natus nihil odit quia sed? Est.
-</div>
+<section class="mt-4">
+    <div class="container mx-auto px-3">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium culpa explicabo maiores minima pariatur quae ratione vitae voluptas. A cum error in nihil nisi nostrum pariatur, sed soluta ut voluptatem!
+    </div>
+</section>
 
 <%@ include file="../common/foot.jspf" %>
