@@ -5,7 +5,16 @@
 <head>
   <meta charset="UTF-8">
   <title>${pageTitle}</title>
+  <!-- 제이쿼리 불러오기 : 무조건 최상단에 둔다. -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js"></script>
+
+  <!-- 테일윈드 불러오기 -->
+  <!-- 노멀라이즈, 라이브러리 : 노멀라이즈는 기본적으로 태그들이 모양이 희안한데 그걸 평범하게 만들어주는것 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- 사이트 공통 css -->
   <link rel="stylesheet" href="/css/common.css">
+  <!-- 사이트 공통 js -->
   <script src="/js/common.js" defer></script>
 </head>
 <body>
