@@ -267,7 +267,7 @@ flex items-center : 로고에 사용했고 중앙으로 오게된다.
 mx-auto : 블럭요소 가운데로 정렬(container에 주로 사용)
 mt : margin-top라고해서 위쪽 바깥쪽 여백을 주는것.
 flex h-full items-center px-3 hover:underline : 수직 중앙정렬 후 마우스를 갖다댔을때 언더라인이 생기면서 클릭 할 수 있게 된다.
-
+onclick="history.back()" : 클릭했을때 뒤로가기(버튼에서 <button type="button" "여기안에 작성">뒤로가기</button>)
 colgroup을 주고 col에 너비를 200 준것이다(list의 내용에 들어가는 부분)
 <colgroup>
     <col width="200"/>
@@ -288,6 +288,7 @@ colgroup을 주고 col에 너비를 200 준것이다(list의 내용에 들어가
 SELECT * FROM article; : 순수하게 article 게시물 보여주는것.
 SELECT * FROM article; : json을 통해 추가적인 데이터를 가져올때.
 
+------------------
 
 
 
