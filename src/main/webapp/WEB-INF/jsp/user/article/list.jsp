@@ -1,21 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!doctype html>
-<html lang="ko">
-<head>
-  <title>게시물 리스트</title>
-</head>
-<body>
 
-<h1>게시물 리스트 페이지</h1>
+<c:set var="pageTitle" value="게시물 리스트" />
+<%@ include file="../common/head.jspf" %>
 
-<header>
-  <a href="">로고</a>
-  <ul>
-    <li><a href="/">홈</a></li>
-    <li><a href="/user/article/list">리스트</a></li>
-  </ul>
-</header>
 <table border="1">
   <thead>
   <tr>
@@ -34,16 +22,14 @@
       <th>${article.updateDate.substring(2, 16)}</th>
       <th>${article.memberId}</th>
       <th>
-        <a href="../article/derail?id=${article.id}">${article.title}</a>
+        <a href="../article/detail?id=${article.id}">${article.title}</a>
       </th>
     </tr>
   </c:forEach>
   </tbody>
 </table>
-</body>
 
-</html>
-
+<%@ include file="../common/foot.jspf" %>
 
 
 
