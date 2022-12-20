@@ -273,8 +273,16 @@ colgroup을 주고 col에 너비를 200 준것이다(list의 내용에 들어가
     <col width="200"/>
 </colgroup>
 
-
-
+-----------------
+  @Select("""
+      SELECT A.*,
+      M.nickname AS extra__writeName
+      FROM article AS A
+      LEFT JOIN member AS M
+      ON A.memberId = M.id
+      ORDER BY id DESC
+      """)
+: 닉네임을 extra__writeName 으로 하고, article에서 집합을 찾는건데 멤버에서 아이디가 일치하면 멤버아이디를 A.id에 넣어주는것이다.
 
 
 

@@ -49,7 +49,7 @@ CREATE TABLE `member` (
 	`nickname` CHAR(20) NOT NULL,
 	cellphoneNo CHAR(20) NOT NULL,
 	email CHAR(50) NOT NULL,
-	delSratus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴여부(0=탈퇴전, 1=탈퇴)', # Tinyint : 실체로 회원가입을할때 회원이 추가되는데 회원이 탈퇴를 할때 회원정보를 숨기는것이다.(나중에 찾을수가 없기때문이다.)ex.싸이월드
+	delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴여부(0=탈퇴전, 1=탈퇴)', # Tinyint : 실체로 회원가입을할때 회원이 추가되는데 회원이 탈퇴를 할때 회원정보를 숨기는것이다.(나중에 찾을수가 없기때문이다.)ex.싸이월드
 	delDate DATETIME COMMENT '탈퇴날짜'																										 # delSratus : 삭제 상태를 의미한다.
 );
 
