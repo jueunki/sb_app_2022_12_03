@@ -47,7 +47,7 @@ public class UsrArticleController {
     ResultData<Integer> writeArticleRd = articleService.writeArticle(loginedMemberId, title, body);
     int id = writeArticleRd.getData1();
 
-    Article article = articleService.getArticle(id);
+    Article article = articleService.getForPrintArticle(id);
 
     // Data만 바꿔서 브라우저로 넘기는 과정
     return ResultData.newData(writeArticleRd, "article", article); //데이터만 보여주는것이 아니라 데이터 타입도 보여주는것.
@@ -56,7 +56,7 @@ public class UsrArticleController {
 
   @RequestMapping("/user/article/list")
   public String showList(Model model) {
-    List<Article> articles = articleService.getArticles();
+    List<Article> articles = articleService.getForPrintArticles();
 
     model.addAttribute("articles", articles);
 
@@ -66,7 +66,7 @@ public class UsrArticleController {
 
   @RequestMapping("/user/article/detail")
   public String showDetail(Model model, int id) { //상세보기는 하나만 가져오는것이기 때문에 복수와 단수를 정확하게 표현해줘야한다.
-    Article article = articleService.getArticle(id);
+    Article article = articleService.getForPrintArticle(id);
 
    model.addAttribute("article", article);
 
@@ -88,7 +88,7 @@ public class UsrArticleController {
     if (isLogined == false) {
       return ResultData.from("F-A", "로그인 후 이용해주세요.");
     }
-    Article article = articleService.getArticle(id);
+    Article article = articleService.getForPrintArticle(id);
 
     if (article.getMemberId() != loginedMemberId) {
       return ResultData.from("F-2", "권한이 없습니다.");
@@ -118,7 +118,7 @@ public class UsrArticleController {
     if (isLogined == false) {
       return ResultData.from("F-A", "로그인 후 이용해주세요.");
     }
-    Article article = articleService.getArticle(id);
+    Article article = articleService.getForPrintArticle(id);
 
     if (article.getMemberId() != loginedMemberId) {
       return ResultData.from("F-2", "권한이 없습니다."); //월권이기 때문에 서비스에게 넘기는것이 좋다.

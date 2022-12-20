@@ -283,7 +283,10 @@ colgroup을 주고 col에 너비를 200 준것이다(list의 내용에 들어가
       ORDER BY id DESC
       """)
 : 닉네임을 extra__writeName 으로 하고, article에서 집합을 찾는건데 멤버에서 아이디가 일치하면 멤버아이디를 A.id에 넣어주는것이다.
-
+---------------------
+두가지가 있다.
+SELECT * FROM article; : 순수하게 article 게시물 보여주는것.
+SELECT * FROM article; : json을 통해 추가적인 데이터를 가져올때.
 
 
 
