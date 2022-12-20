@@ -4,13 +4,14 @@ import com.sbs.exam.sb_app_2022_1203.service.ArticleService;
 import com.sbs.exam.sb_app_2022_1203.util.Ut;
 import com.sbs.exam.sb_app_2022_1203.vo.Article;
 import com.sbs.exam.sb_app_2022_1203.vo.ResultData;
+import com.sbs.exam.sb_app_2022_1203.vo.Rq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -22,16 +23,12 @@ public class UsrArticleController {
   // 액션 메서드 시작
   @RequestMapping("/user/article/doAdd")
   @ResponseBody
-  public ResultData<Article> doAdd(HttpSession httpSession, String title, String body) {
-    boolean isLogined = false;
-    int loginedMemberId = 0;
+  public ResultData<Article> doAdd(HttpServletRequest req, String title, String body) {
+   Rq rq = new Rq(req);
 
-    if (httpSession.getAttribute("loginedMemberId") != null) {
-      // 로그인 되어있는 상태
-      isLogined = true;
-      loginedMemberId = (int) httpSession.getAttribute("loginedMemberId");
-    }
-    if (isLogined == false) {
+
+
+    if (rq.isLogined() == false) {
       return ResultData.from("F-A", "로그인 후 이용해주세요.");
     }
 
@@ -44,10 +41,10 @@ public class UsrArticleController {
     }
     // ResultData<Integer> 의 뜻 : 제너릭을 재정의하는것?
     // <Integer>를 쓴 이유 : 데이터 타입이 int인것을 return할것인데, int로 형변환을 해줄 필요가 없게된다.
-    ResultData<Integer> writeArticleRd = articleService.writeArticle(loginedMemberId, title, body);
+    ResultData<Integer> writeArticleRd = articleService.writeArticle(rq.getLoginedMemberId(), title, body);
     int id = writeArticleRd.getData1();
 
-    Article article = articleService.getForPrintArticle(loginedMemberId, id);
+    Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
     // Data만 바꿔서 브라우저로 넘기는 과정
     return ResultData.newData(writeArticleRd, "article", article); //데이터만 보여주는것이 아니라 데이터 타입도 보여주는것.
@@ -55,15 +52,10 @@ public class UsrArticleController {
 
 
   @RequestMapping("/user/article/list")
-  public String showList(HttpSession httpSession, Model model) {
-    boolean isLogined = false;
-    int loginedMemberId = 0;
-    if (httpSession.getAttribute("loginedMemberId") != null) {
-      // 로그인 되어있는 상태
-      isLogined = true;
-      loginedMemberId = (int) httpSession.getAttribute("loginedMemberId");
-    }
-    List<Article> articles = articleService.getForPrintArticles(loginedMemberId);
+  public String showList(HttpServletRequest req, Model model) {
+    Rq rq = new Rq(req);
+
+    List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMemberId());
 
     model.addAttribute("articles", articles);
 
@@ -72,16 +64,10 @@ public class UsrArticleController {
   }
 
   @RequestMapping("/user/article/detail")
-  public String showDetail(HttpSession httpSession, Model model, int id) { //상세보기는 하나만 가져오는것이기 때문에 복수와 단수를 정확하게 표현해줘야한다.
-    boolean isLogined = false;
-    int loginedMemberId = 0;
-    if (httpSession.getAttribute("loginedMemberId") != null) {
-      // 로그인 되어있는 상태
-      isLogined = true;
-      loginedMemberId = (int) httpSession.getAttribute("loginedMemberId");
-    }
+  public String showDetail(HttpServletRequest req, Model model, int id) { //상세보기는 하나만 가져오는것이기 때문에 복수와 단수를 정확하게 표현해줘야한다.
+    Rq rq = new Rq(req);
 
-    Article article = articleService.getForPrintArticle(loginedMemberId, id);
+    Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
    model.addAttribute("article", article);
 
@@ -91,23 +77,16 @@ public class UsrArticleController {
 
   @RequestMapping("/user/article/doDelete")
   @ResponseBody
-  public String doDelete(HttpSession httpSession, int id) {
-    boolean isLogined = false;
-    int loginedMemberId = 0;
-
-    if (httpSession.getAttribute("loginedMemberId") != null) {
-      // 로그인 되어있는 상태
-      isLogined = true;
-      loginedMemberId = (int) httpSession.getAttribute("loginedMemberId");
-    }
-    if (isLogined == false) {
+  public String doDelete(HttpServletRequest req, int id) {
+    Rq rq = new Rq(req);
+    if (rq.isLogined() == false) {
       return Ut.jsHistoryBack("로그인 후 이용해주세요.");
     }
     // 로그인 하지않았을시 게시물 삭제가 되지않게 하는 부분.
-    Article article = articleService.getForPrintArticle(loginedMemberId, id);
+    Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
     //경고창을 띄어주는 부분.
-    if (article.getMemberId() != loginedMemberId) {
+    if (article.getMemberId() != rq.getLoginedMemberId()) {
       return Ut.jsHistoryBack("권한이 없습니다.");
     }
 
@@ -123,21 +102,14 @@ public class UsrArticleController {
 
   @RequestMapping("/user/article/doModify")
   @ResponseBody
-  public ResultData<Article> doModify(HttpSession httpSession, int id, String title, String body) {
-    boolean isLogined = false; //변수가 isLogined라는게 체킹되려면 이러한 변수를 셋팅해줘야한다.
-    int loginedMemberId = 0;
-
-    if (httpSession.getAttribute("loginedMemberId") != null) {
-      // 로그인 되어있는 상태
-      isLogined = true;
-      loginedMemberId = (int) httpSession.getAttribute("loginedMemberId");
-    }
-    if (isLogined == false) {
+  public ResultData<Article> doModify(HttpServletRequest req, int id, String title, String body) {
+    Rq rq = new Rq(req);
+    if (rq.isLogined() == false) {
       return ResultData.from("F-A", "로그인 후 이용해주세요.");
     }
-    Article article = articleService.getForPrintArticle(loginedMemberId, id);
+    Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
-    if (article.getMemberId() != loginedMemberId) {
+    if (article.getMemberId() != rq.getLoginedMemberId()) {
       return ResultData.from("F-2", "권한이 없습니다."); //월권이기 때문에 서비스에게 넘기는것이 좋다.
     }
 
@@ -145,7 +117,7 @@ public class UsrArticleController {
       return ResultData.from("F-1", Ut.f("%d번 게시물이 존재하지 않습니다.", id));
     }
 
-    ResultData actorCanModifyRd = articleService.actorCanModify(loginedMemberId, article); //loginedMemberId가 article을 수정할 수 있다는 뜻
+    ResultData actorCanModifyRd = articleService.actorCanModify(rq.getLoginedMemberId(), article); //rq.getrq.getLoginedMemberId()()가 article을 수정할 수 있다는 뜻
 
     if (actorCanModifyRd.isFail()) {  //
       return actorCanModifyRd;
