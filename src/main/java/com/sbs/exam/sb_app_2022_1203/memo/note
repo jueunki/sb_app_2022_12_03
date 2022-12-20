@@ -302,8 +302,19 @@ SELECT * FROM article; : json을 통해 추가적인 데이터를 가져올때.
   }
 
 
+------------------
+Ut.jsReplace : replace로 된것은 바로뒤 뒤로가기가 안되고 맨처음 place로 가고 중간에 있던 place는 소멸된다.
+do로 시작되는 페이지는 머물 수 있는 페이지가 아니다. 잠깐 있는 페이지 이다.
+결제 페이지에서 삭제로가고 마지막에 리스트 페이지로 가는데,
+뒤로가기를 해서 삭제로 가게되면 결제가 두번되니까 그것을 방지하기 위함
 
+------------------
+ public ResultData<Article>의 ResultData<Article>는 결과를 확인하기 위해 만든것이지 ajax 실제로는
 
+ getForPrintArticles
+ getArticles -> getForPrintArticle와 getArticles는 차이가 있다.
 
+ getForPrintArticle -> innerJoin해서 추가정보 추가해주고, 현재 로그인 한 회원 가져와서 그 회원이 수정이나 삭제할 수 있는 정보까지 여기(getForPrintArticle)에 넘겨준 상태라고 보면 된다.
+ getArticle -> 단순쿼리 SELECT * FROM article;이런식으로 데이터를 받아온다.
 
 
