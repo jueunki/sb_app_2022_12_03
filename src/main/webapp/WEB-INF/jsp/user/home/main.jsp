@@ -4,6 +4,8 @@
 <html lang="ko">
 <head>
     <title>메인</title>
+    <link rel="stylesheet" href="/css/common.css">
+    <script src="/js/common.js" defer></script>
 <head>
 <body>
     <h1>메인 페이지</h1>
