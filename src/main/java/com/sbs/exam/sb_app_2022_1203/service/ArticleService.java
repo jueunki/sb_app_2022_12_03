@@ -24,22 +24,21 @@ public class ArticleService {
     int id = articleRepository.getLastInsertId();
 
     // Service(여기)에서 Controller에게 넘기는 과정
-    return ResultData.from("S-1", Ut.f("%d번 게시물이 생성되었습니다.", id),"id", id);
+    return ResultData.from("S-1", Ut.f("%d번 게시물이 생성되었습니다.", id), "id", id);
   }
 
-    //출력용
+  //출력용
   public List<Article> getForPrintArticles(int actorId) {
     List<Article> articles = articleRepository.getForPrintArticles();
 
-
-    for(Article article : articles) {
+    for (Article article : articles) {
       updateForPrintData(actorId, article);
     }
     return articles;
   }
 
   private void updateForPrintData(int actorId, Article article) { //(int actorId, Article article) : 로그인 한 사람이 누구인지 얻어오고, 해당 게시물을 얻어오는데
-    if( article == null ) {
+    if (article == null) {
       return;
     }
 
@@ -67,22 +66,21 @@ public class ArticleService {
   }
 
   public ResultData actorCanModify(int actorId, Article article) {
-
-    if(article == null) {
+    if (article == null) {
       return ResultData.from("F-1", "권한이 없습니다.");
     }
-    if(article.getMemberId() != actorId) {
+    if (article.getMemberId() != actorId) {
       return ResultData.from("F-2", "권한이 없습니다.");
     }
-  return ResultData.from("S-1", "게시물 수정이 가능합니다.");
+    return ResultData.from("S-1", "게시물 수정이 가능합니다.");
   }
 
   public ResultData actorCanDelete(int actorId, Article article) {
 
-    if(article == null) {
-      return ResultData.from("F-1", "게시물이 존재하지 않습니다.");
+    if (article == null) {
+      return ResultData.from("F-1", "권한이 없습니다.");
     }
-    if(article.getMemberId() != actorId) {
+    if (article.getMemberId() != actorId) {
       return ResultData.from("F-2", "권한이 없습니다.");
     }
     return ResultData.from("S-1", "게시물 삭제가 가능합니다.");
