@@ -25,6 +25,7 @@ public class Ut {
       msg = "";
     }
 
+    // 메시지를 띄워주고 뒤로가기. history.back();*자바스크립트 문법.
     return Ut.f("""
         <script>
         const msg = '%s'.trim();
@@ -44,6 +45,7 @@ public class Ut {
     if (uri == null) {
       uri = "";
     }
+    // 이부분이 있어야지만 실제로 게시물을 삭제 했을때 리스트 페이지로 이동 할 수 있는 부분.
     return Ut.f("""
         <script>
         const msg = '%s'.trim();

@@ -38,6 +38,7 @@ public class ArticleService {
   }
 
   private void updateForPrintData(int actorId, Article article) { //(int actorId, Article article) : 로그인 한 사람이 누구인지 얻어오고, 해당 게시물을 얻어오는데
+    //데이터를 담아서 넘겨준 상태.
     if (article == null) {
       return;
     }

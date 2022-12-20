@@ -103,8 +103,10 @@ public class UsrArticleController {
     if (isLogined == false) {
       return Ut.jsHistoryBack("로그인 후 이용해주세요.");
     }
+    // 로그인 하지않았을시 게시물 삭제가 되지않게 하는 부분.
     Article article = articleService.getForPrintArticle(loginedMemberId, id);
 
+    //경고창을 띄어주는 부분.
     if (article.getMemberId() != loginedMemberId) {
       return Ut.jsHistoryBack("권한이 없습니다.");
     }
@@ -116,7 +118,7 @@ public class UsrArticleController {
 
     articleService.deleteArticle(id);
 
-    return Ut.jsReplace(Ut.f("%d번 게시물을 삭제하였습니다.", id), "../article/list");
+    return Ut.jsReplace(Ut.f("%d번 게시물을 삭제하였습니다.", id), "../article/list"); //->uri를 리스트로 넘겨주는 부분.
   }
 
   @RequestMapping("/user/article/doModify")
