@@ -359,3 +359,7 @@ interceptor는 컨트롤러 이전에 실행되는것.
 UserArticleController의
   Rq rq = new Rq(req); 를 모두
   Rq rq = (Rq) req.getAttribute("rq"); 로 바꿔줬다.
+
+---------
+Interceptor를 두개로 만들어줄것인데,
+BeforeActionInterceptor는 만인을 위한 interceptor라고 보면되고
