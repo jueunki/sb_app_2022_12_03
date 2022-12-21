@@ -15,10 +15,10 @@ public class ResultData<DT> {
   @Getter
   private DT data1;
 
-  private ResultData() {
-    // private생성자 : 외부에서 접근할 수 없게 하는것.
-
-  }
+//  private ResultData() {
+//    // private생성자 : 외부에서 접근할 수 없게 하는것.
+//
+//  }
 
 
   public static ResultData from(String resultCode, String msg) {

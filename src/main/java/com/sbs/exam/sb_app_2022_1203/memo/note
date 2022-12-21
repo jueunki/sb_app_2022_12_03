@@ -363,3 +363,6 @@ UserArticleController의
 ---------
 Interceptor를 두개로 만들어줄것인데,
 BeforeActionInterceptor는 만인을 위한 interceptor라고 보면되고
+NeedLoginInterceptor
+
+BeforeActionInterceptor에서 최초로 한번 실행되고 ArticleController에서 Rq

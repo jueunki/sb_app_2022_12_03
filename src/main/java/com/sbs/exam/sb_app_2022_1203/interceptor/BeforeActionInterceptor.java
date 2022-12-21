@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 public class BeforeActionInterceptor implements HandlerInterceptor {
   @Override
   public boolean preHandle(HttpServletRequest req, HttpServletResponse resp, Object handle) throws Exception {
-    System.out.println("로그인 필요");  // 리스트 버튼 누르면 실행되는부분.
-    Rq rq = new Rq(req);
+    // 리스트 버튼 누르면 실행되는부분.
+    Rq rq = new Rq(req, resp);
     req.setAttribute("rq", rq);
 
     return HandlerInterceptor.super.preHandle(req, resp, handle);
