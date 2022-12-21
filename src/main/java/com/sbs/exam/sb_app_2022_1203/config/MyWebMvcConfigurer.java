@@ -19,6 +19,7 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
   @Autowired
   NeedLoginInterceptor needLoginInterceptor;
 
+
   // 이 함수는 인터셉터를 적용하는 역할을 합니다.
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
@@ -26,11 +27,10 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
         .addPathPatterns("/**")           //-> 모든 요청
         .excludePathPatterns("/css/**") //-> css와
         .excludePathPatterns("/js/**")  //->js는 interceptor가 작동 할 필요가 없는 작업이다.
-                                        //localhost:8081/css/common.css라고 하면 출력된다.
-        .excludePathPatterns("/error");
+        .excludePathPatterns("/error");                                //localhost:8081/css/common.css라고 하면 출력된다.
+
 
     registry.addInterceptor(needLoginInterceptor) //정해진 요청대로 간섭
-
         .addPathPatterns("/user/article/write")   //글 작성폼
         .addPathPatterns("/user/article/doWrite") //글 전송폼
         .addPathPatterns("/user/article/modify")

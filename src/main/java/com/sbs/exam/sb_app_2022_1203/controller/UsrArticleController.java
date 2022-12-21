@@ -96,7 +96,24 @@ public class UsrArticleController {
     return Ut.jsReplace(Ut.f("%d번 게시물을 삭제하였습니다.", id), "../article/list"); //->uri를 리스트로 넘겨주는 부분.
   }
 
-  @RequestMapping("/user/article/doModify")
+  @RequestMapping("/user/article/modify")
+  public String showModify(HttpServletRequest req, int id, String title, String body) {
+    Rq rq = (Rq) req.getAttribute("rq");
+
+    Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
+
+    if (article == null) {
+      return rq.historyBackJsOnView(Ut.f("%d번 게시물이 존재하지 않습니다.", id)); //여기서 @ResponseBody가 없으면 jsp를 찾는 역할을 한다.
+    }
+    ResultData actorCanModifyRd = articleService.actorCanModify(rq.getLoginedMemberId(), article); //rq.getrq.getLoginedMemberId()()가 article을 수정할 수 있냐는 뜻
+
+    if (actorCanModifyRd.isFail()) {  //수정 할 수 없다는 뜻.
+      return rq.historyBackJsOnView(actorCanModifyRd.getMsg());
+    }
+    return "user/article/modify";
+  }
+
+    @RequestMapping("/user/article/doModify")
   @ResponseBody
   public ResultData<Article> doModify(HttpServletRequest req, int id, String title, String body) {
     Rq rq = (Rq) req.getAttribute("rq");
