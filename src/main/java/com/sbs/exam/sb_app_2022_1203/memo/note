@@ -340,3 +340,6 @@ if (httpSession.getAttribute("loginedMemberId") != null) {
 isLogined = true;
 loginedMemberId = (int) httpSession.getAttribute("loginedMemberId");
 } -> Rq rq = new Rq(req); 로 변경
+-----------------------
+
+인테세터 컨트롤러 이전에 실행되는것.
