@@ -14,7 +14,7 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
   public boolean preHandle(HttpServletRequest req, HttpServletResponse resp, Object handle) throws Exception {
     // 리스트 버튼 누르면 실행되는부분.
     Rq rq = new Rq(req, resp);
-    req.setAttribute("rq", rq);
+    req.setAttribute("rq", rq);  // 이렇게 담아두면 jsp 까지 가며 편리하다.
 
     return HandlerInterceptor.super.preHandle(req, resp, handle);
   }

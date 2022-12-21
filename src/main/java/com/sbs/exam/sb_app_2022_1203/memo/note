@@ -366,3 +366,24 @@ BeforeActionInterceptor는 만인을 위한 interceptor라고 보면되고
 NeedLoginInterceptor
 
 BeforeActionInterceptor에서 최초로 한번 실행되고 ArticleController에서 Rq
+----------
+** 실행 순서도 **
+Interceptor 제일 먼저 딱 한번 실행된다.
+            @Configuration
+            public class MyWebMvcConfigurer implements WebMvcConfigurer {}에서 가장 먼저 실행되면서 정책을 가져온다.
+            @Autowired      -> new를 사용하여 번거롭지 않도록 막아주는것
+              BeforeActionInterceptor beforeActionInterceptor;
+
+
+              @Autowired
+              NeedLoginInterceptor needLoginInterceptor;
+
+              @Component : 스프링이 관리하는것 자체를 빈 이라고 하는데 빈을 설정하는것이 Component이다.
+              preHandle : Rq를 만든것을 직접 다루기 불편해서 대신 다룰수 있게 해주는 요소라고 생각하면 된다.
+              req 받은편지 , resp 보낼편지, preHandle 둘을 통합하여 받고 보내는 리모컨
+Controller
+Service
+Repository <-> DB와 통신함
+뷰(JSP)
+
+method="post" -> post방식은 보안이 높아서 post방식으로 했다.

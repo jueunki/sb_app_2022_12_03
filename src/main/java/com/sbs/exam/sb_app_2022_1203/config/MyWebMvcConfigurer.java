@@ -1,4 +1,4 @@
-package com.sbs.exam.sb_app_2022_1203;
+package com.sbs.exam.sb_app_2022_1203.config;
 
 import com.sbs.exam.sb_app_2022_1203.interceptor.BeforeActionInterceptor;
 import com.sbs.exam.sb_app_2022_1203.interceptor.NeedLoginInterceptor;
@@ -22,14 +22,15 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
   // 이 함수는 인터셉터를 적용하는 역할을 합니다.
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
-    registry.addInterceptor(beforeActionInterceptor)
+    registry.addInterceptor(beforeActionInterceptor) // 모든 요청대로 간섭
         .addPathPatterns("/**")           //-> 모든 요청
         .excludePathPatterns("/css/**") //-> css와
         .excludePathPatterns("/js/**")  //->js는 interceptor가 작동 할 필요가 없는 작업이다.
                                         //localhost:8081/css/common.css라고 하면 출력된다.
         .excludePathPatterns("/error");
 
-    registry.addInterceptor(needLoginInterceptor)
+    registry.addInterceptor(needLoginInterceptor) //정해진 요청대로 간섭
+
         .addPathPatterns("/user/article/write")   //글 작성폼
         .addPathPatterns("/user/article/doWrite") //글 전송폼
         .addPathPatterns("/user/article/modify")

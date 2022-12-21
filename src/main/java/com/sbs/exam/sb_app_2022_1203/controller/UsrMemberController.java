@@ -70,12 +70,15 @@ public class UsrMemberController {
     return ResultData.newData(joinRd,"member", member);  //newData :
   }
 
+  @RequestMapping("/user/member/login")  //@ResponseBody를 붙이면 return "user/member/login"; 이 글자를 보여주는것 이라서 붙이면 안된다.
+  public String showLogin(HttpSession httpSession) {  //폼으로 보여지는것은 show, 처리되는것은 do 라고 설정했다.
+    return "user/member/login"; // 이 요청은 login.jsp에게로 이동되는것이다.
+  }
 
 
   @RequestMapping("/user/member/doLogin")
   @ResponseBody           //로그인 구현까지 마치면 여기 HttpSession httpsession 이렇게 세션에 저장을 해야한다.
-  public ResultData doLogin(HttpSession httpSession, String loginId, String loginPw) {
-
+  public String doLogin(HttpSession httpSession, String loginId, String loginPw) {
     boolean isLogined = false;
 
     if (httpSession.getAttribute("loginedMemberId") != null){
@@ -84,26 +87,26 @@ public class UsrMemberController {
     }
 
     if(isLogined) {
-      return ResultData.from("F-5", "이미 로그인 되었습니다.");
+      return Ut.jsHistoryBack("이미 로그인 되었습니다.");
       // 이미 로그인이 되었다고 문구를 띄운다.
     }
 
     if (Ut.empty(loginId)) {
-      return ResultData.from("F-1", "loginId(을)를 입력 해주세요.");
+      return Ut.jsHistoryBack("loginId(을)를 입력 해주세요.");
     }
 
     if (Ut.empty(loginPw)) {
-      return ResultData.from("F-2","loginPw(을)를 입력 해주세요.");
+      return Ut.jsHistoryBack("loginPw(을)를 입력 해주세요.");
     }
 
     Member member = memberService.getMemberByLoginId(loginId);
 
     if(member == null) {
-      return ResultData.from("F-3", "존재하지 않는 로그인 아이디 입니다.");
+      return Ut.jsHistoryBack("존재하지 않는 로그인 아이디 입니다.");
     }
 
     if(member.getLoginPw().equals(loginPw) == false) {
-      return ResultData.from("F-4", "비밀번호가 일치하지 않습니다.");
+      return Ut.jsHistoryBack("비밀번호가 일치하지 않습니다.");
     }
 
 
@@ -111,14 +114,10 @@ public class UsrMemberController {
     httpSession.setAttribute("loginedMemberId", member.getId());
 
 
-    return ResultData.from("S-1", Ut.f("%s님 환영합니다!", member.getNickname()));
+    return Ut.jsReplace(Ut.f("%s님 환영합니다.", member.getNickname()), "/");
 
   }
   //로그인 구현까지 마치면 세션에 저장을 해야한다.
-
-
-
-
 
   @RequestMapping("/user/member/doLogout")
   @ResponseBody           //로그아웃 구현까지 마치면 여기 HttpSession httpsession 이렇게 세션에 저장을 해야한다.
