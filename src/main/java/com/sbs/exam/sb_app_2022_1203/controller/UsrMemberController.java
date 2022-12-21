@@ -118,16 +118,10 @@ public class UsrMemberController {
 
   @RequestMapping("/user/member/doLogout")
   @ResponseBody           //로그아웃 구현까지 마치면 여기 HttpSession httpsession 이렇게 세션에 저장을 해야한다.
-  public ResultData doLogout(HttpSession httpSession) {
+  public ResultData doLogout(HttpServletRequest req) {
+    Rq rq = (Rq) req.getAttribute("rq");
 
-    boolean isLogined = false;
-
-    if (httpSession.getAttribute("loginedMemberId") == null){
-      //이미 로그아웃 되어있는 상태라면
-      isLogined = true; // true라서 아래로 넘어가서
-    }
-
-    if(isLogined) {
+    if(!rq.isLogined()) {
       return ResultData.from("S-1", "이미 로그아웃 상태입니다.");
       // 이미 로그아웃이 되었다고 문구를 띄운다.
     }
@@ -135,7 +129,7 @@ public class UsrMemberController {
 
 
     //이렇게 적으면 세션을 지나서 통과되는 문을 만드는것과 같다.
-    httpSession.removeAttribute("loginedMemberId"); //로그아웃 구현까지 마치면 세션에 저장을 해야한다.
+    rq.logout(); //로그아웃 구현까지 마치면 세션에 저장을 해야한다.
 
 
     return ResultData.from("S-2", "로그아웃 되었습니다.");
