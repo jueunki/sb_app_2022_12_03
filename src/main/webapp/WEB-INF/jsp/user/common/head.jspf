@@ -47,7 +47,7 @@
           <a href="/user/member/doLogout" class="flex h-full items-center px-3 hover:underline">
             <span>로그아웃</span>
           </a>
-        </li> 
+        </li>
       </c:if>
     </ul>
   </div>
