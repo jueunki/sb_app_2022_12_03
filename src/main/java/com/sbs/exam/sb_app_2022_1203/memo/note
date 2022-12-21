@@ -342,4 +342,20 @@ loginedMemberId = (int) httpSession.getAttribute("loginedMemberId");
 } -> Rq rq = new Rq(req); 로 변경
 -----------------------
 
-인테세터 컨트롤러 이전에 실행되는것.
+interceptor는 컨트롤러 이전에 실행되는것.
+-----------------------
+2022-12-21 95강의 이론 확인
+
+
+@Override
+  public boolean preHandle(HttpServletRequest req, HttpServletResponse resp, Object handle) throws Exception {
+    System.out.println("실행되니?");  // 리스트 버튼 누르면 실행되는부분.
+    Rq rq = new Rq(req);
+    req.setAttribute("rq", rq);
+
+    return HandlerInterceptor.super.preHandle(req, resp, handle);
+  }
+--------
+UserArticleController의
+  Rq rq = new Rq(req); 를 모두
+  Rq rq = (Rq) req.getAttribute("rq"); 로 바꿔줬다.

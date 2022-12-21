@@ -24,7 +24,7 @@ public class UsrArticleController {
   @RequestMapping("/user/article/doAdd")
   @ResponseBody
   public ResultData<Article> doAdd(HttpServletRequest req, String title, String body) {
-   Rq rq = new Rq(req);
+   Rq rq = (Rq) req.getAttribute("rq");
 
 
 
@@ -53,7 +53,7 @@ public class UsrArticleController {
 
   @RequestMapping("/user/article/list")
   public String showList(HttpServletRequest req, Model model) {
-    Rq rq = new Rq(req);
+    Rq rq = (Rq) req.getAttribute("rq");
 
     List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMemberId());
 
@@ -65,7 +65,7 @@ public class UsrArticleController {
 
   @RequestMapping("/user/article/detail")
   public String showDetail(HttpServletRequest req, Model model, int id) { //상세보기는 하나만 가져오는것이기 때문에 복수와 단수를 정확하게 표현해줘야한다.
-    Rq rq = new Rq(req);
+    Rq rq = (Rq) req.getAttribute("rq");
 
     Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
@@ -78,23 +78,21 @@ public class UsrArticleController {
   @RequestMapping("/user/article/doDelete")
   @ResponseBody
   public String doDelete(HttpServletRequest req, int id) {
-    Rq rq = new Rq(req);
+    Rq rq = (Rq) req.getAttribute("rq");
     if (rq.isLogined() == false) {
       return Ut.jsHistoryBack("로그인 후 이용해주세요.");
     }
     // 로그인 하지않았을시 게시물 삭제가 되지않게 하는 부분.
     Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
+    if (article == null) {
+      return Ut.jsHistoryBack(Ut.f("%d번 게시물이 존재하지 않습니다.", id));
+    }
+
     //경고창을 띄어주는 부분.
     if (article.getMemberId() != rq.getLoginedMemberId()) {
       return Ut.jsHistoryBack("권한이 없습니다.");
     }
-
-    if (article == null) {
-      return Ut.jsHistoryBack(Ut.f("%d번 게시물이 존재하지 않습니다.", id));
-
-    }
-
     articleService.deleteArticle(id);
 
     return Ut.jsReplace(Ut.f("%d번 게시물을 삭제하였습니다.", id), "../article/list"); //->uri를 리스트로 넘겨주는 부분.
@@ -103,7 +101,7 @@ public class UsrArticleController {
   @RequestMapping("/user/article/doModify")
   @ResponseBody
   public ResultData<Article> doModify(HttpServletRequest req, int id, String title, String body) {
-    Rq rq = new Rq(req);
+    Rq rq = (Rq) req.getAttribute("rq");
     if (rq.isLogined() == false) {
       return ResultData.from("F-A", "로그인 후 이용해주세요.");
     }
