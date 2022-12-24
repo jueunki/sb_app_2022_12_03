@@ -1,5 +1,6 @@
 package com.sbs.exam.sb_app_2022_1203.vo;
 
+import com.sbs.exam.sb_app_2022_1203.service.MemberService;
 import com.sbs.exam.sb_app_2022_1203.util.Ut;
 import lombok.Getter;
 
@@ -14,11 +15,12 @@ public class Rq {
   private boolean isLogined;
   @Getter
   private int loginedMemberId;
-
+  @Getter
+  private Member loginedMember;
   private HttpServletRequest req;
   private HttpServletResponse resp;
   private HttpSession session;
-  public Rq(HttpServletRequest req, HttpServletResponse resp) {
+  public Rq(HttpServletRequest req, HttpServletResponse resp, MemberService memberService) {
     this.req = req;
     this.resp = resp;
     this.session = req.getSession();
@@ -31,9 +33,12 @@ public class Rq {
       // 로그인 되어있는 상태
       isLogined = true;
       loginedMemberId = (int) session.getAttribute("loginedMemberId");
+      loginedMember = memberService.getMemberById(loginedMemberId); // 위에는 Id만 가져오는것이고 여기는 작성자까지 가져오려는 부분이다.
+      // loginedMemberId가 실제 작성자가 되는것이기 때문에 로그인한 멤버 아이디를 가져오는것이다.
     }
     this.isLogined = isLogined;
     this.loginedMemberId = loginedMemberId;
+    this.loginedMember = loginedMember;
   }
 
   public void printHistoryBackJs(String msg) {

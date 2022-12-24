@@ -20,10 +20,15 @@ public class UsrArticleController {
   private ArticleService articleService;
 
 
+  @RequestMapping("/user/article/write")
+  public String showWrite(HttpServletRequest req) {
+    return "user/article/write";
+  }
+
   // 액션 메서드 시작
-  @RequestMapping("/user/article/doAdd")
+  @RequestMapping("/user/article/doWrite")
   @ResponseBody
-  public ResultData<Article> doAdd(HttpServletRequest req, String title, String body) {
+  public ResultData<Article> doWrite(HttpServletRequest req, String title, String body) {
    Rq rq = (Rq) req.getAttribute("rq");
 
     if (rq.isLogined() == false) {
@@ -139,7 +144,7 @@ public class UsrArticleController {
       //여기에 요청을 넣는것이다.
 
       articleService.modifyArticle(id, title, body); //localhost:8081/user/article/doModify?id=1&title=제목1 수정&body=내용1 수정 이라고적으면 수정이 된다.
-      return Ut.jsReplace(Ut.f("%d번 게시물이 수정되었습니다.", id), Ut.f("../article/detail?id=%d", id)); //게시물 수정 후 자바 스크립트로 후 처리(수정 했을때 메시지 뜰 수 있게 만들어 주는 부분) 
+      return Ut.jsReplace(Ut.f("%d번 게시물이 수정되었습니다.", id), Ut.f("../article/detail?id=%d", id)); //게시물 수정 후 자바 스크립트로 후 처리(수정 했을때 메시지 뜰 수 있게 만들어 주는 부분)
     }
       //여기까지 오면 수정이 가능하다는것.
   }
