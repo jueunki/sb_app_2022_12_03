@@ -129,7 +129,7 @@ public class UsrArticleController {
         return rq.jsHistoryBack("로그인 후 이용해주세요.");
       }
       Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
- 
+
       if (article.getMemberId() != rq.getLoginedMemberId()) {
         return rq.jsHistoryBack("권한이 없습니다."); //월권이기 때문에 서비스에게 넘기는것이 좋다.
       }
