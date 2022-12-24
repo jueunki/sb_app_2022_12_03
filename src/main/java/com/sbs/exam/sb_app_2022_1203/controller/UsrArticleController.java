@@ -116,33 +116,34 @@ public class UsrArticleController {
 
     @RequestMapping("/user/article/doModify")
   @ResponseBody
-  public ResultData<Article> doModify(HttpServletRequest req, int id, String title, String body) {
-    Rq rq = (Rq) req.getAttribute("rq");
-    if (rq.isLogined() == false) {
-      return ResultData.from("F-A", "로그인 후 이용해주세요.");
+  public String doModify(HttpServletRequest req, int id, String title, String body) {
+      Rq rq = (Rq) req.getAttribute("rq");
+      if (rq.isLogined() == false) {
+        return Ut.jsHistoryBack("로그인 후 이용해주세요.");
+      }
+      Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
+
+      if (article.getMemberId() != rq.getLoginedMemberId()) {
+        return Ut.jsHistoryBack("권한이 없습니다."); //월권이기 때문에 서비스에게 넘기는것이 좋다.
+      }
+
+      if (article == null) {
+        return Ut.jsHistoryBack(Ut.f("%d번 게시물이 존재하지 않습니다.", id));
+      }
+
+      ResultData actorCanModifyRd = articleService.actorCanModify(rq.getLoginedMemberId(), article); //rq.getrq.getLoginedMemberId()()가 article을 수정할 수 있다는 뜻
+
+      if (actorCanModifyRd.isFail()) {
+        return Ut.jsHistoryBack(actorCanModifyRd.getMsg());
+      }
+      //여기에 요청을 넣는것이다.
+
+      articleService.modifyArticle(id, title, body); //localhost:8081/user/article/doModify?id=1&title=제목1 수정&body=내용1 수정 이라고적으면 수정이 된다.
+      return Ut.jsReplace(Ut.f("%d번 게시물이 수정되었습니다.", id), Ut.f("../article/detail?id=%d", id));
     }
-    Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
-
-    if (article.getMemberId() != rq.getLoginedMemberId()) {
-      return ResultData.from("F-2", "권한이 없습니다."); //월권이기 때문에 서비스에게 넘기는것이 좋다.
-    }
-
-    if (article == null) {
-      return ResultData.from("F-1", Ut.f("%d번 게시물이 존재하지 않습니다.", id));
-    }
-
-    ResultData actorCanModifyRd = articleService.actorCanModify(rq.getLoginedMemberId(), article); //rq.getrq.getLoginedMemberId()()가 article을 수정할 수 있다는 뜻
-
-    if (actorCanModifyRd.isFail()) {  //
-      return actorCanModifyRd;
-    }
-    //여기에 요청을 넣는것이다.
-
-    return articleService.modifyArticle(id, title, body); //localhost:8081/user/article/doModify?id=1&title=제목1 수정&body=내용1 수정 이라고적으면 수정이 된다.
-    //여기까지 오면 수정이 가능하다는것.
+      //여기까지 오면 수정이 가능하다는것.
   }
 
 
   // 액션 메서드 끝
 
-}
