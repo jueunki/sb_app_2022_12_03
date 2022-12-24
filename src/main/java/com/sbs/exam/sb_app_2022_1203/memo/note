@@ -403,3 +403,21 @@ Repository <-> DB와 통신함
 뷰(JSP)
 
 method="post" -> post방식은 보안이 높아서 post방식으로 했다.
+
+=================================
+** 화면창을 줄였을때 깨짐 방지
+webapp/static/css/common.css 에
+/* 커스텀 */
+body {
+    min-width : 800px;
+}
+
+/* 라이브러리 */
+.con-min-width {
+    min-width : 1080px;
+}
+그리고
+head.jspf에
+<header class="con-min-width h-20 bg-gray-300">
+class에 con-min-width를 적어주면 일정 800px에 맞게 화면 깨짐이 방지되면서 스크롤바가 생긴다.
+=================================

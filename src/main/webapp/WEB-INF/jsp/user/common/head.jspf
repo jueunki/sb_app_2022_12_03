@@ -18,7 +18,7 @@
   <script src="/static/js/common.js" defer></script>
 </head>
 <body>
-<header class="h-20 bg-gray-300">
+<header class="con-min-width h-20 bg-gray-300">
   <div class="con mx-auto h-full flex "> <!-- mx-auto : 블럭요소를 가운데로 정렬할수있는것-->
     <a href="/" class="flex items-center px-3">
       로고

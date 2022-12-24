@@ -14,6 +14,10 @@ header > a {
 }
 
 /* 라이브러리 */
+.con-min-width {
+    min-width : 1080px;
+}
+
 .con {
     width : 1080px;
     margin : 0 auto; /* 0은 위아래 margin은 왼쪽+오른쪽 // display block을 가운데로 정렬 할 수 있다. */
@@ -32,11 +36,8 @@ header > a {
 }
 /* 여기까지 테이블 만드는 부분 */
 
-.btn-text-link {
-    color : skyblue;
-}
-
-.btn-text-link:hover {
-    text-decoration: underline;
+/* 커스텀 */
+body {
+    min-width : 800px;
 }
 
