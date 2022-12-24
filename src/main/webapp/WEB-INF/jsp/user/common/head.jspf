@@ -31,8 +31,13 @@
         </a>
       </li>
       <li>
-        <a href="/user/article/list" class="flex h-full items-center px-3 hover:underline">
-          <span>리스트</span>
+        <a href="/user/article/list?boardId=1" class="flex h-full items-center px-3 hover:underline">
+          <span>공지사항 게시판</span>
+        </a>
+      </li>
+      <li>
+        <a href="/user/article/list?boardId=2" class="flex h-full items-center px-3 hover:underline">
+          <span>자유 게시판</span>
         </a>
       </li>
       <c:if test="${!rq.isLogined()}">
@@ -52,4 +57,10 @@
     </ul>
   </div>
 </header>
+
+<section class="mt-5 con-min-width">
+  <div class="con mx-auto px-3">
+    <h1>${pageTitle} 페이지</h1>
+  </div>
+</section>
 <main>

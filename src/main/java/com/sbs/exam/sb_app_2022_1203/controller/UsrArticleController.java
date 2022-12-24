@@ -1,11 +1,12 @@
 package com.sbs.exam.sb_app_2022_1203.controller;
 
 import com.sbs.exam.sb_app_2022_1203.service.ArticleService;
+import com.sbs.exam.sb_app_2022_1203.service.BoardService;
 import com.sbs.exam.sb_app_2022_1203.util.Ut;
 import com.sbs.exam.sb_app_2022_1203.vo.Article;
+import com.sbs.exam.sb_app_2022_1203.vo.Board;
 import com.sbs.exam.sb_app_2022_1203.vo.ResultData;
 import com.sbs.exam.sb_app_2022_1203.vo.Rq;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +17,16 @@ import java.util.List;
 
 @Controller
 public class UsrArticleController {
-  @Autowired
+
   private ArticleService articleService;
+  private BoardService boardService;
+
+  public UsrArticleController(ArticleService articleService, BoardService boardService) {
+    this.articleService = articleService;
+    this.boardService = boardService;
+  }
+
+
 
 
   @RequestMapping("/user/article/write")
@@ -57,11 +66,14 @@ public class UsrArticleController {
 
 
   @RequestMapping("/user/article/list")
-  public String showList(HttpServletRequest req, Model model) {
+  public String showList(HttpServletRequest req, Model model, int boardId) {
     Rq rq = (Rq) req.getAttribute("rq");
+
+    Board board = boardService.getBoardById(boardId);
 
     List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMemberId());
 
+    model.addAttribute("board", board);
     model.addAttribute("articles", articles);
 
     return "/user/article/list";
