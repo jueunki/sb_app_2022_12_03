@@ -67,7 +67,7 @@ public class UsrArticleController {
 
     Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
-   model.addAttribute("article", article);
+   model.addAttribute("article", article); //->req.setAttribute();와 같은 의미이며 이는 jsp할때 이렇게 쓰는것이고 현재 쓰는것은 Spring boot 할 때 쓰는것이다.
 
     return "user/article/detail";
     //String data type과 Int data type을 둘다 허용 하려면 둘의 상위type인 Object로 사용해준다(별로 좋은 방법은 아닙니다.)
@@ -97,7 +97,7 @@ public class UsrArticleController {
   }
 
   @RequestMapping("/user/article/modify")
-  public String showModify(HttpServletRequest req, int id, String title, String body) {
+  public String showModify(HttpServletRequest req, Model model, int id) {
     Rq rq = (Rq) req.getAttribute("rq");
 
     Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
@@ -110,6 +110,7 @@ public class UsrArticleController {
     if (actorCanModifyRd.isFail()) {  //수정 할 수 없다는 뜻.
       return rq.historyBackJsOnView(actorCanModifyRd.getMsg());
     }
+    model.addAttribute("article", article);
     return "user/article/modify";
   }
 

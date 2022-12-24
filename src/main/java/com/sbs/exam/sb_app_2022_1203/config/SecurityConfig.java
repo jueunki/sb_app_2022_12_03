@@ -18,6 +18,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     // 로그인 disable 처리
     http.cors().and();
+    http.authorizeRequests((requests) -> requests.anyRequest().authenticated());
+    http.formLogin();
+    http.httpBasic();
     http.csrf().disable();  // 이부분이 있어야 시큐리티 처리를 했을 때 오류나지않는다.
   }
 }

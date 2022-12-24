@@ -269,6 +269,18 @@ mt : margin-top라고해서 위쪽 바깥쪽 여백을 주는것.
 flex h-full items-center px-3 hover:underline : 수직 중앙정렬 후 마우스를 갖다댔을때 언더라인이 생기면서 클릭 할 수 있게 된다.
 onclick="history.back()" : 클릭했을때 뒤로가기(버튼에서 <button type="button" "여기안에 작성">뒤로가기</button>)
 <c:if test="false"> : 참이면 보여지고, 참이 아니면 안보여진다.
+class="w-full" : 전체 크기만큼 폼을 키울 수 있다. --> modify(글수정 라인 내용수정폼 적용)
+rows="10" : 쓸 수 있는 칸을 엔터로 쳤을 때 10칸 사용 할 수 있다는 뜻이며 modify 글수정 라인에 적용했다.
+<form class="table-box-type-1" method="POST"> : 에서 method="POST"는 길이에 제한이 없게 해주는 것이다. 폼을 사용할 때는 보통 post방식으로 쓰는것이 좋다.
+<input type="hidden" name="id" value="${article.id}"> : hidden은 넘기는 아이디를 보여주지 않게 하기위해 숨기는 기능이다.
+
+
+
+
+
+
+
+
 
 
 --------------------------

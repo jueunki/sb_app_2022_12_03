@@ -40,6 +40,7 @@ public class Rq {
     resp.setContentType("text/html; charset=UTF-8"); //한글 깨짐 방지
     print(Ut.jsHistoryBack(msg));
   }
+
   public void print(String str) {
     try {
       resp.getWriter().append(str);
