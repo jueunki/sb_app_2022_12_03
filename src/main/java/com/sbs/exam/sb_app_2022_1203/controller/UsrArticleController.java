@@ -28,29 +28,31 @@ public class UsrArticleController {
   // 액션 메서드 시작
   @RequestMapping("/user/article/doWrite")
   @ResponseBody
-  public ResultData<Article> doWrite(HttpServletRequest req, String title, String body) {
+  public String doWrite(HttpServletRequest req, String title, String body, String replaceUri) {
    Rq rq = (Rq) req.getAttribute("rq");
 
     if (rq.isLogined() == false) {
-      return ResultData.from("F-A", "로그인 후 이용해주세요.");
+      return rq.jsHistoryBack("로그인 후 이용해주세요.");
     }
 
     if (Ut.empty(title)) {
-      return ResultData.from("F-1", "title(을)를 입력해주세요.");
+      return rq.jsHistoryBack("title(을)를 입력해주세요.");
     }
 
     if (Ut.empty(body)) {
-      return ResultData.from("F-2", "body(을)를 입력해주세요.");
+      return rq.jsHistoryBack("body(을)를 입력해주세요.");
     }
     // ResultData<Integer> 의 뜻 : 제너릭을 재정의하는것?
     // <Integer>를 쓴 이유 : 데이터 타입이 int인것을 return할것인데, int로 형변환을 해줄 필요가 없게된다.
     ResultData<Integer> writeArticleRd = articleService.writeArticle(rq.getLoginedMemberId(), title, body);
     int id = writeArticleRd.getData1();
 
-    Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
+    if(Ut.empty(replaceUri)) {
+      replaceUri = Ut.f("../article/detail?id=%d", id);
+    }
 
     // Data만 바꿔서 브라우저로 넘기는 과정
-    return ResultData.newData(writeArticleRd, "article", article); //데이터만 보여주는것이 아니라 데이터 타입도 보여주는것.
+    return rq.jsReplace(Ut.f("%d번 게시물이 생성되었습니다.", id), replaceUri);
   }
 
 
@@ -83,22 +85,22 @@ public class UsrArticleController {
   public String doDelete(HttpServletRequest req, int id) {
     Rq rq = (Rq) req.getAttribute("rq");
     if (rq.isLogined() == false) {
-      return Ut.jsHistoryBack("로그인 후 이용해주세요.");
+      return rq.jsHistoryBack("로그인 후 이용해주세요.");
     }
     // 로그인 하지않았을시 게시물 삭제가 되지않게 하는 부분.
     Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
     if (article == null) {
-      return Ut.jsHistoryBack(Ut.f("%d번 게시물이 존재하지 않습니다.", id));
+      return rq.jsHistoryBack(Ut.f("%d번 게시물이 존재하지 않습니다.", id));
     }
 
     //경고창을 띄어주는 부분.
     if (article.getMemberId() != rq.getLoginedMemberId()) {
-      return Ut.jsHistoryBack("권한이 없습니다.");
+      return rq.jsHistoryBack("권한이 없습니다.");
     }
     articleService.deleteArticle(id);
 
-    return Ut.jsReplace(Ut.f("%d번 게시물을 삭제하였습니다.", id), "../article/list"); //->uri를 리스트로 넘겨주는 부분.
+    return rq.jsReplace(Ut.f("%d번 게시물을 삭제하였습니다.", id), "../article/list"); //->uri를 리스트로 넘겨주는 부분.
   }
 
   @RequestMapping("/user/article/modify")
@@ -124,27 +126,27 @@ public class UsrArticleController {
   public String doModify(HttpServletRequest req, int id, String title, String body) {
       Rq rq = (Rq) req.getAttribute("rq");
       if (rq.isLogined() == false) {
-        return Ut.jsHistoryBack("로그인 후 이용해주세요.");
+        return rq.jsHistoryBack("로그인 후 이용해주세요.");
       }
       Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
-
+ 
       if (article.getMemberId() != rq.getLoginedMemberId()) {
-        return Ut.jsHistoryBack("권한이 없습니다."); //월권이기 때문에 서비스에게 넘기는것이 좋다.
+        return rq.jsHistoryBack("권한이 없습니다."); //월권이기 때문에 서비스에게 넘기는것이 좋다.
       }
 
       if (article == null) {
-        return Ut.jsHistoryBack(Ut.f("%d번 게시물이 존재하지 않습니다.", id));
+        return rq.jsHistoryBack(Ut.f("%d번 게시물이 존재하지 않습니다.", id));
       }
 
       ResultData actorCanModifyRd = articleService.actorCanModify(rq.getLoginedMemberId(), article); //rq.getrq.getLoginedMemberId()()가 article을 수정할 수 있다는 뜻
 
       if (actorCanModifyRd.isFail()) {
-        return Ut.jsHistoryBack(actorCanModifyRd.getMsg());
+        return rq.jsHistoryBack(actorCanModifyRd.getMsg());
       }
       //여기에 요청을 넣는것이다.
 
       articleService.modifyArticle(id, title, body); //localhost:8081/user/article/doModify?id=1&title=제목1 수정&body=내용1 수정 이라고적으면 수정이 된다.
-      return Ut.jsReplace(Ut.f("%d번 게시물이 수정되었습니다.", id), Ut.f("../article/detail?id=%d", id)); //게시물 수정 후 자바 스크립트로 후 처리(수정 했을때 메시지 뜰 수 있게 만들어 주는 부분)
+      return rq.jsReplace(Ut.f("%d번 게시물이 수정되었습니다.", id), Ut.f("../article/detail?id=%d", id)); //게시물 수정 후 자바 스크립트로 후 처리(수정 했을때 메시지 뜰 수 있게 만들어 주는 부분)
     }
       //여기까지 오면 수정이 가능하다는것.
   }
