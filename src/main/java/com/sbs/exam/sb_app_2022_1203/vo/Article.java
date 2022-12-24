@@ -19,7 +19,18 @@ public class Article {
 
   private  String extra__writerName; // 작성자다.
   // 여기는 leftjoin을 사용하면 받을 수 있는데,
+  private boolean extra__actorCanModify;
   private boolean extra__actorCanDelete;
+
+
+  public String getRegDateForPrint() {
+    return regDate.substring(2, 16);
+  }
+
+  public String getUpdateDateForPrint() {
+    return updateDate.substring(2, 16);
+  }
+
   // 여기는 쿼리로 받아올 수 없다.(무조건 false인 정보이다.)
 }
 

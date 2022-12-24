@@ -261,7 +261,11 @@ db도 schema.sql에서 확인해서mariadb로 복사해와서 그 당시의 db�
 테일윈드(노멀라이즈, 라이브러리 : 노멀라이즈는 기본적으로 태그들이 모양이 희안한데 그걸 평범하게 만들어주는것) : https://tailwindcss.com/docs/installation/play-cdn
 테일윈드 cheat sheet에 프론트 용어 검색하면 나온다 참고해서 만들것.
 테일윈드 cheat sheet에 docs 클릭하면 어떻게 사용이되는지 확인 할 수 있다!
+daisyUI : 테일윈드와 궁합이 잘맞는 프로그램이다.
 
+
+
+=============================
 grow : 빈공간을 채우고 오른쪽으로 이동한다(상단 메뉴 이동할때 사용했다.)
 flex items-center : 로고에 사용했고 중앙으로 오게된다.
 mx-auto : 블럭요소 가운데로 정렬(container에 주로 사용)

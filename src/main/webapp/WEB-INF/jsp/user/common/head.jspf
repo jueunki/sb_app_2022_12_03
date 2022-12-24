@@ -7,18 +7,18 @@
   <title>${pageTitle}</title>
   <!-- 제이쿼리 불러오기 : 무조건 최상단에 둔다. -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js"></script>
-
   <!-- 테일윈드 불러오기 : [] 대괄호를 이용하여 편리하게 프론트 설정을 할 수 있다. -->
   <!-- 노멀라이즈, 라이브러리 : 노멀라이즈는 기본적으로 태그들이 모양이 희안한데 그걸 평범하게 만들어주는것 -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+  <!-- 데이지 UI -->
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@2.46.0/dist/full.css" rel="stylesheet" type="text/css" />
   <!-- 사이트 공통 css -->
   <link rel="stylesheet" href="/static/css/common.css">
   <!-- 사이트 공통 js -->
   <script src="/static/js/common.js" defer></script>
 </head>
 <body>
-<header class="h-[80px] bg-[#afafaf]">
+<header class="h-20 bg-gray-300">
   <div class="con mx-auto h-full flex "> <!-- mx-auto : 블럭요소를 가운데로 정렬할수있는것-->
     <a href="/" class="flex items-center px-3">
       로고
