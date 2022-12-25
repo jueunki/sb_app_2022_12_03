@@ -160,6 +160,40 @@ SELECT * FROM article;
 SELECT * FROM board WHERE id = 1;
 SELECT * FROM board WHERE id = 2;
 
+# 게시물 개수 늘리기!
+/*
+insert into article
+(
+	regDate, updateDate, memberId, boardId, title, `body`
+)
+select now(), NOW(), FLOOR(RAND() * 2) + 1, FLOOR(RAND() * 2) + 1, concat('제목_', rand()), CONCAT('내용_', RAND())
+from article;
+*/
+# 몇개 추가되었는지 확인 할 수 있는것!
+# select count(*) from article;
+
+
+# 위의 쿼리문을 실행 할 때 마다 배수만큼 실행이 되어 늘어난다.
+
+
+
+# mysql rand 1 to 100 : 1~100까지 랜덤 숫자값을 의미!
+# CONCAT : 내용을 붙여서 넣을수 있는것.
+
+# 0,1,2가 랜덤으로 나오는것!
+# select  floor(rand() * 3);
+
+# 1,2,3이 순서대로 나오는것!
+# SELECT  FLOOR(RAND() * 3) + 1;
+
+#===회원수를 셀때는 관리자를 빼고 계산해야한다===
+
+# 숫자를 랜덤으로 배치가 되는것!
+# select rand();
+
+
+
+
 
 
 
