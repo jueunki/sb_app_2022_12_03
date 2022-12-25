@@ -468,7 +468,30 @@ private HttpServletResponse resp;
 private HttpSession session;
 이들은 각각 사용하는 방법이 다른데 Rq를 사용하여 한번에 다룰 수 있도록 정의한것이다.
 
+-----------------------------
+@Data  //@Data : getter and setter를 다 만들어준다.
+@NoArgsConstructor
+@AllArgsConstructor //@AllArgsConstructor : 모든인스턴스의 변수를 받는 생성자를 만들수있다.
+public class Article {
+  //테이블의 구조
+  private int id;
+  private String regDate;
+  private String updateDate;
+  private int memberId;
+  private String title;
+  private String body;
 
+  //-> 여기까지 작성한것은 db 정보가 있으니 정보를 담을 수 있는 틀을 만들어준것이다.(안전하게 저장이 된다.)
+
+  //있을수도 있고 없을수도 있는 내용들이라서 extra를 붙여준것인데, 문제는
+  private  String extra__writerName;    // innerjoin을 통해서 테이블에 있는것을 조인해서 이름을 가져올 수 있는것이다.
+
+  //-> 여기까지는 쿼리로 한번에 가져올 수 있는데 나머지 아래에 있는것들은 되지않아서 추가연산을 사용한다.
+
+  private boolean extra__actorCanModify;    // 수정 할 수 있는지 없는지에 대한것이다.
+  private boolean extra__actorCanDelete;
+
+----------------------------------------
 
 
 
