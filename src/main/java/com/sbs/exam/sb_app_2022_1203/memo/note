@@ -421,3 +421,54 @@ head.jspf에
 <header class="con-min-width h-20 bg-gray-300">
 class에 con-min-width를 적어주면 일정 800px에 맞게 화면 깨짐이 방지되면서 스크롤바가 생긴다.
 =================================
+JSP = Servlet : 하나의 파일!
+기본 톰캣의 포트번호 : http://localhost:8080
+현재는 포트오류가 생길 수 있어서 8081로 했다.
+http://localhost:8080/Exam1/user/article/write.jsp -> 나중에 서블릿으로 바껴서 실행하게되는것.
+http://localhost:8080/Exam1/user/article/doWrite
+게시물을 작성하려면 이러게 두개가 필요한데 이 두개 다 서블릿이다.
+그런데 .jsp 는 자바코드보다 html 파일이 더 많고
+doWrite 는 자바로 된 로직이 많다.
+req -> 받은편지 resp -> 발송될 편지
+맨처음엔 자바가 서블릿이면 충분할것이라 생각했지만,
+게시물 작성 수정 삭제만 해도 추가 할 것들이 많아지기 때문에
+디스패처 서블릿을 하나 만들어서 아래의 요청들을 /user/*로 오게해서 컨트롤러로 보낸다 이를 경량 서블릿이라고 하는데,
+컨트롤러에서는 일일이 db접속여부나 한글깨짐여부를 확인 할 필요가 없어진것이다.
+
+사용자 100명이 1번 접속했다,
+HttpServletRequest 라는 객체가 100개 생성된다.
+HttpServletResponse도 100개,
+Session 도 100개 생성된다.
+
+사용자 100명이 2번 접속했다,
+HttpServletRequest 라는 객체가 200개 생성된다.
+HttpServletResponse도 200개,
+HttpSession 은 100개 생성된다.
+
+개인 브라우저는 브라우저마다 딱 하나이다.
+ex. 헬스장에 갈때마다 헬스장 락커가 계속 생성되지 않고, 키를 가져가지 않으면 열리지 않듯이
+락커를 브라우저라고 생각하면 쉬울것이다.
+
+http://localhost:8080/Exam1/user/article/doModify
+http://localhost:8080/Exam2
+
+HttpServletRequest
+- 정보 넣기
+- 정보 얻기
+HttpServletResponse
+- 정보 쓰기
+HttpSession
+- 정보를 편집
+
+정보를 톰캣이 받아서 톰캣 내에 있는 request 서블릿 에게 준다.
+그 정보를 다시 컨트롤러에게 준다.
+Rq에서 보면
+private HttpServletRequest req;
+private HttpServletResponse resp;
+private HttpSession session;
+이들은 각각 사용하는 방법이 다른데 Rq를 사용하여 한번에 다룰 수 있도록 정의한것이다.
+
+
+
+
+
