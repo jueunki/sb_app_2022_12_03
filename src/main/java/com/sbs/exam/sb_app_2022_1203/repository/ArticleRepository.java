@@ -88,5 +88,19 @@ public interface ArticleRepository {
       </script>
       """)
   public List<Article> getArticles(@Param("boardId") int boardId);
-}
 
+
+
+  @Select("""
+          <script>
+          SELECT COUNT(*) AS cnt
+          FROM article AS A
+          WHERE 1
+          <if test="boardId != 0">
+            AND A.boardId = #{boardId}
+          </if>
+          </script>
+          """)
+  int getArticlesCount(@Param("boardId") int boardId);
+}
+//boardId가 0이면 0과 0이 같지않으면 불특정 게시물을 가져오는것.
