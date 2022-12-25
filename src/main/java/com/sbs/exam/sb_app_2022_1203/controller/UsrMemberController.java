@@ -9,17 +9,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
 @Controller
 public class UsrMemberController {
   private MemberService memberService;
+  private Rq rq;
 
   //alt + insert해서 constructor를 눌러서 만들어준다.
-  public UsrMemberController(MemberService memberService) {
+  public UsrMemberController(MemberService memberService, Rq rq) {
     this.memberService = memberService;
+    this.rq = rq;
   }
 
   //Object : int와 String을 둘다 받으려면 오브젝트를 써준다.
@@ -80,9 +81,7 @@ public class UsrMemberController {
 
   @RequestMapping("/user/member/doLogin")
   @ResponseBody           //로그인 구현까지 마치면 여기 HttpSession httpsession 이렇게 세션에 저장을 해야한다.
-  public String doLogin(HttpServletRequest req, String loginId, String loginPw) {
-    Rq rq = (Rq) req.getAttribute("rq");
-
+  public String doLogin(String loginId, String loginPw) {
     if(rq.isLogined()) {
       return Ut.jsHistoryBack("이미 로그인 되었습니다.");
       // 이미 로그인이 되었다고 문구를 띄운다.
@@ -118,20 +117,15 @@ public class UsrMemberController {
 
   @RequestMapping("/user/member/doLogout")
   @ResponseBody           //로그아웃 구현까지 마치면 여기 HttpSession httpsession 이렇게 세션에 저장을 해야한다.
-  public String doLogout(HttpServletRequest req) {
-    Rq rq = (Rq) req.getAttribute("rq");
-
+  public String doLogout() {
     if(!rq.isLogined()) {
       return Ut.jsHistoryBack("이미 로그아웃 상태입니다.");
       // 이미 로그아웃이 되었다고 문구를 띄운다.
     }
-
     //이렇게 적으면 세션을 지나서 통과되는 문을 만드는것과 같다.
     rq.logout(); //로그아웃 구현까지 마치면 세션에 저장을 해야한다.
 
-
     return Ut.jsReplace(Ut.f("로그아웃 되었습니다."),"/");
-
   }
 }
 

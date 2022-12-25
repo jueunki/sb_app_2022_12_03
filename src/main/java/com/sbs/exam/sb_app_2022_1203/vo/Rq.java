@@ -3,12 +3,17 @@ package com.sbs.exam.sb_app_2022_1203.vo;
 import com.sbs.exam.sb_app_2022_1203.service.MemberService;
 import com.sbs.exam.sb_app_2022_1203.util.Ut;
 import lombok.Getter;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+@Component
+@Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class Rq {
 
   @Getter
@@ -39,6 +44,7 @@ public class Rq {
     this.isLogined = isLogined;
     this.loginedMemberId = loginedMemberId;
     this.loginedMember = loginedMember;
+    this.req.setAttribute("rq", this); // this는 자기자신이다.!!
   }
 
   public void printHistoryBackJs(String msg) {

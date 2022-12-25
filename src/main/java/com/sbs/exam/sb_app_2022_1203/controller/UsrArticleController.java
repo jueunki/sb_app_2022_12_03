@@ -20,10 +20,12 @@ public class UsrArticleController {
 
   private ArticleService articleService;
   private BoardService boardService;
+  private Rq rq;
 
-  public UsrArticleController(ArticleService articleService, BoardService boardService) {
+  public UsrArticleController(ArticleService articleService, BoardService boardService, Rq rq) {
     this.articleService = articleService;
     this.boardService = boardService;
+    this.rq = rq;
   }
 
 
@@ -37,8 +39,7 @@ public class UsrArticleController {
   // 액션 메서드 시작
   @RequestMapping("/user/article/doWrite")
   @ResponseBody
-  public String doWrite(HttpServletRequest req, String title, String body, String replaceUri) {
-   Rq rq = (Rq) req.getAttribute("rq");
+  public String doWrite(String title, String body, String replaceUri) {
 
     if (rq.isLogined() == false) {
       return rq.jsHistoryBack("로그인 후 이용해주세요.");
@@ -66,9 +67,7 @@ public class UsrArticleController {
 
 
   @RequestMapping("/user/article/list")
-  public String showList(HttpServletRequest req, Model model, int boardId) {
-    Rq rq = (Rq) req.getAttribute("rq");
-
+  public String showList(Model model, int boardId) {
     Board board = boardService.getBoardById(boardId);
 
     if(board == null) {
@@ -88,9 +87,7 @@ public class UsrArticleController {
   }
 
   @RequestMapping("/user/article/detail")
-  public String showDetail(HttpServletRequest req, Model model, int id) { //상세보기는 하나만 가져오는것이기 때문에 복수와 단수를 정확하게 표현해줘야한다.
-    Rq rq = (Rq) req.getAttribute("rq");
-
+  public String showDetail(Model model, int id) { //상세보기는 하나만 가져오는것이기 때문에 복수와 단수를 정확하게 표현해줘야한다.
     Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
    model.addAttribute("article", article); //->req.setAttribute();와 같은 의미이며 이는 jsp할때 이렇게 쓰는것이고 현재 쓰는것은 Spring boot 할 때 쓰는것이다.
@@ -101,8 +98,7 @@ public class UsrArticleController {
 
   @RequestMapping("/user/article/doDelete")
   @ResponseBody
-  public String doDelete(HttpServletRequest req, int id) {
-    Rq rq = (Rq) req.getAttribute("rq");
+  public String doDelete(int id) {
     if (rq.isLogined() == false) {
       return rq.jsHistoryBack("로그인 후 이용해주세요.");
     }
@@ -123,9 +119,7 @@ public class UsrArticleController {
   }
 
   @RequestMapping("/user/article/modify")
-  public String showModify(HttpServletRequest req, Model model, int id) {
-    Rq rq = (Rq) req.getAttribute("rq");
-
+  public String showModify(Model model, int id) {
     Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
     if (article == null) {
@@ -142,8 +136,7 @@ public class UsrArticleController {
 
     @RequestMapping("/user/article/doModify")
   @ResponseBody
-  public String doModify(HttpServletRequest req, int id, String title, String body) {
-      Rq rq = (Rq) req.getAttribute("rq");
+  public String doModify(int id, String title, String body) {
       if (rq.isLogined() == false) {
         return rq.jsHistoryBack("로그인 후 이용해주세요.");
       }
