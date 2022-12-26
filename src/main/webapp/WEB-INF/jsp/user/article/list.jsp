@@ -6,8 +6,22 @@
 
 <section class="mt-5 con-min-width">
   <div class="con mx-auto px-3">
-    <div>
-      게시물 개수 : ${articlesCount} 건
+    <div class="flex">
+      <div>
+        게시물 개수 : <span class="badge badge-primary">${articlesCount}</span> 건
+      </div>
+      <div class="flex-grow"></div>
+      <form>
+        <input type="hidden" name="boardId" value="${param.boardId}">
+        <select data-value="${param.searchKeywordTypeCode}" name="searchKeywordTypeCode" class="select select-bordered">
+        <option disabled="disabled">검색타입</option>
+          <option value="title">제목</option>
+          <option value="body">내용</option>
+          <option value="title,body">제목,내용</option>
+          <input name="searchKeyword" type="text" class="ml-2 w-72 input input-bordered" placeholder="검색어" maxlength="20" value="${param.searchKeyword}">
+          <button type="submit" class="ml-2 btn btn-primary">검색</button>
+        </select>
+      </form>
     </div>
     <div class="table-box-type-1 mt-3">
       <table class="table table-fixed">
