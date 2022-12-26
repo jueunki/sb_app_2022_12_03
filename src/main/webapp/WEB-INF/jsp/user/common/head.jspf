@@ -3,7 +3,7 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" class="light" data-theme="light">
   <title>${pageTitle}</title>
   <!-- 제이쿼리 불러오기 : 무조건 최상단에 둔다. -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js"></script>

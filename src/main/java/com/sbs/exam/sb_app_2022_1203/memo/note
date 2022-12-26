@@ -540,7 +540,13 @@ int pagesCount = (int)Math.ceil((double) articlesCount / itemsCountInAPage); //�
     model.addAttribute("pagesCount", pagesCount);  이렇게 값을 넘겨줘야한다.
 
 ==============================
-
+ 
 <c:set> : 값을 설정하는것!
 <c:set var="pageMenuArmLen" value="4" /> : ArmLen은 길이/ 현재 페이지를 기준으로 좌로4칸 우로4칸씩 보여주겠다는것.
+
+
+head.jspf의
+ <meta charset="UTF-8" class="light" data-theme="light"> 중에
+ class="light" data-theme="light 는 다크모드를 사용해도 고정으로 밝은모드로 고정시키는것을 의미하며 현재는 설정을 해준 상태이다.
+ 개인 컴퓨터에서 다크모드를 사용하고 있을 시에 미리 설정해놓고 작업하면 불편함이 없이 좋을것이다.
 
