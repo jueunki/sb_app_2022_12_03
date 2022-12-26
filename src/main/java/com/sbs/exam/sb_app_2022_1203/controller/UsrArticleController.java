@@ -94,6 +94,12 @@ public class UsrArticleController {
 
   @RequestMapping("/user/article/detail")
   public String showDetail(Model model, int id) { //상세보기는 하나만 가져오는것이기 때문에 복수와 단수를 정확하게 표현해줘야한다.
+    ResultData increaseHitCountRd = articleService.increaseHitCount(id);
+
+    if(increaseHitCountRd.isFail()) {
+      return rq.historyBackJsOnView(increaseHitCountRd.getMsg());
+    }
+
     Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
    model.addAttribute("article", article); //->req.setAttribute();와 같은 의미이며 이는 jsp할때 이렇게 쓰는것이고 현재 쓰는것은 Spring boot 할 때 쓰는것이다.

@@ -142,6 +142,15 @@ public interface ArticleRepository {
          </if>
          </script>
          """)
-  int getArticlesCount(@Param("boardId") int boardId,@Param("searchKeywordTypeCode") String searchKeywordTypeCode,@Param("searchKeyword") String searchKeyword);
+  public int getArticlesCount(@Param("boardId") int boardId,@Param("searchKeywordTypeCode") String searchKeywordTypeCode,@Param("searchKeyword") String searchKeyword);
+
+  @Update("""
+         <script>
+          UPDATE article
+          SET hitCount = hitCount + 1
+          WHERE id = #{id}
+         </script>
+         """)
+  public int increaseHitCount(@Param("id") int id);
 }
 //boardId가 0이면 0과 0이 같지않으면 불특정 게시물을 가져오는것.

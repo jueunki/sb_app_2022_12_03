@@ -1,7 +1,10 @@
 package com.sbs.exam.sb_app_2022_1203.vo;
 
 import lombok.Getter;
+import lombok.ToString;
 
+
+@ToString
 public class ResultData<DT> {
   // 성공 : S-1, S-2, S-3
   // 실패 : F-1, F-2, F-3

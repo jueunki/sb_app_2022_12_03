@@ -16,7 +16,9 @@ public class Article {
   private String title;
   private String body;    // 여기까지 작성한것은 db 정보가 있으니 정보를 담을 수 있는 틀을 만들어준것이다.(안전하게 저장이 된다.)
   // 여기 까지는 기본 쿼리를 쓰면 받을 수 있고
-
+  // --여기는
+  private String hitCount;
+  // 제외--
   private  String extra__writerName; // 작성자다.
   // 여기는 leftjoin을 사용하면 받을 수 있는데,
   private boolean extra__actorCanModify;
