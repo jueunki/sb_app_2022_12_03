@@ -541,5 +541,6 @@ int pagesCount = (int)Math.ceil((double) articlesCount / itemsCountInAPage); //�
 
 ==============================
 
-
+<c:set> : 값을 설정하는것!
+<c:set var="pageMenuArmLen" value="4" /> : ArmLen은 길이/ 현재 페이지를 기준으로 좌로4칸 우로4칸씩 보여주겠다는것.
 
