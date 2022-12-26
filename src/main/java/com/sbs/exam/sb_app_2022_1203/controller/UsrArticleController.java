@@ -78,9 +78,12 @@ public class UsrArticleController {
     int articlesCount = articleService.getArticlesCount(boardId);
 
     int itemsCountInAPage = 10; //아이템 카운터를 10개 까지 한다는 뜻.
+    int pagesCount = (int)Math.ceil((double) articlesCount / itemsCountInAPage); //만약에 글이 20 페이지가 있으면 2 페이지 27개의 글이 있으면 3페이지가 보이게 하는것
     List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMemberId(), boardId, itemsCountInAPage, page);
 
-    model.addAttribute("board", board);
+    model.addAttribute("boardId", boardId);
+    model.addAttribute("pagesCount", pagesCount); // 이렇게 값을 넘겨줘야한다.
+    model.addAttribute("page", page);
     model.addAttribute("articlesCount", articlesCount);
     model.addAttribute("articles", articles);
 
