@@ -28,7 +28,7 @@ public class ArticleService {
   }
 
   //출력용
-  public List<Article> getForPrintArticles(int actorId, int boardId, int itemsCountInAPage, int page) {
+  public List<Article> getForPrintArticles(int actorId, int boardId, String searchKeywordTypeCode, String searchKeyword, int itemsCountInAPage, int page) {
     /* 예시 설명
     SELECT *
     FROM article
@@ -40,7 +40,7 @@ public class ArticleService {
     int limitStart = (page -1) * itemsCountInAPage; //페이지가 1이면 0부터 10까지 보여주는것이고 페이지가 1 이면 10에서 10 까지 보여주는것이고 페이지가 3 이면 20에서 10까지 보여주는것이다.
     int limitTake = itemsCountInAPage;
 
-    List<Article> articles = articleRepository.getArticles(boardId, limitStart, limitTake);
+    List<Article> articles = articleRepository.getArticles(boardId, searchKeywordTypeCode, searchKeyword, limitStart, limitTake);
 
 
     for (Article article : articles) {
