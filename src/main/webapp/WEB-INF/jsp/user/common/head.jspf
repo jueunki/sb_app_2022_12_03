@@ -31,6 +31,11 @@
         </a>
       </li>
       <li>
+        <a href="../article/write" class="flex h-full items-center px-3 hover:underline">
+          <span>게시물 작성</span>
+        </a>
+      </li>
+      <li>
         <a href="/user/article/list?boardId=1" class="flex h-full items-center px-3 hover:underline">
           <span>공지사항 게시판</span>
         </a>

@@ -4,11 +4,10 @@
 <c:set var="pageTitle" value="게시물 작성" />
 <%@ include file="../common/head.jspf" %>
 
-<section class="mt-5">
-  <div class="container mx-auto px-3">
+<section class="mt-5 con-min-width">
+  <div class="con mx-auto px-3">
     <form class="table-box-type-1" method="POST" action="../article/doWrite">
       <input type="hidden" name="id" value="${article.id}"> <!-- 서버에 적용시키려면 이부분이 꼭 필요하다. -->
-
       <table border="1">
         <colgroup>
           <col width="200"/>
