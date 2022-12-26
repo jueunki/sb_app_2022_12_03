@@ -68,14 +68,15 @@ public class UsrArticleController {
 
 
   @RequestMapping("/user/article/list")
-  public String showList(Model model, @RequestParam(defaultValue = "1") int boardId , @RequestParam(defaultValue = "1") int page) {
+  public String showList(Model model, @RequestParam(defaultValue = "1") int boardId , @RequestParam(defaultValue = "1") int page,
+                         @RequestParam(defaultValue = "title,body") String searchKeywordTypeCode, @RequestParam(defaultValue = "")  String searchKeyword) {
     Board board = boardService.getBoardById(boardId);
 
     if(board == null) {
       return rq.historyBackJsOnView(Ut.f("%d번 게시판은 존재하지 않습니다.", boardId));
     }
 
-    int articlesCount = articleService.getArticlesCount(boardId);
+    int articlesCount = articleService.getArticlesCount(boardId, searchKeywordTypeCode, searchKeyword);
 
     int itemsCountInAPage = 10; //아이템 카운터를 10개 까지 한다는 뜻.
     int pagesCount = (int)Math.ceil((double) articlesCount / itemsCountInAPage); //만약에 글이 20 페이지가 있으면 2 페이지 27개의 글이 있으면 3페이지가 보이게 하는것

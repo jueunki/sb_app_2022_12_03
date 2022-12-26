@@ -540,13 +540,68 @@ int pagesCount = (int)Math.ceil((double) articlesCount / itemsCountInAPage); //�
     model.addAttribute("pagesCount", pagesCount);  이렇게 값을 넘겨줘야한다.
 
 ==============================
- 
+
 <c:set> : 값을 설정하는것!
 <c:set var="pageMenuArmLen" value="4" /> : ArmLen은 길이/ 현재 페이지를 기준으로 좌로4칸 우로4칸씩 보여주겠다는것.
 
-
+--------------------------
 head.jspf의
  <meta charset="UTF-8" class="light" data-theme="light"> 중에
  class="light" data-theme="light 는 다크모드를 사용해도 고정으로 밝은모드로 고정시키는것을 의미하며 현재는 설정을 해준 상태이다.
  개인 컴퓨터에서 다크모드를 사용하고 있을 시에 미리 설정해놓고 작업하면 불편함이 없이 좋을것이다.
+
+------------------------
+  articleRepository 내용중
+
+  <if text="searchKeyword != ''"> : searchKeyword가 없지않다, 존재한다라는것을 의미
+
+  @Select("""
+           <script>
+           SELECT COUNT(*) AS cnt
+           FROM article AS A
+           WHERE 1
+           <if test="boardId != 0">
+             AND A.boardId = #{boardId}
+           </if>
+           <if text="searchKeyword != ''">
+            <choose>
+              <when test="searchKeywordTypeCode == 'title'">
+              AND A.title LIKE #{searchKeyword}
+              </when>
+            </choose>
+           </if>
+           </script>
+           """) 에서 AND A.title LIKE #{searchKeyword} 이부분이 쿼리가 실행되면
+           AND A.title = #{searchKeyword} 이렇게 바뀌는데 실제로
+           'AND A.title = #{searchKeyword}' 이렇게 자동적으로 따옴표가 붙어서 바뀌게 된다.
+           ex -> AND A.title = '하하'
+ AND A.title LIKE '%#{searchKeyword}%' 이렇게 나와야 하는데
+ AND A.title LIKE '%'#{searchKeyword}'%' 이렇게 바뀌고
+ AND A.title LIKE '%'하하'%'이렇게 되기때문에 문법 오류가 생길수있다.
+그래서 CONCAT을 붙여서 처리한다.
+
+AND A.title LIKE CONCAT('%', #{searchKeyword}, '%') 이렇게 처리하는것이고,
+예를 들어 AND A.title LIKE CONCAT('%', '하하', '%') 이렇게 처리하게되면,
+AND A.title LIKE %하하% 이렇게 출력이 된다. -어쩔수없는 마이바티스의 한계라고 한다.
+
+----
+  <when test="searchKeywordTypeCode == 'title'">
+   AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+  </when>
+  <when test="searchKeywordTypeCode == 'body'">
+   AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+  </when>
+ 의 다음에 오는 하위의
+<otherwise> 는 풀이 하자면 title도 아니고 body도 아니면 이라는 뜻이다.
+-----
+<otherwise>
+              AND (
+                A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+                OR
+                A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+              )
+            </otherwise>
+
+제목이나 내용이 검색이되면(둘중 하나라도 포함이되면) 검색하겠다라는 뜻!
+
 
