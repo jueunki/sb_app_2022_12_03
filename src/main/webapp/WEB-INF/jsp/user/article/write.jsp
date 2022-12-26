@@ -21,6 +21,27 @@
             </td>
           </tr>
           <tr>
+            <th>게시판</th>
+            <td>
+              <select class="select select-bordered" name="boardId">
+                <option disabled selected>게시판을 선택해주세요.</option>
+                <option value="1">공지</option>
+                <option value="2">자유</option>
+              </select>
+              <!-- 이렇게 써도되고 -->
+              <!--
+              <label>
+              공지
+              <input type="radio" name="boardId" value="1" />
+              </label>
+              <label>
+                자유
+              <input type="radio" name="boardId" value="2" />
+              </label>
+              -->
+            </td>
+          </tr>
+          <tr>
             <th>제목</th>
             <td>
               <input name="title" class="input input-bordered w-96 max-w-xs" type="text" placeholder="제목" />

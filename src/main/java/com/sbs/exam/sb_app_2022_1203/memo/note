@@ -518,3 +518,9 @@ public class UsrArticleController {
 요청별로 하나씩 존재해야하는데 private Rq rq;라는 객체에게 명령을 하면,
 proxyMode 얘가 대리자 역할을 해서 각각의 사용자 별로
 다른 애들에게 전달을 한다는 뜻!
+=============================
+
+<option disabled>게시판을 선택해주세요.</option> 의 disabled를 사용하면
+게시판을 선택해주세요. 라는 문구가 비활성화 된다!
+
+required="required" : 입력을 하지 않았을 때 입력란을 작성하라고 문구가 뜨는것!
