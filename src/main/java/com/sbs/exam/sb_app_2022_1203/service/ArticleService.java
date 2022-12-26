@@ -28,8 +28,19 @@ public class ArticleService {
   }
 
   //출력용
-  public List<Article> getForPrintArticles(int actorId, int boardId) {
-    List<Article> articles = articleRepository.getArticles(boardId);
+  public List<Article> getForPrintArticles(int actorId, int boardId, int itemsCountInAPage, int page) {
+    /* 예시 설명
+    SELECT *
+    FROM article
+    WHERE boardId = 1  여기서 1은 공지사항 게시판으로 설정이 되어있어서
+     ORDER BY id DESC   공지사항 게시판이면 0부터 10까지 보여줘라 라는 의미.
+     LIMIT 0, 10
+    */
+
+    int limitStart = (page -1) * itemsCountInAPage; //페이지가 1이면 0부터 10까지 보여주는것이고 페이지가 1 이면 10에서 10 까지 보여주는것이고 페이지가 3 이면 20에서 10까지 보여주는것이다.
+    int limitTake = itemsCountInAPage;
+
+    List<Article> articles = articleRepository.getArticles(boardId, limitStart, limitTake);
 
 
     for (Article article : articles) {
