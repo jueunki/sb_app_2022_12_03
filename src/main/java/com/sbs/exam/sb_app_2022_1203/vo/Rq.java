@@ -85,4 +85,11 @@ public class Rq {
   public String jsReplace(String msg, String uri) {
     return Ut.jsReplace(msg, uri);
   }
+
+
+  //---- 로그인상태에서 메인홈화면으로 가면 로그아웃 되어있어야하는데 로그인이라고 잘못 설정이 되어있는 부분을 해소하고자 만든 부분----
+  //  하위의 메서드는 Rq 객체가 자연스럽게 생성되도록 유도하는 역할을 한다.
+  // 지우면 안되고 편의를 위해서 initOnBeforeActionInterceptor 에서 꼭 호촐을 해줘야 한다.
+  public void initOnBeforeActionInterceptor() {
+  }
 }
