@@ -603,5 +603,17 @@ AND A.title LIKE %하하% 이렇게 출력이 된다. -어쩔수없는 마이바
             </otherwise>
 
 제목이나 내용이 검색이되면(둘중 하나라도 포함이되면) 검색하겠다라는 뜻!
+------
 
+<table class="table table-fixed"> : 의 테이블 안에 클래스를 만들어서 table 을 넣으면 테이블의 형태가 데이지UI의 형태에 맞게 모양이 바뀌며,
+table-fixed 는 게시물의 제목이 아무리 길어도 테이블 만큼의 선에서 ...처리로 더이상 글의 크기가 넘어가지 않게 해주는것이다.
 
+<a class="btn-text-link block w-full truncate" : 풀이를 하자면,
+a가 display 가 inline 이면 기본적으로 너비가 적용되지않는다
+block을 줘야지 너비가 적용되기 때문에 block 을 넣었고,
+너비가 있어야지 truncate 가 적용이된다.
+w-full 은 너비가 100% 라는 의미이고, truncate 는 너비가 정해져있고 그 이상을 넘어가면 자른다는 의미이다.
+
+lorem 을 작성하고 tab을 누르게 되면 아무글이나 길게 나오게되는것이다.
+
+------
