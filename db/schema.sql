@@ -191,7 +191,13 @@ from article;
 # 숫자를 랜덤으로 배치가 되는것!
 # select rand();
 
+# select concat('%', '하하', '%'); #이렇게 출력하면 문장이 합쳐져서 출력이되서 오류가 생기지 않는다.
 
+
+# 게시물 테이블 hitCount 칼럼을 추가
+# alter table article
+# add column hitCount int(10) unsigned not null default 0; #
+# desc article;
 
 
 
