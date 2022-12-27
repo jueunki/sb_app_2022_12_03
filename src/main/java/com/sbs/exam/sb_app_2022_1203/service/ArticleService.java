@@ -19,7 +19,7 @@ public class ArticleService {
   }
 
 
-  public ResultData writeArticle(int memberId, int boardId, String title, String body) {
+  public ResultData<Integer> writeArticle(int memberId, int boardId, String title, String body) {
     articleRepository.writeArticle(memberId, boardId, title, body);
     int id = articleRepository.getLastInsertId();
 
@@ -49,6 +49,13 @@ public class ArticleService {
     return articles;
   }
 
+  public Article getForPrintArticle(int actorId, int id) {
+    Article article = articleRepository.getForPrintArticle(id);
+
+    updateForPrintData(actorId, article);
+
+    return article;
+  }
   private void updateForPrintData(int actorId, Article article) { //(int actorId, Article article) : 로그인 한 사람이 누구인지 얻어오고, 해당 게시물을 얻어오는데
     //데이터를 담아서 넘겨준 상태.
     if (article == null) {
@@ -62,13 +69,7 @@ public class ArticleService {
     article.setExtra__actorCanModify(actorCanModifyRd.isSuccess());
   }
 
-  public Article getForPrintArticle(int actorId, int id) {
-    Article article = articleRepository.getForPrintArticle(id);
 
-    updateForPrintData(actorId, article);
-
-    return article;
-  }
 
   public void deleteArticle(int id) {
     articleRepository.deleteArticle(id);
@@ -83,7 +84,7 @@ public class ArticleService {
 
   public ResultData actorCanModify(int actorId, Article article) {
     if (article == null) {
-      return ResultData.from("F-1", "권한이 없습니다.");
+      return ResultData.from("F-1", "게시물이 존재하지 않습니다.");
     }
     if (article.getMemberId() != actorId) {
       return ResultData.from("F-2", "권한이 없습니다.");
@@ -94,7 +95,7 @@ public class ArticleService {
   public ResultData actorCanDelete(int actorId, Article article) {
 
     if (article == null) {
-      return ResultData.from("F-1", "권한이 없습니다.");
+      return ResultData.from("F-1", "게시물이 존재하지 않습니다.");
     }
     if (article.getMemberId() != actorId) {
       return ResultData.from("F-2", "권한이 없습니다.");
@@ -106,7 +107,7 @@ public class ArticleService {
     return articleRepository.getArticlesCount(boardId, searchKeywordTypeCode, searchKeyword);
   }
 
-  public ResultData increaseHitCount(int id) {
+  public ResultData<Integer> increaseHitCount(int id) {
     int affectedRowsCount = articleRepository.increaseHitCount(id);
 
     if(affectedRowsCount == 0) {

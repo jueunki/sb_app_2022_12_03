@@ -643,7 +643,41 @@ UserArticleController에서
   public ResultData<Integer> doIncreaseHitCountRd(int id) {
     }
     를 만들었다
-http://localhost:8081/user/article/article/doIncreaseHitCount?id=2 이렇게 별도의 페이지로 뺄것이다.
+http://localhost:8081/user/article/doIncreaseHitCount?id=2 이렇게 별도의 페이지로 뺄것이다.
+위에 있는걸로 접속하면 아래에 있는,
+http://localhost:8081/user/article/doIncreaseHitCountRd?id=2 로 바로 넘어가게 script설정을 detail 맨 하단에 해주었다.
+===================================================
+게시물 조회된것만 확인하면 되지 페이지 전체가 다시 로딩될 필요는 없기 때문에 ajax 처리를 해줬다.
+<script>
+  const params = {};
+  params.id = parseInt('${param.id}');
+</script>
+<script>
+  function ArticleDetail__increaseHitCount() {
+  $.get('/user/article/deIncreaseHitCountRd',       -> 이부분은 form 이다. 이부분으로 날리겠다라는 뜻.
+    {
+      id : params.id,                               -> 그렇게 되면 id는 ?id=id 이런 방식으로 나오게 되는데 ?id=1, ?id=2, ?id=3 ... 이렇게 출력되는것이다. 상단 <script> 에서 params.id = parseInt('${param.id}'); 이렇게 아이디를 구했기 때문!
+      ajaxMode: 'Y'
+    }, function(data) {
+      $('.article-detail__hit-count').empty().html(data.data1); > -> $('.article-detail__hit-count')에 있는 내용을 지우고 (data.data1) 여기 안에있는것으로 보여주겠다는 뜻. increase 하게되면 data1 은 조회수 인데 조회수를 보여주겠다는 뜻이다. 실제로 페이지에서 보여주는 조회수와 여기서 보여주는 조회수는 실제로 다르다 iframe 과 비슷한건데 iframe 을 대체한것이다.
+    }, 'json');
+  }
+  $(function() {
+   $(function() {
+      // ArticleDetail__increaseHitCount();
+       setTimeout(ArticleDetail__increaseHitCount, 3000);  -> 3초 뒤에 실행하겠다는 뜻.
+       })
+</script>
+==========================
+<!--
+<script>
+  location.href = 'http://localhost:8081/user/article/doIncreaseHitCountRd?id=2';
+</script>
+  -->
+<!--
+<iframe src="http://localhost:8081/user/article/doIncreaseHitCountRd?id=2" frameborder="0"></iframe>
+  -->
+이 두가지는 detail 맨 하단에 적었던 것들 둘중 하나 사용해도된다.
 
 
 
