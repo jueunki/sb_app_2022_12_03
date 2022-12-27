@@ -104,7 +104,7 @@ public class UsrArticleController {
   @RequestMapping("/user/article/doIncreaseHitCountRd") // 조회수 알아보기
   @ResponseBody
   public ResultData<Integer> doIncreaseHitCountRd(int id) {
-    ResultData increaseHitCountRd = articleService.increaseHitCount(id);
+    ResultData<Integer> increaseHitCountRd = articleService.increaseHitCount(id);
 
     if (increaseHitCountRd.isFail()) {
       return increaseHitCountRd;

@@ -12,7 +12,7 @@
 <script>
   function
   ArticleDetail__increaseHitCount() {
-  $.get('/user/article/deIncreaseHitCountRd',
+  $.get('/user/article/doIncreaseHitCountRd',
     {
       id : params.id,
       ajaxMode: 'Y'
