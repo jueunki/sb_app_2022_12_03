@@ -635,3 +635,15 @@ $('select[data-value]').each(function(index, el){
   <!-- 사이트 공통 js -->
   <script src="/static/js/common.js" defer></script> 여기에 있는 defer를 붙여줬기 때문에 html이 실행된 후 나중에 실행이 된다.
 ----
+
+2022-12-27 ajax 방식으로 바꾼다.
+
+UserArticleController에서
+@RequestMapping("/user/article/doIncreaseHitCountRd")
+  public ResultData<Integer> doIncreaseHitCountRd(int id) {
+    }
+    를 만들었다
+http://localhost:8081/user/article/article/doIncreaseHitCount?id=2 이렇게 별도의 페이지로 뺄것이다.
+
+
+

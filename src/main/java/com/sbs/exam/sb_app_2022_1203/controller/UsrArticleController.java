@@ -30,8 +30,6 @@ public class UsrArticleController {
   }
 
 
-
-
   @RequestMapping("/user/article/write")
   public String showWrite(HttpServletRequest req) {
     return "user/article/write";
@@ -58,7 +56,7 @@ public class UsrArticleController {
     ResultData<Integer> writeArticleRd = articleService.writeArticle(rq.getLoginedMemberId(), boardId, title, body);
     int id = writeArticleRd.getData1();
 
-    if(Ut.empty(replaceUri)) {
+    if (Ut.empty(replaceUri)) {
       replaceUri = Ut.f("../article/detail?id=%d", id);
     }
 
@@ -68,18 +66,18 @@ public class UsrArticleController {
 
 
   @RequestMapping("/user/article/list")
-  public String showList(Model model, @RequestParam(defaultValue = "1") int boardId , @RequestParam(defaultValue = "1") int page,
-                         @RequestParam(defaultValue = "title,body") String searchKeywordTypeCode, @RequestParam(defaultValue = "")  String searchKeyword) {
+  public String showList(Model model, @RequestParam(defaultValue = "1") int boardId, @RequestParam(defaultValue = "1") int page,
+                         @RequestParam(defaultValue = "title,body") String searchKeywordTypeCode, @RequestParam(defaultValue = "") String searchKeyword) {
     Board board = boardService.getBoardById(boardId);
 
-    if(board == null) {
+    if (board == null) {
       return rq.historyBackJsOnView(Ut.f("%d번 게시판은 존재하지 않습니다.", boardId));
     }
 
     int articlesCount = articleService.getArticlesCount(boardId, searchKeywordTypeCode, searchKeyword);
 
     int itemsCountInAPage = 10; //아이템 카운터를 10개 까지 한다는 뜻.
-    int pagesCount = (int)Math.ceil((double) articlesCount / itemsCountInAPage); //만약에 글이 20 페이지가 있으면 2 페이지 27개의 글이 있으면 3페이지가 보이게 하는것
+    int pagesCount = (int) Math.ceil((double) articlesCount / itemsCountInAPage); //만약에 글이 20 페이지가 있으면 2 페이지 27개의 글이 있으면 3페이지가 보이게 하는것
     List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMemberId(), boardId, searchKeywordTypeCode, searchKeyword, itemsCountInAPage, page);
 
     model.addAttribute("boardId", boardId);
@@ -94,18 +92,25 @@ public class UsrArticleController {
 
   @RequestMapping("/user/article/detail")
   public String showDetail(Model model, int id) { //상세보기는 하나만 가져오는것이기 때문에 복수와 단수를 정확하게 표현해줘야한다.
-    ResultData increaseHitCountRd = articleService.increaseHitCount(id);
-
-    if(increaseHitCountRd.isFail()) {
-      return rq.historyBackJsOnView(increaseHitCountRd.getMsg());
-    }
 
     Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
-   model.addAttribute("article", article); //->req.setAttribute();와 같은 의미이며 이는 jsp할때 이렇게 쓰는것이고 현재 쓰는것은 Spring boot 할 때 쓰는것이다.
+    model.addAttribute("article", article); //->req.setAttribute();와 같은 의미이며 이는 jsp할때 이렇게 쓰는것이고 현재 쓰는것은 Spring boot 할 때 쓰는것이다.
 
     return "user/article/detail";
     //String data type과 Int data type을 둘다 허용 하려면 둘의 상위type인 Object로 사용해준다(별로 좋은 방법은 아닙니다.)
+  }
+
+  @RequestMapping("/user/article/doIncreaseHitCountRd") // 조회수 알아보기
+  @ResponseBody
+  public ResultData<Integer> doIncreaseHitCountRd(int id) {
+    ResultData increaseHitCountRd = articleService.increaseHitCount(id);
+
+    if (increaseHitCountRd.isFail()) {
+      return increaseHitCountRd;
+    }
+
+    return ResultData.newData(increaseHitCountRd, "hitCount", articleService.getArticleHitCount(id));
   }
 
   @RequestMapping("/user/article/doDelete")
@@ -146,32 +151,32 @@ public class UsrArticleController {
     return "user/article/modify";
   }
 
-    @RequestMapping("/user/article/doModify")
+  @RequestMapping("/user/article/doModify")
   @ResponseBody
   public String doModify(int id, String title, String body) {
-      if (rq.isLogined() == false) {
-        return rq.jsHistoryBack("로그인 후 이용해주세요.");
-      }
-      Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
-
-      if (article.getMemberId() != rq.getLoginedMemberId()) {
-        return rq.jsHistoryBack("권한이 없습니다."); //월권이기 때문에 서비스에게 넘기는것이 좋다.
-      }
-
-      if (article == null) {
-        return rq.jsHistoryBack(Ut.f("%d번 게시물이 존재하지 않습니다.", id));
-      }
-
-      ResultData actorCanModifyRd = articleService.actorCanModify(rq.getLoginedMemberId(), article); //rq.getrq.getLoginedMemberId()()가 article을 수정할 수 있다는 뜻
-
-      if (actorCanModifyRd.isFail()) {
-        return rq.jsHistoryBack(actorCanModifyRd.getMsg());
-      }
-      //여기에 요청을 넣는것이다.
-
-      articleService.modifyArticle(id, title, body); //localhost:8081/user/article/doModify?id=1&title=제목1 수정&body=내용1 수정 이라고적으면 수정이 된다.
-      return rq.jsReplace(Ut.f("%d번 게시물이 수정되었습니다.", id), Ut.f("../article/detail?id=%d", id)); //게시물 수정 후 자바 스크립트로 후 처리(수정 했을때 메시지 뜰 수 있게 만들어 주는 부분)
+    if (rq.isLogined() == false) {
+      return rq.jsHistoryBack("로그인 후 이용해주세요.");
     }
-      //여기까지 오면 수정이 가능하다는것.
+    Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
+
+    if (article.getMemberId() != rq.getLoginedMemberId()) {
+      return rq.jsHistoryBack("권한이 없습니다."); //월권이기 때문에 서비스에게 넘기는것이 좋다.
+    }
+
+    if (article == null) {
+      return rq.jsHistoryBack(Ut.f("%d번 게시물이 존재하지 않습니다.", id));
+    }
+
+    ResultData actorCanModifyRd = articleService.actorCanModify(rq.getLoginedMemberId(), article); //rq.getrq.getLoginedMemberId()()가 article을 수정할 수 있다는 뜻
+
+    if (actorCanModifyRd.isFail()) {
+      return rq.jsHistoryBack(actorCanModifyRd.getMsg());
+    }
+    //여기에 요청을 넣는것이다.
+
+    articleService.modifyArticle(id, title, body); //localhost:8081/user/article/doModify?id=1&title=제목1 수정&body=내용1 수정 이라고적으면 수정이 된다.
+    return rq.jsReplace(Ut.f("%d번 게시물이 수정되었습니다.", id), Ut.f("../article/detail?id=%d", id)); //게시물 수정 후 자바 스크립트로 후 처리(수정 했을때 메시지 뜰 수 있게 만들어 주는 부분)
   }
-  // 액션 메서드 끝
+  //여기까지 오면 수정이 가능하다는것.
+}
+// 액션 메서드 끝

@@ -152,5 +152,15 @@ public interface ArticleRepository {
          </script>
          """)
   public int increaseHitCount(@Param("id") int id);
+
+
+  @Select("""
+         <script>
+         SELECT hitCount
+         FROM article
+         WHERE id = #{id}
+         </script>
+         """)
+  public int getArticleHitCount(@Param("id") int id);
 }
 //boardId가 0이면 0과 0이 같지않으면 불특정 게시물을 가져오는것.
