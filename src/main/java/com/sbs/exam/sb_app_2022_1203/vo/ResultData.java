@@ -17,6 +17,11 @@ public class ResultData<DT> {
   //비고란
   @Getter
   private DT data1;
+  @Getter
+  private String data2Name;
+  //비고란
+  @Getter
+  private Object data2;
 
 //  private ResultData() {
 //    // private생성자 : 외부에서 접근할 수 없게 하는것.
@@ -53,5 +58,12 @@ public class ResultData<DT> {
   public static<DT> ResultData<DT> newData(ResultData oldRd, String data1Name, DT data1) {
     return from(oldRd.getResultCode(), oldRd.getMsg(), data1Name, data1); //데이터 이름도 넣겠다는 의미.
     //alt + shift + R 누르면 한꺼번에 바꿀수있다.
+  }
+
+  public void setData2(String dataName, Object data) {
+    data2Name = dataName;
+    data2 = data;
+
+
   }
 }
