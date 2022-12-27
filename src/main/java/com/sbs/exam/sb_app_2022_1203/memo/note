@@ -705,5 +705,17 @@ localStorage.setItem('test', 1); 구글에서 긁어 온 코드를 보면 'test'
    localStorage.setItem('article', true); -> 이 부분은 이미 한번 위에 코드가 실행되었다는 뜻이다.
 이 스크립트 문법의 해석은 localStorage에 기록이 있으면 바로 return해서 보내버리는것이다.
 
-
+========
 http://172.30.1.79/user/article/detail?id=2 -> 접속 해보면 될것같은데 안되서 보류.
+
+=========
+
+== 크롬 개발자 도구 Network 와 Application 사용방법 ==
+개발 프로젝트에서 F12 누르고 LocalStorage를 누르면 조회된 목록을 알 수 있고,
+Network 에서 Preserve log 와 Disable cache 를 체크해놓지 않으면 통신되는것이 계속뜬다.
+체크를 해놓은 상태로 봐야 정보가 남아있다.
+체크 한 후 All로 F5 를 눌러서 보면 요청이 들어오는것을 확인할 수 있다.
+올 누르면 정보가 쌓인다.
+그리고 Fetch/XHR을 클릭해서 F5를 누르면 요청한 내용만 볼 수 있다.
+그리고 Headers 를 누르게되면 내가 어떤방식으로 요청을 했는지 확인 할 수 있다.
+계속 F5를 눌러서 보고싶지않다면 Name 에 떠있는 내역을 우클릭해서 Replay XHR을 누르면 또 요청을 보낼 수 있다.
