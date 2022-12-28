@@ -26,9 +26,11 @@
     <div class="table-box-type-1 mt-3">
       <table class="table table-fixed">
         <colgroup>
-          <col width="80"/>
-          <col width="150"/>
-          <col width="150"/>
+          <col width="50"/>
+          <col width="100"/>
+          <col width="100"/>
+          <col width="50"/>
+          <col width="50"/>
           <col width="150"/>
           <col/>
         </colgroup>
@@ -36,7 +38,9 @@
         <tr>
           <th>번호</th>
           <th>작성날짜</th>
-          <th>수정날짜</th>
+          <th>작성날짜</th>
+          <th>조회</th>
+          <th>추천</th>
           <th>작성자</th>
           <th>제목</th>
         </tr>
@@ -45,14 +49,16 @@
         <c:forEach var="article" items="${articles}">
           <tr>
             <th>${article.id}</th>
-            <th>${article.regDate.substring(2, 16)}</th>
-            <th>${article.updateDate.substring(2, 16)}</th>
-            <th>${article.extra__writerName}</th>
-            <th>
+            <td>${article.regDate.substring(2, 16)}</td>
+            <td>${article.updateDate.substring(2, 16)}</td>
+            <td>${article.hitCount}</td>
+            <td>${article.extra__goodReactionPoint}</td>
+            <td>${article.extra__writerName}</td>
+            <td>
               <a class="btn-text-link block w-full truncate" href="../article/detail?id=${article.id}">
                 ${article.title}
               </a>
-            </th>
+            </td>
           </tr>
         </c:forEach>
         </tbody>
