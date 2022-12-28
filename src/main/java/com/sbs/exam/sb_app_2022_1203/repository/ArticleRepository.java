@@ -7,7 +7,6 @@ import java.util.List;
 
 @Mapper
 public interface ArticleRepository {
-
   @Insert("""
       INSERT INTO article
       SET regDate = NOW(),
@@ -17,7 +16,6 @@ public interface ArticleRepository {
       title = #{title},
       `body` = #{body}
       """)
-  // INSERT INTO article SET regDate = NOW(), updateDate = NOW(), title = ?, `body` = ?
   public void writeArticle(@Param("memberId") int memberId, @Param("boardId") int boardId, @Param("title") String title, @Param("body") String body);
 
   @Select("""
@@ -26,108 +24,101 @@ public interface ArticleRepository {
       M.nickname AS extra__writerName,
       IFNULL(SUM(RP.point), 0) AS extra__sumReactionPoint,
       IFNULL(SUM(IF(RP.point &gt; 0, RP.point, 0)), 0) AS extra__goodReactionPoint,
-      IFNULL(SUM(IF(RP.point &lt; 0, RP.point, 0)), 0) AS extra__badReactionPoint   
+      IFNULL(SUM(IF(RP.point &lt; 0, RP.point, 0)), 0) AS extra__badReactionPoint
       FROM article AS A
       LEFT JOIN `member` AS M
-      ON A.memberId = M.id 
+      ON A.memberId = M.id
       LEFT JOIN reactionPoint AS RP
       ON RP.relTypeCode = 'article'
-      AND A.id = RP.relId
+      AND A.id = RP.relId          
       WHERE 1
       AND A.id = #{id}
       GROUP BY A.id
       </script>
       """)
-  // SELECE * FROM article WHERE id = ? 이라고 해야 id를 가져올 수 있다.
   public Article getForPrintArticle(@Param("id") int id);
 
   @Delete("""
-      DELETE 
-      FROM article 
+      DELETE
+      FROM article
       WHERE id = #{id}
       """)
-  // DELETE FROM article WHERE id = ?
   public void deleteArticle(@Param("id") int id);
 
-
-  @Select("""
+  @Select("""          
       SELECT A.*,
-      M.nickname AS extra__writerName 
+      M.nickname AS extra__writerName
       FROM article AS A
       LEFT JOIN member AS M
-      ON A.memberId = M.id 
-      ORDER BY A.id DESC
+      ON A.memberId = M.id      
+      ORDER BY A.id DESC          
       """)
-  // SELECT * FROM article ORDER BY id DESC;
   public List<Article> getForPrintArticles();
 
   @Update("""
       <script>
       UPDATE article
       <set>
-          <if test='title != null'>
-            title = #{title},
-          </if>
-          <if test='body != null'>
-            `body` = #{body},
-          </if>
-            updateDate = NOW()
-        </set>
-        WHERE id = #{id}
+        <if test='title != null'>
+          title = #{title},
+        </if>
+        <if test='body != null'>
+          `body` = #{body},
+        </if>
+        updateDate = NOW()
+      </set>
+      WHERE id = #{id}
       </script>
       """)
-  // UPDATE article SET title = ?, `body` = ? updateDate = NOW() WHERE id = ?
-
   public void modifyArticle(@Param("id") int id, @Param("title") String title, @Param("body") String body);
 
   @Select("SELECT LAST_INSERT_ID()")
   public int getLastInsertId();
 
   @Select("""
-          <script>          
-          SELECT A.*,
-          IFNULL(SUM(RP.point), 0) AS extra__sumReactionPoint,
-          IFNULL(SUM(IF(RP.point &gt; 0, RP.point, 0)), 0) AS extra__goodReactionPoint,
-          IFNULL(SUM(IF(RP.point &lt; 0, RP.point, 0)), 0) AS extra__badReactionPoint
-          FROM (
-            SELECT A.*,
-            M.nickname AS extra__writerName
-            FROM article AS A
-            LEFT JOIN member AS M
-            ON A.memberId = M.id 
-            WHERE 1
-            <if test="boardId != 0">
-              AND A.boardId = #{boardId}
-            </if>
-            <if test="searchKeyword != ''">
-               <choose>
-                   <when test="searchKeywordTypeCode == 'title'">
-                      AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
-                   </when>
-                   <when test="searchKeywordTypeCode == 'body'">
-                      AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')
-                   </when>
-                   <otherwise>
-                     AND (
-                       A.title LIKE CONCAT('%', #{searchKeyword}, '%')
-                       OR
-                       A.body LIKE CONCAT('%', #{searchKeyword}, '%')
-                     )
-                   </otherwise>
-               </choose>
-            </if>               
-            <if test="limitTake != -1">
-              LIMIT #{limitStart}, #{limitTake}
-            </if>
-          ) AS A
-          LEFT JOIN reactionPoint AS RP
-          ON RP.relTypeCode = 'article'
-          AND A.id = RP.relId
-          GROUP BY A.id          
-          </script>          
-          """)
-  public List<Article> getForPrintArticles(@Param("boardId") int boardId, @Param("searchKeywordTypeCode") String searchKeywordTypeCode, @Param("searchKeyword") String searchKeyword, @Param("limitStart") int limitStart, @Param("limitTake") int limitTake);
-
+      <script>          
+      SELECT A.*,
+      IFNULL(SUM(RP.point), 0) AS extra__sumReactionPoint,
+      IFNULL(SUM(IF(RP.point &gt; 0, RP.point, 0)), 0) AS extra__goodReactionPoint,
+      IFNULL(SUM(IF(RP.point &lt; 0, RP.point, 0)), 0) AS extra__badReactionPoint
+      FROM (
+        SELECT A.*,
+        M.nickname AS extra__writerName
+        FROM article AS A
+        LEFT JOIN member AS M
+        ON A.memberId = M.id 
+        WHERE 1
+        <if test="boardId != 0">
+          AND A.boardId = #{boardId}
+        </if>
+        <if test="searchKeyword != ''">
+           <choose>
+               <when test="searchKeywordTypeCode == 'title'">
+                  AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+               </when>
+               <when test="searchKeywordTypeCode == 'body'">
+                  AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+               </when>
+               <otherwise>
+                 AND (
+                   A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+                   OR
+                   A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+                 )
+               </otherwise>
+           </choose>
+        </if>               
+        <if test="limitTake != -1">
+          LIMIT #{limitStart}, #{limitTake}
+        </if>
+      ) AS A
+      LEFT JOIN reactionPoint AS RP
+      ON RP.relTypeCode = 'article'
+      AND A.id = RP.relId
+      GROUP BY A.id          
+      </script>          
+      """)
+  public List<Article> getFroPrintArticles(@Param("boardId") int boardId, @Param("searchKeywordTypeCode") String searchKeywordTypeCode, @Param("searchKeyword") String searchKeyword, @Param("limitStart") int limitStart, @Param("limitTake") int limitTake);
 
   @Select("""
       <script>          
@@ -159,22 +150,33 @@ public interface ArticleRepository {
   public int getArticlesCount(@Param("boardId") int boardId, @Param("searchKeywordTypeCode") String searchKeywordTypeCode, @Param("searchKeyword") String searchKeyword);
 
   @Update("""
-      <script>
-       UPDATE article
-       SET hitCount = hitCount + 1
-       WHERE id = #{id}
-      </script>
+      <script>          
+      UPDATE article
+      SET hitCount = hitCount + 1
+      WHERE id = #{id}     
+      </script>          
       """)
   public int increaseHitCount(@Param("id") int id);
+
+  @Select("""
+      <script>          
+      SELECT hitCount
+      FROM article
+      WHERE id = #{id}                    
+      </script>          
+      """)
+  public int getArticleHitCount(@Param("id") int id);
 
 
   @Select("""
       <script>
-      SELECT hitCount
-      FROM article
-      WHERE id = #{id}
+      SELECT IFNULL(SUM(RP.point), 0) AS s
+      FROM reactionPoint AS RP
+      WHERE RP.relTypeCode = 'article'
+      AND RP.relId = #{id}
+      AND RP.memberId = #{memberId}
       </script>
       """)
-  public int getArticleHitCount(@Param("id") int id);
+  public int getSumReactionPointByMemberId(@Param("id") int id, @Param("memberId") int memberId);
 }
 //boardId가 0이면 0과 0이 같지않으면 불특정 게시물을 가져오는것.

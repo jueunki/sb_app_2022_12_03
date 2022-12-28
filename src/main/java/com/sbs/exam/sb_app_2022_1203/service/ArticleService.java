@@ -37,11 +37,11 @@ public class ArticleService {
      LIMIT 0, 10
     */
 
-    int limitStart = (page -1) * itemsCountInAPage; //페이지가 1이면 0부터 10까지 보여주는것이고 페이지가 1 이면 10에서 10 까지 보여주는것이고 페이지가 3 이면 20에서 10까지 보여주는것이다.
+    int limitStart = (page - 1) * itemsCountInAPage; //페이지가 1이면 0부터 10까지 보여주는것이고 페이지가 1 이면 10에서 10 까지 보여주는것이고 페이지가 3 이면 20에서 10까지 보여주는것이다.
     int limitTake = itemsCountInAPage;
 
-    List<Article> articles = articleRepository.getForPrintArticles(boardId, searchKeywordTypeCode, searchKeyword, limitStart, limitTake);
-
+    List<Article> articles = articleRepository.getFroPrintArticles(boardId, searchKeywordTypeCode, searchKeyword,
+        limitStart, limitTake);
 
     for (Article article : articles) {
       updateForPrintData(actorId, article);
@@ -121,5 +121,9 @@ public class ArticleService {
 
   public int getArticleHitCount(int id) {
     return articleRepository.getArticleHitCount(id);
+  }
+
+  public boolean actorCanMakeReactionPoint(int actorId, int id) {
+    return articleRepository.getSumReactionPointByMemberId(id, actorId) == 0;
   }
 }

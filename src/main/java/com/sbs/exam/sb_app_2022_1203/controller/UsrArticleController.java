@@ -96,6 +96,10 @@ public class UsrArticleController {
     Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
     model.addAttribute("article", article); //->req.setAttribute();와 같은 의미이며 이는 jsp할때 이렇게 쓰는것이고 현재 쓰는것은 Spring boot 할 때 쓰는것이다.
+    boolean actorCanMakeReactionPoint = articleService.actorCanMakeReactionPoint(rq.getLoginedMemberId(), id);
+
+    model.addAttribute("actorCanMakeReactionPoint", actorCanMakeReactionPoint);
+
 
     return "user/article/detail";
     //String data type과 Int data type을 둘다 허용 하려면 둘의 상위type인 Object로 사용해준다(별로 좋은 방법은 아닙니다.)
