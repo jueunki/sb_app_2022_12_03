@@ -36,5 +36,8 @@ public class Article {
   }
 
   // 여기는 쿼리로 받아올 수 없다.(무조건 false인 정보이다.)
+  public String getForPrintBody() {
+    return body.replaceAll("\n", "<br>");
+  }
 }
 

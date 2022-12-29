@@ -4,10 +4,7 @@ import com.sbs.exam.sb_app_2022_1203.service.ArticleService;
 import com.sbs.exam.sb_app_2022_1203.service.BoardService;
 import com.sbs.exam.sb_app_2022_1203.service.ReactionPointService;
 import com.sbs.exam.sb_app_2022_1203.util.Ut;
-import com.sbs.exam.sb_app_2022_1203.vo.Article;
-import com.sbs.exam.sb_app_2022_1203.vo.Board;
-import com.sbs.exam.sb_app_2022_1203.vo.ResultData;
-import com.sbs.exam.sb_app_2022_1203.vo.Rq;
+import com.sbs.exam.sb_app_2022_1203.vo.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -103,6 +100,9 @@ public class UsrArticleController {
 
     model.addAttribute("actorCanMakeReaction", actorCanMakeReactionPointRd.isSuccess());
 
+    List<Reply> replies = replyService.getForPrintReplies(rq.getLoginedMemberId(), "article", id);
+    model.addAttribute("replies", replies);
+
     if (actorCanMakeReactionPointRd.getResultCode().equals("F-2")) {  // 좋아요를 할 수 있느냐에서 실패를 한다면 F-2와 같이 액션을 취했기때문에 인데
       int sumReactionPointByMemberId = (int)actorCanMakeReactionPointRd.getData1();
 
@@ -114,10 +114,6 @@ public class UsrArticleController {
 
       }
     }
-
-
-
-
 
     return "user/article/detail";
     //String data type과 Int data type을 둘다 허용 하려면 둘의 상위type인 Object로 사용해준다(별로 좋은 방법은 아닙니다.)
