@@ -99,9 +99,24 @@ public class UsrArticleController {
     Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
     model.addAttribute("article", article); //->req.setAttribute();와 같은 의미이며 이는 jsp할때 이렇게 쓰는것이고 현재 쓰는것은 Spring boot 할 때 쓰는것이다.
-    boolean actorCanMakeReactionPoint = reactionPointService.actorCanMakeReactionPoint(rq.getLoginedMemberId(), "article", id);
+    ResultData actorCanMakeReactionPointRd = reactionPointService.actorCanMakeReactionPoint(rq.getLoginedMemberId(), "article", id);
 
-    model.addAttribute("actorCanMakeReactionPoint", actorCanMakeReactionPoint);
+    model.addAttribute("actorCanMakeReaction", actorCanMakeReactionPointRd.isSuccess());
+
+    if (actorCanMakeReactionPointRd.getResultCode().equals("F-2")) {  // 좋아요를 할 수 있느냐에서 실패를 한다면 F-2와 같이 액션을 취했기때문에 인데
+      int sumReactionPointByMemberId = (int)actorCanMakeReactionPointRd.getData1();
+
+      if (sumReactionPointByMemberId > 0) {
+        model.addAttribute("actorCanCancelGoodReaction", true);
+      }
+      else {
+        model.addAttribute("actorCanCancelBadReaction", true);
+
+      }
+    }
+
+
+
 
 
     return "user/article/detail";
