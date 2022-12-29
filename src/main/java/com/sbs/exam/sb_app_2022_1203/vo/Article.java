@@ -18,9 +18,8 @@ public class Article {
   // 여기 까지는 기본 쿼리를 쓰면 받을 수 있고
   // --여기는
   private String hitCount;
-  private int extra__sumReactionPoint;
-  private int extra__goodReactionPoint;
-  private int extra__badReactionPoint;
+  private int goodReactionPoint;
+  private int badReactionPoint;
   // 제외--
   private  String extra__writerName; // 작성자다.
   // 여기는 leftjoin을 사용하면 받을 수 있는데,

@@ -18,11 +18,13 @@
           <option value="title">제목</option>
           <option value="body">내용</option>
           <option value="title,body">제목,내용</option>
+
           <input name="searchKeyword" type="text" class="ml-2 w-72 input input-bordered" placeholder="검색어" maxlength="20" value="${param.searchKeyword}">
           <button type="submit" class="ml-2 btn btn-primary">검색</button>
         </select>
       </form>
     </div>
+
     <div class="table-box-type-1 mt-3">
       <table class="table table-fixed">
         <colgroup>
@@ -32,7 +34,7 @@
           <col width="50"/>
           <col width="50"/>
           <col width="150"/>
-          <col/>
+          <col />
         </colgroup>
         <thead>
         <tr>
@@ -49,10 +51,10 @@
         <c:forEach var="article" items="${articles}">
           <tr>
             <th>${article.id}</th>
-            <td>${article.regDate.substring(2, 16)}</td>
-            <td>${article.updateDate.substring(2, 16)}</td>
+            <td>${article.forPrintType1RegDate}</td>
+            <td>${article.forPrintType1UpdateDate}</td>
             <td>${article.hitCount}</td>
-            <td>${article.extra__goodReactionPoint}</td>
+            <td>${article.goodReactionPoint}</td>
             <td>${article.extra__writerName}</td>
             <td>
               <a class="btn-text-link block w-full truncate" href="../article/detail?id=${article.id}">
@@ -66,29 +68,21 @@
     </div>
     <div class="page-menu mt-3 flex justify-center">
       <div class="btn-group">
-        <c:set var="pageMenuArmLen" value="5" />
-        <c:set var="startPage" value="${page - pageMenuArmLen >= 1 ? page - pageMenuArmLen : 1}"/>
-        <c:set var="endPage" value="${page + pageMenuArmLen <= pagesCount ? page + pageMenuArmLen : pagesCount}"/>
-
-
-        <!-- 일일이 다 써줄 수 없어서 변수로 처리해준다. 추가되면 여기서만 작업을 할 수 있다.-->
+        <c:set var="pageMenuArmLen" value="5"/>
+        <c:set var="startPage" value="${page - pageMenuArmLen >= 1 ? page - pageMenuArmLen : 1}" />
+        <c:set var="endPage" value="${page + pageMenuArmLen <= pagesCount ? page + pageMenuArmLen : pagesCount}" />
         <c:set var="pageBaseUri" value="?boardId=${boardId}" />
         <c:set var="pageBaseUri" value="${pageBaseUri}&searchKeywordTypeCode=${searchKeywordTypeCode}" />
         <c:set var="pageBaseUri" value="${pageBaseUri}&searchKeyword=${param.searchKeyword}" />
-
-
-
         <c:if test="${startPage > 1}">
           <a class="btn btn-sm" href="${pageBaseUri}&page=1">1</a>
-          <c:if test="startPage > 2">
+          <c:if test="${startPage > 2}">
             <a href="btn btn-disabled">...</a>
           </c:if>
         </c:if>
-
         <c:forEach begin="${startPage}" end="${endPage}" var="i">
-        <a class="btn btn-sm ${page == i ? 'btn-active' : ''}" href="${pageBaseUri}?page=${i}">${i}</a>
+          <a class="btn btn-sm ${page == i ? 'btn-active' : ''}" href="${pageBaseUri}&page=${i}">${i}</a>
         </c:forEach>
-
         <c:if test="${endPage < pagesCount}">
           <c:if test="${endPage < pagesCount - 1}">
             <a href="btn btn-disabled">...</a>
@@ -99,9 +93,6 @@
     </div>
   </div>
 </section>
-
 <%@ include file="../common/foot.jspf" %>
-
-
 
 

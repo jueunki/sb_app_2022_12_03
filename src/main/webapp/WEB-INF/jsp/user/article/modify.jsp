@@ -24,11 +24,11 @@
           </tr>
           <tr>
             <th>작성날짜</th>
-            <td>${article.regDateForPrint}</td>
+            <td>${article.forPrintType2RegDate}</td>
           </tr>
           <tr>
             <th>수정날짜</th>
-            <td>${article.updateDateForPrint}</td>
+            <td>${article.forPrintType2UpdateDate}</td>
           </tr>
           <tr>
             <th>조회</th>
@@ -39,7 +39,7 @@
           <tr>
             <th>추천</th>
             <td>
-              <span class="badge badge-primary article-detail__hit-count">${article.extra__goodReactionPoint}</span>
+              <span class="badge badge-primary">${article.goodReactionPoint}</span>
             </td>
           </tr>
           <tr>
@@ -76,14 +76,10 @@
         <a class="btn btn-link" href="../article/modify?id=${article.id}">게시물 수정</a>
       </c:if>
       <c:if test="${article.extra__actorCanDelete}">
-        <a class="btn btn-link" onclick="if(confirm('정말 삭제하시겠습니까?') == false ) return false" href="../article/doDelete?id=${article.id}">게시물 삭제</a>
+        <a class="btn btn-link" onclick="if( confirm('정말 삭제하시겠습니까?') == false ) return false" href="../article/doDelete?id=${article.id}">게시물 삭제</a>
       </c:if>
     </div>
   </div>
 </section>
-
 <%@ include file="../common/foot.jspf" %>
-
-
-
 

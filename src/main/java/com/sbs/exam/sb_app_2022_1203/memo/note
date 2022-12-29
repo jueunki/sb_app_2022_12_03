@@ -729,3 +729,8 @@ UserArticleRepository 에 mysql은 부등호 사용이 가능하나, 마이바�
 getArticles : 순수한 아티클 객체만 반환
 getForPrintArticles : +a 출력용 추가데이터 정보가 들어가있다.
 =========================
+2022-12-28
+쿼리속도 최적화를 위해서, article 테이블에 좋아요 싫어요 칼럼 추가
+
+
+
