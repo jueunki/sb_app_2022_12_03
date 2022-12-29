@@ -133,6 +133,73 @@
   </div>
 </section>
 
+<script>
+  // 댓글 작성 관련
+  let ReplyWrite__submitFormDone = false;
+  function ReplyWrite__submitForm(form) {
+    if(ReplyWrite__submitForm) {
+      return;
+    }
+
+    // 좌우공백 제거
+    form.body.value = form.body.value.trim();
+
+    if(form.body.value.length == 0) {
+      alert('댓글을 입력해주세요.');
+      form.body.focus();
+      return;
+    }
+
+    if(form.body.value.length < 2) {
+      alert('댓글내용을 2자 이상 입력해주세요.');
+      form.body.focus();
+      return;
+    }
+
+    ReplyWrite__submitFormDone = true;
+    form.submit();
+  }
+</script>
+<section class="mt-5 con-min-width">
+  <div class="con mx-auto px-3">
+    <h1>댓글 작성</h1>
+
+    <C:if test="${rq.logined}">
+      <form class="table-box-type-1" method="POST" action="../reply/doWrite"
+            onsubmit="ReplyWrite__submitForm(this); return false;">
+        <input type="hidden" name="relTypeCode" value="article">
+        <input type="hidden" name="relId" value="${article.id}">
+
+        <table border="1">
+          <colgroup>
+            <col width="200" />
+          </colgroup>
+          <tbody>
+          <tr>
+            <th>작성자</th>
+            <td>
+              ${rq.loginedMember.nickname}
+            </td>
+          </tr>
+          <tr>
+            <th>내용</th>
+            <td>
+              <textarea class="textarea textarea-bordered w-full" name="body" rows="5" placeholder=""></textarea>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="flex justify-end my-3">
+          <button type="submit" class="btn btn-primary">댓글작성</button>
+        </div>
+      </form>
+    </C:if>
+    <C:if test="${rq.notLogined}">
+      <a class="link link-primary" href="/user/member/login">로그인</a> 후 이용해주세요.
+    </C:if>
+  </div>
+</section>
+
 
 
 <%@ include file="../common/foot.jspf" %>
