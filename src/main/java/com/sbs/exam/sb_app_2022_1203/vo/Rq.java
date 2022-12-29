@@ -47,6 +47,10 @@ public class Rq {
     this.req.setAttribute("rq", this); // this는 자기자신이다.!!
   }
 
+  public boolean isnotLogined() {
+    return !isLogined;
+  }
+
   public void printHistoryBackJs(String msg) {
     resp.setContentType("text/html; charset=UTF-8"); //한글 깨짐 방지
     print(Ut.jsHistoryBack(msg));
