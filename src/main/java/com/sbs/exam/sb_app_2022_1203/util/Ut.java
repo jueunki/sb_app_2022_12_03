@@ -10,6 +10,15 @@ public class Ut {
       return true;
     }
 
+    if (obj instanceof Integer) {
+      return ((int)obj) == 0;
+    }
+
+    if (obj instanceof Long) {
+      return ((Long)obj) == 0;
+    }
+
+
     if (obj instanceof String == false) {   //넘겨받은것을 String으로 바꿀것인데 String이 아닌것은 return true해준다.
       return true;
     }   // instanceof : obj객체가 String형 이라는것을 확인시켜주기 위한것.
