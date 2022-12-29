@@ -371,6 +371,28 @@ SELECT * FROM reply;
 
 
 
+# 댓글 테이블에 goodReactionPoint 칼럼을 추가
+ALTER TABLE reply
+ADD COLUMN goodReactionPoint INT(10) UNSIGNED NOT NULL DEFAULT 0;
+
+# 댓글 테이블에 badReactionPoint 칼럼을 추가
+ALTER TABLE reply
+ADD COLUMN badReactionPoint INT(10) UNSIGNED NOT NULL DEFAULT 0;
+
+
+SELECT * FROM reply;
+
+# 댓글 테이블에 INDEX 걸기
+# alter table `reply` add index(`relTypeCode`, `relId`);
+
+
+# EXPLAIN SELECT R.*
+# FROM reply AS R
+# LEFT JOIN `member` AS M
+# ON R.member = M.id
+# WHERE R.relTypeCode = 'article'
+# AND R.relId = 1
+# ORDER BY R.id DESC
 
 
 

@@ -733,4 +733,50 @@ getForPrintArticles : +a 출력용 추가데이터 정보가 들어가있다.
 쿼리속도 최적화를 위해서, article 테이블에 좋아요 싫어요 칼럼 추가
 
 
+=========================
+2022-12-29
+== 댓글 작성 폼 만들기 이후 강의 ==
+댓글 테이블안에
+1 댓글
+2 댓글
+3 댓글
+4 댓글
+5 댓글 이 있을것인데 많은양의 댓글이 있다고 가정했을 때
 
+색인 : 사전의 사이드에 보면 가, 나, 다, 라... 등등 적혀있는것
+단어를
+단어를 찾을때 sql의 내용에있는 내용을 풀스캔하여 index 를 통해서 찾게되는데
+index 를 통해서 찾을 때 매우 빠른 속도로 스캔을 한다.
+
+sqlyog 에서 좌측에있는 메뉴바 라인에서 프로젝트를 누르고
+테이블에 reply 를 클릭 한 후, F6번을 누르게 되면 인덱스창이 나오는데
+relTypeCode 와 relId 를 체크하고 확인을 누르고 저장을 눌러주면
+인덱스 이름과 컬럼이 추가가 되는것을 확인 할 수 있다.
+이게 WHERE 절에서 순서대로 확인을 한것이다.
+SELECT R.*
+FROM reply AS R
+LEFT JOIN `member` AS M
+ON R.member = M.id
+WHERE R.relTypeCode = 'article'
+AND R.relId = 1
+ORDER BY R.id DESC 이런식으로 WHERE 절을 통해서검색을 한것이 나온다.
+EXPLAIN SELECT R.*
+FROM reply AS R
+LEFT JOIN `member` AS M
+ON R.member = M.id
+WHERE R.relTypeCode = 'article'
+AND R.relId = 1
+EXPLAIN이라고 앞에 붙여주고 실행을 하면
+ALTER TABLE `reply` ADD INDEX(`relTypeCode`, `relId`); 이렇게 뜨는데
+이것을 실행해주면 속도가 빨라지는것을 확인 할 수  있다.
+이는 게시물 수가 굉장히 많을때 사용하면 좋다.
+
+# 댓글 테이블에 goodReactionPoint 칼럼을 추가
+ALTER TABLE reply
+ADD COLUMN goodReactionPoint INT(10) UNSIGNED NOT NULL DEFAULT 0;
+
+# 댓글 테이블에 badReactionPoint 칼럼을 추가
+ALTER TABLE reply
+ADD COLUMN badReactionPoint INT(10) UNSIGNED NOT NULL DEFAULT 0;
+
+SELECT * FROM reply;
