@@ -2,6 +2,7 @@ package com.sbs.exam.sb_app_2022_1203.controller;
 
 import com.sbs.exam.sb_app_2022_1203.service.ArticleService;
 import com.sbs.exam.sb_app_2022_1203.service.BoardService;
+import com.sbs.exam.sb_app_2022_1203.service.ReactionPointService;
 import com.sbs.exam.sb_app_2022_1203.util.Ut;
 import com.sbs.exam.sb_app_2022_1203.vo.Article;
 import com.sbs.exam.sb_app_2022_1203.vo.Board;
@@ -22,10 +23,12 @@ public class UsrArticleController {
   private ArticleService articleService;
   private BoardService boardService;
   private Rq rq;
+  private ReactionPointService reactionPointService;
 
-  public UsrArticleController(ArticleService articleService, BoardService boardService, Rq rq) {
+  public UsrArticleController(ArticleService articleService, BoardService boardService, Rq rq, ReactionPointService reactionPointService) {
     this.articleService = articleService;
     this.boardService = boardService;
+    this.reactionPointService = reactionPointService;
     this.rq = rq;
   }
 
@@ -96,7 +99,7 @@ public class UsrArticleController {
     Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
     model.addAttribute("article", article); //->req.setAttribute();와 같은 의미이며 이는 jsp할때 이렇게 쓰는것이고 현재 쓰는것은 Spring boot 할 때 쓰는것이다.
-    boolean actorCanMakeReactionPoint = articleService.actorCanMakeReactionPoint(rq.getLoginedMemberId(), id);
+    boolean actorCanMakeReactionPoint = reactionPointService.actorCanMakeReactionPoint(rq.getLoginedMemberId(), "article", id);
 
     model.addAttribute("actorCanMakeReactionPoint", actorCanMakeReactionPoint);
 

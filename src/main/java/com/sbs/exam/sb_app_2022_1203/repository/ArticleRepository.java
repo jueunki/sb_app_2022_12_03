@@ -152,15 +152,5 @@ public interface ArticleRepository {
   public int getArticleHitCount(@Param("id") int id);
 
 
-  @Select("""
-      <script>
-      SELECT IFNULL(SUM(RP.point), 0) AS s
-      FROM reactionPoint AS RP
-      WHERE RP.relTypeCode = 'article'
-      AND RP.relId = #{id}
-      AND RP.memberId = #{memberId}
-      </script>
-      """)
-  public int getSumReactionPointByMemberId(@Param("id") int id, @Param("memberId") int memberId);
 }
 //boardId가 0이면 0과 0이 같지않으면 불특정 게시물을 가져오는것.
