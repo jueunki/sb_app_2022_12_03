@@ -219,7 +219,17 @@
         <div class="flex flex_col">
           <span class="font-bold">${reply.extra__writerName}</span>
           <span>${reply.forPrintType2RegDate}</span>
-          <span>추천 : ${reply.goodReactionPoint}</span>
+          <div class="flex">
+            <span>추천 : ${reply.goodReactionPoint}</span>
+            <div class="modifyAndDelete-btn ml-auto text-gray-400">
+              <c:if test="${reply.extra__actorCanModify}">
+                <a href="../reply/modify?id=${reply.id}">수정</a>
+              </c:if>
+              <c:if test="${reply.extra__actorCanDelete}">
+                <a onclick="if(confirm('정말 삭제하시겠습니까?') == false ) return false" href="../reply/doDelete?id=${reply.id}">삭제</a>
+              </c:if>
+          </div>
+          </div>
         </div>
       </div>
       <div class="reply-list__body border-b border-gray-300 my-3">
