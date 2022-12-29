@@ -35,6 +35,8 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
         .addPathPatterns("/user/article/doWrite") //글 전송폼
         .addPathPatterns("/user/article/modify")
         .addPathPatterns("/user/article/doModify")
-        .addPathPatterns("/user/article/doDelete");
+        .addPathPatterns("/user/article/doDelete")
+        .addPathPatterns("/user/reactionPoint/doGoodReaction")
+        .addPathPatterns("/user/reactionPoint/doBadReaction");
   }
 }

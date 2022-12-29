@@ -1,6 +1,8 @@
 package com.sbs.exam.sb_app_2022_1203.util;
 
 
+import java.net.URLEncoder;
+
 // Util 함수 클래스 : 로그인 아이디가 있는지 체크해주는 함수
 public class Ut {
   public static boolean empty(Object obj) { //범용적으로 데이터를 받으려고 Object 타입으로 한다.
@@ -55,6 +57,14 @@ public class Ut {
         location.replace('%s');
         </script>
         """, msg, uri);
+  }
+
+  public static String getUriEncoded(String str) {
+    try {
+      return URLEncoder.encode(str, "UTF-8");
+    } catch (Exception e) {
+      return str;
+    }
   }
 }
 
