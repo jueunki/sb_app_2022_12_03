@@ -19,7 +19,7 @@ public interface ReactionPointRepository {
           INSERT INTO reactionPoint
           SET regDate = NOW(),
           updateDate = NOW(),
-          relTypeCode = ${relTypeCode},
+          relTypeCode = #{relTypeCode},
           relId = #{relId},
           memberId = #{memberId},
           `point` = 1
@@ -42,7 +42,7 @@ public interface ReactionPointRepository {
   @Delete("""
           DELETE FROM reactionPoint
           WHERE relTypeCode = #{relTypeCode}
-          AND relId = #{relId},
+          AND relId = #{relId}
           AND memberId = #{memberId}
           """)
   public void deleteReactionPoint(@Param("memberId")int memberId, @Param("relTypeCode")String relTypeCode, @Param("relId")int relId);

@@ -1,10 +1,7 @@
 package com.sbs.exam.sb_app_2022_1203.repository;
 
 import com.sbs.exam.sb_app_2022_1203.vo.Reply;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -20,7 +17,7 @@ public interface ReplyRepository {
           relId = #{relId},
           body = #{body}
           """)
-  void writeArticle(@Param("memberId")int memberId,
+  void writeReply(@Param("memberId")int memberId,
                     @Param("relTypeCode")String relTypeCode,
                     @Param("relId")int relId,
                     @Param("body")String body);
@@ -31,7 +28,8 @@ public interface ReplyRepository {
   int getLastInsertId();
 
   @Select("""
-          SELECT R.*
+          SELECT R.*,
+          M.nickname AS extra__writerName
           FROM reply AS R
           LEFT JOIN `member` AS M
           ON R.memberId = M.id
@@ -41,4 +39,63 @@ public interface ReplyRepository {
           """)
   List<Reply> getForPrintReplies(@Param("relTypeCode") String relTypeCode, @Param("relId") int relId);
 
+
+  @Select("""
+          SELECT R.*,
+          M.nickname AS extra__writerName
+          FROM reply AS R
+          LEFT JOIN `member` AS M
+          ON R.memberId = M.id
+          WHERE R.id = #{id}
+          """)
+  Reply getForPrintReply(@Param("id") int id);
+
+
+  @Select("""
+          SELECT R.*
+          FROM reply AS R
+          WHERE R.id = #{id}
+          """)
+  Reply getReply(@Param("id")int id);
+
+  @Delete("""
+          DELETE FROM reply
+          WHERE id = #{id}
+          """)
+  void deleteReply(@Param("id")int id);
+
+
+  /*
+   @Select("""
+          SELECT R.*,
+          M.nickname AS extra__writerName
+          FROM reply AS R
+          LEFT JOIN `member` AS M
+          ON R.memberId = M.id
+          WHERE R.id = #{id}
+          """)
+  Reply getForPrintReply(@Param("id") int id);
+
+  @Select("""
+          SELECT R.*
+          FROM reply AS R
+          WHERE R.id = #{id}
+          """)
+  Reply getReply(@Param("id") int id);
+
+  @Delete("""
+          DELETE FROM reply
+          WHERE id = #{id}
+          """)
+  void deleteReply(@Param("id") int id);
+
+  @Update("""
+          UPDATE reply
+          SET updateDate = NOW(),
+          `body` = #{body}
+          WHERE id = #{id}
+          """)
+  void modifyReply(@Param("id") int id, @Param("body") String body);
+
+  */
 }

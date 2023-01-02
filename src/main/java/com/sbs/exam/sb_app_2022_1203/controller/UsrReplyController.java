@@ -2,6 +2,7 @@ package com.sbs.exam.sb_app_2022_1203.controller;
 
 import com.sbs.exam.sb_app_2022_1203.service.ReplyService;
 import com.sbs.exam.sb_app_2022_1203.util.Ut;
+import com.sbs.exam.sb_app_2022_1203.vo.Reply;
 import com.sbs.exam.sb_app_2022_1203.vo.ResultData;
 import com.sbs.exam.sb_app_2022_1203.vo.Rq;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,34 @@ public class UsrReplyController {
     this.rq = rq;
   }
 
+  @RequestMapping("/user/reply/doDelete")
+  @ResponseBody
+  public String doDelete(int id, String replaceUri) {
+    if (Ut.empty(id)) {
+      return rq.jsHistoryBack("id(을)를 입력해주세요.");
+    }
+
+    Reply reply = replyService.getForPrintReply(rq.getLoginedMember(), id);
+    if (reply == null) {
+      return rq.jsHistoryBack(Ut.f("%d 번 댓글은 존재하지 않습니다.", id));
+    }
+    if (reply.isExtra__actorCanDelete() == false) {
+      return rq.jsHistoryBack(Ut.f("%d번 댓글을 삭제 할 권한이 없습니다.", id));
+    }
+
+    ResultData deleteReplyRd = replyService.deleteReply(id);
+
+    if (Ut.empty(replaceUri)) {
+      switch (reply.getRelTypeCode()) {
+        case "article":
+          replaceUri = Ut.f("../article/detail?id=%d", reply.getRelId());
+          break;
+      }
+
+    }
+
+    return rq.jsReplace(deleteReplyRd.getMsg(), replaceUri);
+  }
   @RequestMapping("/user/reply/doWrite")
   @ResponseBody
   public String doWrite(String relTypeCode, int relId, String body, String replaceUri) {
@@ -28,7 +57,7 @@ public class UsrReplyController {
     if (Ut.empty(relId)) {
       return rq.jsHistoryBack("relId(을)를 입력해주세요.");
     }
-     ResultData<Integer> writeArticleRd = replyService.writeArticle(rq.getLoginedMemberId(), relTypeCode, relId, body);
+     ResultData<Integer> writeArticleRd = replyService.writeReply(rq.getLoginedMemberId(), relTypeCode, relId, body);
     int id = writeArticleRd.getData1();
 
     switch (relTypeCode) {

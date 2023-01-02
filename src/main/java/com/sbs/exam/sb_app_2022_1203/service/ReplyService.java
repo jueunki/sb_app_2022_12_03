@@ -2,6 +2,7 @@ package com.sbs.exam.sb_app_2022_1203.service;
 
 import com.sbs.exam.sb_app_2022_1203.repository.ReplyRepository;
 import com.sbs.exam.sb_app_2022_1203.util.Ut;
+import com.sbs.exam.sb_app_2022_1203.vo.Member;
 import com.sbs.exam.sb_app_2022_1203.vo.Reply;
 import com.sbs.exam.sb_app_2022_1203.vo.ResultData;
 import org.springframework.stereotype.Service;
@@ -16,8 +17,8 @@ public class ReplyService {
     this.replyRepository = replyRepository;
   }
 
-  public ResultData<Integer> writeArticle(int actorId, String relTypeCode, int relId, String body) {
-    replyRepository.writeArticle(actorId, relTypeCode, relId, body);
+  public ResultData<Integer> writeReply(int actorId, String relTypeCode, int relId, String body) {
+    replyRepository.writeReply(actorId, relTypeCode, relId, body);
     int id = replyRepository.getLastInsertId();
 
     // Service(여기)에서 Controller에게 넘기는 과정
@@ -63,6 +64,24 @@ public class ReplyService {
       return ResultData.from("F-2", "권한이 없습니다.");
     }
     return ResultData.from("S-1", "댓글 삭제가 가능합니다.");
+  }
+
+  public Reply getForPrintReply(Member actor, int id) {
+    Reply reply = replyRepository.getForPrintReply(id);
+
+    updateForPrintData(actor, reply);
+
+    return reply;
+  }
+
+  public Reply getReply(int id) {
+    return replyRepository.getReply(id);
+  }
+
+  public ResultData deleteReply(int id) {
+    replyRepository.deleteReply(id);
+
+    return ResultData.from("S-1", Ut.f("%d번 댓글을 삭제하였습니다.", id));
   }
 }
 

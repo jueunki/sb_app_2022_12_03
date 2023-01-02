@@ -21,7 +21,7 @@ public interface ArticleRepository {
   @Select("""
       <script>
       SELECT A.*,
-      M.nickname AS extra__writerName,
+      M.nickname AS extra__writerName
       FROM article AS A
       LEFT JOIN `member` AS M
       ON A.memberId = M.id   
@@ -186,5 +186,15 @@ public interface ArticleRepository {
           </script>
           """)
   public int decreaseBadReactionPoint(@Param("id")int id);
-}
+
 //boardId가 0이면 0과 0이 같지않으면 불특정 게시물을 가져오는것.
+
+  @Select("""
+          SELECT *
+          FROM article
+          WHERE id = #{id}
+          </script>
+          """)
+  Article getArticle(@Param("id") int id);
+
+  }

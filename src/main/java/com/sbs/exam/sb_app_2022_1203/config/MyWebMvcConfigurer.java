@@ -38,5 +38,20 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
         .addPathPatterns("/user/article/doDelete")
         .addPathPatterns("/user/reactionPoint/doGoodReaction")
         .addPathPatterns("/user/reactionPoint/doBadReaction");
+
+    /*
+    .addPathPatterns("/usr/reactionPoint/doCancelGoodReaction")
+        .addPathPatterns("/usr/reactionPoint/doCancelBadReaction");
+
+    registry.addInterceptor(needLogoutInterceptor)
+        .addPathPatterns("/usr/member/join")
+        .addPathPatterns("/usr/member/doJoin")
+        .addPathPatterns("/usr/member/login")
+        .addPathPatterns("/usr/member/doLogin")
+        .addPathPatterns("/usr/member/findLoginId")
+        .addPathPatterns("/usr/member/doFindLoginId")
+        .addPathPatterns("/usr/member/findLoginPw")
+        .addPathPatterns("/usr/member/doFindLoginPw");
+    */
   }
 }

@@ -3,6 +3,7 @@ package com.sbs.exam.sb_app_2022_1203.controller;
 import com.sbs.exam.sb_app_2022_1203.service.ArticleService;
 import com.sbs.exam.sb_app_2022_1203.service.BoardService;
 import com.sbs.exam.sb_app_2022_1203.service.ReactionPointService;
+import com.sbs.exam.sb_app_2022_1203.service.ReplyService;
 import com.sbs.exam.sb_app_2022_1203.util.Ut;
 import com.sbs.exam.sb_app_2022_1203.vo.*;
 import org.springframework.stereotype.Controller;
@@ -19,13 +20,16 @@ public class UsrArticleController {
 
   private ArticleService articleService;
   private BoardService boardService;
-  private Rq rq;
-  private ReactionPointService reactionPointService;
 
-  public UsrArticleController(ArticleService articleService, BoardService boardService, Rq rq, ReactionPointService reactionPointService) {
+  private ReplyService replyService;
+  private ReactionPointService reactionPointService;
+  private Rq rq;
+
+  public UsrArticleController(ArticleService articleService, BoardService boardService, ReactionPointService reactionPointService, ReplyService replyService, Rq rq) {
     this.articleService = articleService;
     this.boardService = boardService;
     this.reactionPointService = reactionPointService;
+    this.replyService = replyService;
     this.rq = rq;
   }
 
@@ -100,7 +104,7 @@ public class UsrArticleController {
 
     model.addAttribute("actorCanMakeReaction", actorCanMakeReactionPointRd.isSuccess());
 
-    List<Reply> replies = replyService.getForPrintReplies(rq.getLoginedMemberId(), "article", id);
+    List<Reply> replies = replyService.getForPrintReplies(rq.getLoginedMember(), "article", id);
     model.addAttribute("replies", replies);
 
     if (actorCanMakeReactionPointRd.getResultCode().equals("F-2")) {  // 좋아요를 할 수 있느냐에서 실패를 한다면 F-2와 같이 액션을 취했기때문에 인데
