@@ -17,10 +17,9 @@ public interface ReplyRepository {
           relId = #{relId},
           body = #{body}
           """)
-  void writeReply(@Param("memberId")int memberId,
-                    @Param("relTypeCode")String relTypeCode,
-                    @Param("relId")int relId,
-                    @Param("body")String body);
+  void writeReply(@Param("memberId") int memberId,
+                  @Param("relTypeCode") String relTypeCode,
+                  @Param("relId") int relId, @Param("body") String body);
 
   @Select("""
           SELECT LAST_INSERT_ID()
@@ -39,53 +38,26 @@ public interface ReplyRepository {
           """)
   List<Reply> getForPrintReplies(@Param("relTypeCode") String relTypeCode, @Param("relId") int relId);
 
-
   @Select("""
           SELECT R.*,
           M.nickname AS extra__writerName
           FROM reply AS R
           LEFT JOIN `member` AS M
           ON R.memberId = M.id
-          WHERE R.id = #{id}
-          """)
-  Reply getForPrintReply(@Param("id") int id);
-
-
-  @Select("""
-          SELECT R.*
-          FROM reply AS R
-          WHERE R.id = #{id}
-          """)
-  Reply getReply(@Param("id")int id);
-
-  @Delete("""
-          DELETE FROM reply
-          WHERE id = #{id}
-          """)
-  void deleteReply(@Param("id")int id);
-
-
-  /*
-   @Select("""
-          SELECT R.*,
-          M.nickname AS extra__writerName
-          FROM reply AS R
-          LEFT JOIN `member` AS M
-          ON R.memberId = M.id
-          WHERE R.id = #{id}
+          WHERE R.id = #{id}          
           """)
   Reply getForPrintReply(@Param("id") int id);
 
   @Select("""
-          SELECT R.*
-          FROM reply AS R
-          WHERE R.id = #{id}
+          SELECT R.*          
+          FROM reply AS R          
+          WHERE R.id = #{id}          
           """)
   Reply getReply(@Param("id") int id);
 
   @Delete("""
-          DELETE FROM reply
-          WHERE id = #{id}
+          DELETE FROM reply                              
+          WHERE id = #{id}          
           """)
   void deleteReply(@Param("id") int id);
 
@@ -96,6 +68,4 @@ public interface ReplyRepository {
           WHERE id = #{id}
           """)
   void modifyReply(@Param("id") int id, @Param("body") String body);
-
-  */
 }

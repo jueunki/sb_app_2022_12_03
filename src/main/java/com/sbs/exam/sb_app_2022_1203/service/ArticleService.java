@@ -36,7 +36,6 @@ public class ArticleService {
      ORDER BY id DESC   공지사항 게시판이면 0부터 10까지 보여줘라 라는 의미.
      LIMIT 0, 10
     */
-
     int limitStart = (page - 1) * itemsCountInAPage; //페이지가 1이면 0부터 10까지 보여주는것이고 페이지가 1 이면 10에서 10 까지 보여주는것이고 페이지가 3 이면 20에서 10까지 보여주는것이다.
     int limitTake = itemsCountInAPage;
 

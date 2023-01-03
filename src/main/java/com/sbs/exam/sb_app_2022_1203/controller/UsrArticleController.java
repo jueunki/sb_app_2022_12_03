@@ -34,13 +34,13 @@ public class UsrArticleController {
   }
 
 
-  @RequestMapping("/user/article/write")
+  @RequestMapping("/usr/article/write")
   public String showWrite(HttpServletRequest req) {
-    return "user/article/write";
+    return "usr/article/write";
   }
 
   // 액션 메서드 시작
-  @RequestMapping("/user/article/doWrite")
+  @RequestMapping("/usr/article/doWrite")
   @ResponseBody
   public String doWrite(int boardId, String title, String body, String replaceUri) {
 
@@ -69,7 +69,7 @@ public class UsrArticleController {
   }
 
 
-  @RequestMapping("/user/article/list")
+  @RequestMapping("/usr/article/list")
   public String showList(Model model, @RequestParam(defaultValue = "1") int boardId, @RequestParam(defaultValue = "1") int page,
                          @RequestParam(defaultValue = "title,body") String searchKeywordTypeCode, @RequestParam(defaultValue = "") String searchKeyword) {
     Board board = boardService.getBoardById(boardId);
@@ -90,11 +90,11 @@ public class UsrArticleController {
     model.addAttribute("articlesCount", articlesCount);
     model.addAttribute("articles", articles);
 
-    return "/user/article/list";
+    return "/usr/article/list";
 
   }
 
-  @RequestMapping("/user/article/detail")
+  @RequestMapping("/usr/article/detail")
   public String showDetail(Model model, int id) { //상세보기는 하나만 가져오는것이기 때문에 복수와 단수를 정확하게 표현해줘야한다.
 
     Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
@@ -119,11 +119,11 @@ public class UsrArticleController {
       }
     }
 
-    return "user/article/detail";
+    return "usr/article/detail";
     //String data type과 Int data type을 둘다 허용 하려면 둘의 상위type인 Object로 사용해준다(별로 좋은 방법은 아닙니다.)
   }
 
-  @RequestMapping("/user/article/doIncreaseHitCountRd") // 조회수 알아보기
+  @RequestMapping("/usr/article/doIncreaseHitCountRd") // 조회수 알아보기
   @ResponseBody
   public ResultData<Integer> doIncreaseHitCountRd(int id) {
     ResultData<Integer> increaseHitCountRd = articleService.increaseHitCount(id);
@@ -139,7 +139,7 @@ public class UsrArticleController {
     return rd;
     }
 
-  @RequestMapping("/user/article/doDelete")
+  @RequestMapping("/usr/article/doDelete")
   @ResponseBody
   public String doDelete(int id) {
     if (rq.isLogined() == false) {
@@ -161,7 +161,7 @@ public class UsrArticleController {
     return rq.jsReplace(Ut.f("%d번 게시물을 삭제하였습니다.", id), "../article/list"); //->uri를 리스트로 넘겨주는 부분.
   }
 
-  @RequestMapping("/user/article/modify")
+  @RequestMapping("/usr/article/modify")
   public String showModify(Model model, int id) {
     Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
@@ -174,10 +174,10 @@ public class UsrArticleController {
       return rq.historyBackJsOnView(actorCanModifyRd.getMsg());
     }
     model.addAttribute("article", article);
-    return "user/article/modify";
+    return "usr/article/modify";
   }
 
-  @RequestMapping("/user/article/doModify")
+  @RequestMapping("/usr/article/doModify")
   @ResponseBody
   public String doModify(int id, String title, String body) {
     if (rq.isLogined() == false) {
@@ -200,7 +200,7 @@ public class UsrArticleController {
     }
     //여기에 요청을 넣는것이다.
 
-    articleService.modifyArticle(id, title, body); //localhost:8081/user/article/doModify?id=1&title=제목1 수정&body=내용1 수정 이라고적으면 수정이 된다.
+    articleService.modifyArticle(id, title, body); //localhost:8081/usr/article/doModify?id=1&title=제목1 수정&body=내용1 수정 이라고적으면 수정이 된다.
     return rq.jsReplace(Ut.f("%d번 게시물이 수정되었습니다.", id), Ut.f("../article/detail?id=%d", id)); //게시물 수정 후 자바 스크립트로 후 처리(수정 했을때 메시지 뜰 수 있게 만들어 주는 부분)
   }
   //여기까지 오면 수정이 가능하다는것.

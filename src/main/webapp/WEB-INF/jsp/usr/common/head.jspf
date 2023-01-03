@@ -36,32 +36,32 @@
         </a>
       </li>
       <li>
-        <a href="/user/article/list?boardId=1" class="flex h-full items-center px-3 hover:underline">
+        <a href="/usr/article/list?boardId=1" class="flex h-full items-center px-3 hover:underline">
           <span>공지사항 게시판</span>
         </a>
       </li>
       <li>
-        <a href="/user/article/list?boardId=2" class="flex h-full items-center px-3 hover:underline">
+        <a href="/usr/article/list?boardId=2" class="flex h-full items-center px-3 hover:underline">
           <span>자유 게시판</span>
         </a>
       </li>
       <c:if test="${!rq.isLogined()}">
       <li>
-        <a href="/user/member/login" class="flex h-full items-center px-3 hover:underline">
+        <a href="/usr/member/login" class="flex h-full items-center px-3 hover:underline">
           <span>로그인</span>
         </a>
       </li>
       </c:if>
       <c:if test="${rq.isLogined()}">
         <li>
-          <a href="/user/member/modify" class="flex h-full items-center px-3 hover:underline">
+          <a href="/usr/member/modify" class="flex h-full items-center px-3 hover:underline">
             <span>${rq.loginedMember.nickname}'s profile</span>
           </a>
         </li>
       </c:if>
       <c:if test="${rq.isLogined()}">
         <li>
-          <a href="/user/member/doLogout" class="flex h-full items-center px-3 hover:underline">
+          <a href="/usr/member/doLogout" class="flex h-full items-center px-3 hover:underline">
             <span>로그아웃</span>
           </a>
         </li>

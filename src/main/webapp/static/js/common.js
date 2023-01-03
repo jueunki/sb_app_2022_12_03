@@ -13,5 +13,5 @@ $('select[data-value]').each(function(index, el){
 
 // 최초에 $('select[data-value]') 이런 속성을 찾아내는데, $el.attr('data-value');에서 속성을 딱 한번 받아오고
 // 받아온 속성을  $el.val(defaultValue); 여기 엘리먼트에게 넣어준다.
-// view-source:http://localhost:8081/user/article/list?boardId=1&searchKeywordTypeCode=title&searchKeyword=11&page=5로 검색하고 ctrl + u해서 확인해볼 수 있다.
+// view-source:http://localhost:8081/usr/article/list?boardId=1&searchKeywordTypeCode=title&searchKeyword=11&page=5로 검색하고 ctrl + u해서 확인해볼 수 있다.
 

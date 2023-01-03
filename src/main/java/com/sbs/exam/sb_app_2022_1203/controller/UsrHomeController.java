@@ -6,14 +6,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class UsrHomeController {
 
-  @RequestMapping("/user/home/main")
+  @RequestMapping("/usr/home/main")
   public String showMain() {
-    return "user/home/main";
+    return "usr/home/main";
   }
 
   @RequestMapping("/")
   public String showRoot() {
-    return "redirect:/user/home/main";
+    return "redirect:/usr/home/main";
   }
 }
 

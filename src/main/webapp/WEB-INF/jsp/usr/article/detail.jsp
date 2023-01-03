@@ -7,39 +7,31 @@
 <script>
   const params = {};
   params.id = parseInt(${param.id});
-
 </script>
 
 <script>
   function ArticleDetail__increaseHitCount() {
-  const localStorageKey = 'article__' + ${param.id} + '__viewDone';
-
-
-  if(localStorage.getItem(localStorageKey)) {
-    return;
+    const localStorageKey = 'article__' + ${param.id} + '__viewDone';
+    if( localStorage.getItem(localStorageKey) ) {
+      return;
+    }
+    localStorage.setItem(localStorageKey, true);
+    $.get('/usr/article/doIncreaseHitCountRd',
+      {
+        id : params.id,
+        ajaxMode: 'Y'
+      }, function(data) {
+        $('.article-detail__hit-count').empty().html(data.data1);
+      }, 'json');
   }
-     localStorage.setItem(localStorageKey, true);
-
-
-  $.get('/user/article/doIncreaseHitCountRd',
-    {
-      id : params.id,
-      ajaxMode: 'Y'
-    }, function(data) {
-      $('.article-detail__hit-count').empty().html(data.data1);
-    }, 'json');
-  }
-
   $(function() {
     // 실전코드
     // ArticleDetail__increaseHitCount();
-
-   // 임시코드
-
+    // 임시코드
     setTimeout(ArticleDetail__increaseHitCount(), 500);
-    })
-
+  })
 </script>
+
 <section class="mt-5 con-min-width">
   <div class="con mx-auto px-3">
     <div class="table-box-type-1">
@@ -79,39 +71,33 @@
           <td>
             <div class="flex items-center">
               <span class="badge badge-primary">${article.goodReactionPoint}</span>
-              &nbsp
+              &nbsp;
               <c:if test="${actorCanMakeReaction}">
-                <a href="/user/reactionPoint/doGoodReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
-                   class="btn btn-xs btn-primary btn-outline">
-                  좋아요👍🏻
+                <a href="/usr/reactionPoint/doGoodReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}" class="btn btn-xs btn-primary btn-outline">
+                  좋아요 👍🏻
                 </a>
-                &nbsp
-                <a href="/user/reactionPoint/doBadReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
-                   class="btn btn-xs btn-secondary btn-outline">
+                &nbsp;
+                <a href="/usr/reactionPoint/doBadReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}" class="btn btn-xs btn-secondary btn-outline">
                   싫어요 👎🏻
                 </a>
               </c:if>
 
               <c:if test="${actorCanCancelGoodReaction}">
-                <a href="/user/reactionPoint/doCancelGoodReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
-                   class="btn btn-xs btn-primary">
-                  좋아요👍🏻 (취소)
+                <a href="/usr/reactionPoint/doCancelGoodReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}" class="btn btn-xs btn-primary">
+                  좋아요 👍🏻
                 </a>
-                &nbsp
-                <a onclick="alert(this.title); return false;" title="먼저 좋아요를 취소해주세요." href="#"
-                   class="btn btn-xs btn-secondary btn-outline">
+                &nbsp;
+                <a onclick="alert(this.title); return false;" title="먼저 좋아요를 취소해주세요." href="#" class="btn btn-xs btn-secondary btn-outline">
                   싫어요 👎🏻
                 </a>
               </c:if>
 
               <c:if test="${actorCanCancelBadReaction}">
-                <a onclick="alert(this.title); return false;" title="먼저 싫어요를 취소해주세요." href="#"
-                   class="btn btn-xs btn-outline">
-                  좋아요👍🏻 (취소)
+                <a onclick="alert(this.title); return false;" title="먼저 싫어요를 취소해주세요."  href="#" class="btn btn-xs btn-primary btn-outline">
+                  좋아요 👍🏻
                 </a>
-                &nbsp
-                <a href="/user/reactionPoint/doCancelBadReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
-                   class="btn btn-xs btn-secondary">
+                &nbsp;
+                <a href="/usr/reactionPoint/doCancelBadReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}" class="btn btn-xs btn-secondary">
                   싫어요 👎🏻
                 </a>
               </c:if>
@@ -129,13 +115,14 @@
         </tbody>
       </table>
     </div>
+
     <div class="btns">
       <button class="btn btn-link" type="button" onclick="history.back()">뒤로가기</button>
       <c:if test="${article.extra__actorCanModify}">
         <a class="btn btn-link" href="../article/modify?id=${article.id}">게시물 수정</a>
       </c:if>
       <c:if test="${article.extra__actorCanDelete}">
-        <a class="btn btn-link" onclick="if(confirm('정말 삭제하시겠습니까?') == false ) return false"
+        <a class="btn btn-link" onclick="if( confirm('정말 삭제하시겠습니까?') == false ) return false"
            href="../article/doDelete?id=${article.id}">게시물 삭제</a>
       </c:if>
     </div>
@@ -146,35 +133,31 @@
   // 댓글 작성 관련
   let ReplyWrite__submitFormDone = false;
   function ReplyWrite__submitForm(form) {
-    if(ReplyWrite__submitForm) {
+    if( ReplyWrite__submitFormDone ) {
       return;
     }
-
     // 좌우공백 제거
     form.body.value = form.body.value.trim();
-
-    if(form.body.value.length == 0) {
+    if( form.body.value.length == 0 ) {
       alert('댓글을 입력해주세요.');
       form.body.focus();
       return;
     }
-
-    if(form.body.value.length < 2) {
+    if( form.body.value.length < 2 ) {
       alert('댓글내용을 2자 이상 입력해주세요.');
       form.body.focus();
       return;
     }
-
     ReplyWrite__submitFormDone = true;
     form.submit();
   }
-
 </script>
+
 <section class="mt-5 con-min-width">
   <div class="con mx-auto px-3">
     <h1>댓글 작성</h1>
 
-    <C:if test="${rq.logined}">
+    <c:if test="${rq.logined}">
       <form class="table-box-type-1" method="POST" action="../reply/doWrite"
             onsubmit="ReplyWrite__submitForm(this); return false;">
         <input type="hidden" name="relTypeCode" value="article">
@@ -194,7 +177,7 @@
           <tr>
             <th>내용</th>
             <td>
-              <textarea class="textarea textarea-bordered w-full" name="body" rows="5" placeholder=""></textarea>
+              <textarea class="textarea textarea-bordered w-full" name="body" rows="5" placeholder="댓글 내용"></textarea>
             </td>
           </tr>
           </tbody>
@@ -203,48 +186,43 @@
           <button type="submit" class="btn btn-primary">댓글작성</button>
         </div>
       </form>
-    </C:if>
-    <C:if test="${rq.notLogined}">
-      <a class="link link-primary" href="/user/member/login">로그인</a> 후 이용해주세요.
-    </C:if>
+    </c:if>
+    <c:if test="${rq.notLogined}">
+      <a class="link link-primary" href="/usr/member/login">로그인</a> 후 이용해주세요.
+    </c:if>
   </div>
 </section>
 
 <section class="mt-5 con-min-width">
-  <div class="con mx=auto px-3">
-    <h1>댓글 개수(${relies.size()})</h1>
+  <div class="con mx-auto px-3">
+    <h1>댓글 개수(${replies.size()})</h1>
     <div class="reply-list mt-3">
       <c:forEach var="reply" items="${replies}">
-      <div class="reply-list__head">
-        <div class="flex flex_col">
-          <span class="font-bold">${reply.extra__writerName}</span>
-          <span>${reply.forPrintType2RegDate}</span>
-          <div class="flex">
-            <span>추천 : ${reply.goodReactionPoint}</span>
-            <div class="modifyAndDelete-btn ml-auto text-gray-400">
-              <c:if test="${reply.extra__actorCanModify}">
-                <a href="../reply/modify?id=${reply.id}">수정</a>
-              </c:if>
-              <c:if test="${reply.extra__actorCanDelete}">
-                <a onclick="if(confirm('정말 삭제하시겠습니까?') == false ) return false" href="../reply/doDelete?id=${reply.id}">삭제</a>
-              </c:if>
-          </div>
+        <div class="reply-list__head">
+          <div class="flex flex-col">
+            <span class="font-bold">${reply.extra__writerName}</span>
+            <span>${reply.forPrintType2RegDate}</span>
+            <div class="flex">
+              <span>추천 : ${reply.goodReactionPoint}</span>
+              <div class="modifyAndDelete-btn ml-auto text-gray-400">
+                <c:if test="${reply.extra__actorCanModify}">
+                  <a href="../reply/modify?id=${reply.id}">수정</a>
+                </c:if>
+                <c:if test="${reply.extra__actorCanDelete}">
+                  <a  onclick="if( confirm('정말 삭제하시겠습니까?') == false ) return false" href="../reply/doDelete?id=${reply.id}">삭제</a>
+                </c:if>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="reply-list__body border-b border-gray-300 my-3">
-        <div class="flex items-center my-3">
-        #{reply.forPrintBody}
+        <div class="reply-list__body border-b border-gray-300 my-3">
+          <div class="flex items-center my-3">
+            ${reply.forPrintBody}
+          </div>
         </div>
-      </div>
       </c:forEach>
     </div>
   </div>
 </section>
 
-
 <%@ include file="../common/foot.jspf" %>
-
-
-
-
