@@ -1,5 +1,6 @@
 package com.sbs.exam.sb_app_2022_1203.vo;
 
+
 import com.sbs.exam.sb_app_2022_1203.service.MemberService;
 import com.sbs.exam.sb_app_2022_1203.util.Ut;
 import lombok.Getter;
@@ -47,7 +48,7 @@ public class Rq {
     this.req.setAttribute("rq", this); // this는 자기자신이다.!!
   }
 
-  public boolean isnotLogined() {
+  public boolean isNotLogined() {
     return !isLogined;
   }
 

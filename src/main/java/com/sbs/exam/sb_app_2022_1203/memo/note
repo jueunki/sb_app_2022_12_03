@@ -780,3 +780,12 @@ ALTER TABLE reply
 ADD COLUMN badReactionPoint INT(10) UNSIGNED NOT NULL DEFAULT 0;
 
 SELECT * FROM reply;
+
+======================================
+2023-01-03
+ajax 댓글수정 검색해서 찾아보면 많다.
+
+----
+반응형 페이지를 만들거면 아래의 con과 con-min-width를 빼면된다.
+<section class="mt-5 con-min-width">
+  <div class="con mx-auto px-3">

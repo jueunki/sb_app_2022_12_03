@@ -190,6 +190,7 @@ public interface ArticleRepository {
 //boardId가 0이면 0과 0이 같지않으면 불특정 게시물을 가져오는것.
 
   @Select("""
+          <script>
           SELECT *
           FROM article
           WHERE id = #{id}

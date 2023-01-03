@@ -180,5 +180,8 @@ public class ArticleService {
     }
 
 
+  public Article getArticle(int id) {
+    return articleRepository.getArticle(id);
+  }
 }
 
