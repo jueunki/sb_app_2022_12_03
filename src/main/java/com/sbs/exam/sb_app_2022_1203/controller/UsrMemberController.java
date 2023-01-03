@@ -118,7 +118,6 @@ public class UsrMemberController {
     return "usr/member/myPage";
   }
 
-  //회원정보 추가
   @RequestMapping("/usr/member/checkPassword")
   public String showCheckPassword(HttpSession httpSession) {
     return "usr/member/checkPassword";

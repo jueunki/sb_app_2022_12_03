@@ -1,3 +1,5 @@
+package com.sbs.exam.sb_app_2022_1203.config;
+
 import com.sbs.exam.sb_app_2022_1203.interceptor.BeforeActionInterceptor;
 import com.sbs.exam.sb_app_2022_1203.interceptor.NeedLoginInterceptor;
 import com.sbs.exam.sb_app_2022_1203.interceptor.NeedLogoutInterceptor;
