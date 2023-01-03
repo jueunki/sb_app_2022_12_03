@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.sbs.exam.sb_app_2022_10_13.util.Ut" %>
 
 <c:set var="pageTitle" value="마이페이지" />
 <%@ include file="../common/head.jspf" %>
+
 
 <section class="mt-5 con-min-width">
   <div class="con mx-auto px-3">
@@ -25,7 +27,7 @@
           </td>
         </tr>
         <tr>
-          <th>닉네임</th>
+          <th>별명</th>
           <td>
             ${rq.loginedMember.nickname}
           </td>
@@ -45,7 +47,7 @@
         <tr>
           <th>비고</th>
           <td>
-            <a href="../member/checkPassword" class="btn btn-primary">회원정보 수정</a>
+            <a href="../member/checkPassword?replaceUri=${Ut.getUriEncoded('../member/modify')}" class="btn btn-primary">회원정보수정</a>
             <button type="button" onclick="history.back();" class="btn btn-outline btn-secondary">뒤로가기</button>
           </td>
         </tr>

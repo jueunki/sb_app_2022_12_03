@@ -112,11 +112,13 @@ public class UsrMemberController {
       // 이미 로그아웃이 되었다고 문구를 띄운다.
   }
 
+  //마이페이지
   @RequestMapping("/usr/member/myPage")
   public String showMyPage(HttpSession httpSession) {
     return "usr/member/myPage";
   }
 
+  //회원정보 추가
   @RequestMapping("/usr/member/checkPassword")
   public String showCheckPassword(HttpSession httpSession) {
     return "usr/member/checkPassword";
