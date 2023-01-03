@@ -68,6 +68,7 @@ public class Ut {
         """, msg, uri);
   }
 
+
   public static String getUriEncoded(String str) {
     try {
       return URLEncoder.encode(str, "UTF-8");
